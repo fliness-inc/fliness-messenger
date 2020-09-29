@@ -1,0 +1,42 @@
+{
+    "include": [
+        "src/**/*",
+    ],
+    "exclude": [
+        "node_modules"
+    ],
+    "compilerOptions": {
+        "target": "ES5",
+        "module": "esnext",
+        "esModuleInterop": true,
+        "allowJs": true,
+        "baseUrl": "./",
+        "experimentalDecorators": true,
+        "jsx": "preserve",
+        "types": [
+            "node"
+        ],
+        "typeRoots": [
+            "node_modules/@types"
+        ],
+        "resolveJsonModule": true,
+        "lib": [
+            "dom",
+            "dom.iterable",
+            "esnext"
+        ],
+        "skipLibCheck": true,
+        "strict": false,
+        "forceConsistentCasingInFileNames": true,
+        "noEmit": true,
+        "moduleResolution": "node",
+        "isolatedModules": true,
+        "paths": {
+            "@/*": ["./*"],
+            "@src/*": ["src/*"],
+            "@components/*": ["src/components/*"],
+            "@layouts/*": ["src/components/layouts/*"],
+            "@public/*": ["public/*"]
+        }
+    }   
+}
