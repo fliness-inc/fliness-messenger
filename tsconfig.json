@@ -35,6 +35,7 @@
             "@/*": ["./*"],
             "@src/*": ["src/*"],
             "@components/*": ["src/components/*"],
+            "@pages/*": ["src/pages/*"],
             "@layouts/*": ["src/components/layouts/*"],
             "@public/*": ["public/*"]
         }
