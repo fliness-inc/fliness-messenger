@@ -1,4 +1,3 @@
-import { AppComponent } from 'next/dist/next-server/lib/router/router';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 
 export class AppDocument extends Document {
@@ -17,8 +16,8 @@ export class AppDocument extends Document {
 					/>
 				</Head>
 				<body>
-					<Main />
-					<NextScript />
+				<Main />
+				<NextScript />
 				</body>
 			</Html>
 		);

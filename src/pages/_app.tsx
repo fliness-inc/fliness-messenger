@@ -1,5 +1,9 @@
-function MyApp({ Component, pageProps }) {
+import React from 'react';
+import '@pages/index.scss';
+
+function App({ Component, pageProps }) {
 	return <Component {...pageProps} />;
 }
 
-export default MyApp;
+export default App;
+

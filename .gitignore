@@ -25,6 +25,9 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
+.env
+.env.dev
+.env.test
 .env.local
 .env.development.local
 .env.test.local
@@ -32,3 +35,6 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# IntelliJ IDEA
+/.idea/

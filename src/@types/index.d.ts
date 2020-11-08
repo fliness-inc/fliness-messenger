@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface IClassNames {
     [className: string]: string;
 }
@@ -35,6 +33,6 @@ declare module '*.module.scss' {
 }
 
 declare module '*.svg' {
-    const classNames: IClassNames;
+    const classNames: ReactComponent;
     export default classNames;
 }

@@ -1,3 +1,4 @@
+import { NextPage } from 'next';
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import AppBar from '@material-ui/core/AppBar';
@@ -7,9 +8,9 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@public/menu.svg';
 import LogoIcon from '@public/logo.svg';
 import useApollo from '@src/lib/use-apollo';
-import classes from "@pages/index.scss";
+import classes from '@pages/index.module.scss';
 
-export const Home: React.FC = () => {
+export const Home: NextPage = () => {
 	return (
 		<Grid container direction="column" justify="center" alignItems="center">
 			<AppBar position="sticky" className={classes.app_bar}>
@@ -27,4 +28,4 @@ export const Home: React.FC = () => {
 	);
 };
 
-export default useApollo({ ssr: true })(Home);
+export default useApollo(Home);
