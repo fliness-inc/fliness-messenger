@@ -1,0 +1,39 @@
+.info {
+    width: auto !important;
+}
+
+.phone {
+    width: 252px;
+    height: 500px;
+    border-radius: 41px;
+    margin-right: 66px;
+}
+
+.text {
+    margin: 18px;
+}
+
+.text_h1 {
+    font-weight: bold;
+    font-size: 44px;
+    color: #000;
+}
+
+.text_h2 {
+    display: inline;
+    font-weight: 500;
+    font-size: 26px;
+    color: #555;
+}
+.text_h3 {
+    display: inline;
+    font-size: 18px;
+    line-height: 21px;
+    color: #888;
+}
+
+@media(max-width: 1480px) {
+    .info {
+        display: none !important;
+    }
+}
