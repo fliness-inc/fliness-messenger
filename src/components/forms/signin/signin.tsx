@@ -21,7 +21,7 @@ export const LoginForm: React.FC = () => {
 	const [login] = useMutation(LOGIN);
 	const [lock, setLock] = useState(false);
 	const [error, setError] = useState(null);
-	//const router = useRouter();
+	const router = useRouter();
 
 	function handleButtonClick() {
 		const email = emailField.current.value;
@@ -38,8 +38,7 @@ export const LoginForm: React.FC = () => {
 		}).then(res => {
 			token(res.data.auth.login.accessToken);
 			setError(null);
-			setLock(false);
-			//router.push('/chats');
+			router.push('/dialogs');
 		}).catch(e => {
 			if (e.message === `The user was not found with the email: ${email}`) {
 				setError('Invalid email or password');
