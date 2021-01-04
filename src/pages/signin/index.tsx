@@ -1,4 +1,4 @@
-import React from 'react';
+import { NextPage } from 'next';
 import useApollo from '@lib/use-apollo';
 import Grid from '@material-ui/core/Grid';
 import WaveIcon from '@public/wave.svg';
@@ -6,7 +6,7 @@ import LoginForm from '@components/forms/signin/signin';
 import classes from './index.module.scss';
 import Info from '@components/info/info';
 
-export const Login: React.FC = () => {
+export const SignIn: NextPage = () => {
 	return (
 		<Grid
 			container
@@ -30,4 +30,4 @@ export const Login: React.FC = () => {
 	);
 };
 
-export default useApollo(Login);
+export default useApollo(SignIn);

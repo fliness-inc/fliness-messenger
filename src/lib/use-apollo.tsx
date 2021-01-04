@@ -5,8 +5,9 @@ import { setContext } from '@apollo/client/link/context';
 import { token } from '@store/auth';
 import withApollo from 'next-with-apollo';
 import React from 'react';
+import Cookie from 'js-cookie';
 
-export const createApolloClient = (initialState, headers) => {
+export const createApolloClient = (initialState, ctx) => {
 
 	const wsLink = typeof window !== 'undefined'
 		? new WebSocketLink({
@@ -27,35 +28,79 @@ export const createApolloClient = (initialState, headers) => {
 
 	const authLink = setContext(async () => {
 		if (!token()) {
-			const res = await fetch(process.env.NEXT_PUBLIC_API_HTTP_URL, {
-				body: JSON.stringify({
-					operationName: 'RefreshTokens',
-					query: `
-						mutation RefreshTokens {
-							auth {
-								refresh {
-									accessToken
-								}
-							}
-						}`
-				}),
-				headers: {
-					...headers,
-					'Content-Type': 'application/json',
-				},
-				method: 'POST',
-				credentials: 'include',
-				mode: 'cors'
-			});
+			if (ctx) {
+				const cookies = ctx.req.headers['cookie']?.split(';');
+				const jwtToken = cookies?.some(cookie => cookie?.split('=')[0] === 'jwt-token');
 
-			const tokens = await res.json();
+				if (jwtToken) {
+					const res = await fetch(process.env.NEXT_PUBLIC_API_HTTP_URL, {
+						body: JSON.stringify({
+							operationName: 'RefreshTokens',
+							query: `
+								mutation RefreshTokens {
+									auth {
+										refresh {
+											accessToken,
+											refreshToken
+										}
+									}
+								}`
+						}),
+						headers: {
+							'cookie': ctx.req.headers['cookie'],
+							'content-type': 'application/json',
+							'user-agent':  ctx.req.headers['user-agent']
+						},
+						method: 'POST',
+						credentials: 'include',
+						mode: 'cors'
+					});
 
-			if (tokens.data) token(tokens.data.auth.refresh.accessToken);
+					const tokens = await res.json();
+
+					if (tokens.data) {
+						ctx.res.setHeader('set-cookie', `jwt-token=${tokens.data.auth.refresh.refreshToken}`);
+						token(tokens.data.auth.refresh.accessToken);
+					}
+				}
+			}
+			else {
+				if (Cookie.get('jwt-token')) {
+					const res = await fetch(process.env.NEXT_PUBLIC_API_HTTP_URL, {
+						body: JSON.stringify({
+							operationName: 'RefreshTokens',
+							query: `
+								mutation RefreshTokens {
+									auth {
+										refresh {
+											accessToken,
+											refreshToken
+										}
+									}
+								}`
+						}),
+						headers: {
+							'cookie': `jwt-token=${Cookie.get('jwt-token')}`,
+							'content-Type': 'application/json',
+							'user-agent': window.navigator.userAgent
+						},
+						method: 'POST',
+						credentials: 'include',
+						mode: 'cors'
+					});
+		
+					const tokens = await res.json();
+		
+					if (tokens.data) {
+						Cookie.set('jwt-token', tokens.data.auth.refresh.refreshToken);
+						token(tokens.data.auth.refresh.accessToken);
+					}
+				}
+			}
 		}
 
 		return {
 			headers: {
-				...headers,
 				authorization: token() ? `Bearer ${token()}` : '',
 			}
 		}
@@ -78,14 +123,13 @@ export const createApolloClient = (initialState, headers) => {
 
 	return new ApolloClient({
 		link,
-		cache: new InMemoryCache().restore(initialState || {}),
-		headers
+		cache: new InMemoryCache().restore(initialState || {})
 	});
 }
 
 export default withApollo(
-	({ initialState, headers }) => {
-		return createApolloClient(initialState, headers);
+	({ initialState, ctx }) => {
+		return createApolloClient(initialState, ctx);
 	},
 	{
 		render: ({ Page, props }) => {

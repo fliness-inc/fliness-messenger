@@ -9,42 +9,46 @@ import Button from '@material-ui/core/Button';
 import EmailIcon from '@public/email.svg';
 import UnlockIcon from '@public/unlock.svg';
 import { token } from '@store/auth';
-import { LOGIN } from '@components/forms/signin/signin.graphql';
+import { SIGN_IN } from '@components/forms/signin/signin.graphql';
 import Padlock from '@public/padlock.svg';
 import Link from "next/link";
 
-export const LoginForm: React.FC = () => {
+export const SinInForm: React.FC = () => {
 
 	const emailField = useRef(null);
 	const passwordField = useRef(null);
 
-	const [login] = useMutation(LOGIN);
+	const [signIn] = useMutation(SIGN_IN);
 	const [lock, setLock] = useState(false);
 	const [error, setError] = useState(null);
 	const router = useRouter();
 
-	function handleButtonClick() {
+	async function handleButtonClick() {
 		const email = emailField.current.value;
 		const password = passwordField.current.value;
 
 		setLock(true);
-		login({
-			 variables: {
-				 payload: {
-				 	email,
-					password,
-				 }
-			}
-		}).then(res => {
+
+		try {
+			const res = await signIn({
+				variables: {
+					payload: {
+						email,
+					   	password,
+					}
+			   	}
+		   	});
+
 			token(res.data.auth.login.accessToken);
 			setError(null);
 			router.push('/dialogs');
-		}).catch(e => {
-			if (e.message === `The user was not found with the email: ${email}`) {
-				setError('Invalid email or password');
-				setLock(false);
-			}
-		});
+		}
+		catch(e) {
+			if (e.message === `The user was not found with the email: ${email}`) setError('Invalid email or password');
+		}
+		finally {
+			setLock(false);
+		}
 	}
 
 	return (
@@ -104,7 +108,7 @@ export const LoginForm: React.FC = () => {
 				</Button>
 			</div>
 
-			<Link href={'#'}>
+			<Link href={'/signup'}>
 				<Typography className={classes.form__link}>or sign up</Typography>
 			</Link>
             
@@ -112,4 +116,4 @@ export const LoginForm: React.FC = () => {
 	);
 }
 
-export default LoginForm;
+export default SinInForm;

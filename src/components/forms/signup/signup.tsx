@@ -10,49 +10,57 @@ import EmailIcon from '@public/email.svg';
 import UserIcon from '@public/user.svg';
 import UnlockIcon from '@public/unlock.svg';
 import { token } from '@store/auth';
-import { LOGIN } from '@components/forms/signup/signup.graphql';
+import { SIGN_UP } from '@components/forms/signup/signup.graphql';
 import Padlock from '@public/padlock.svg';
 import Link from "next/link";
 
-export const SignupForm: React.FC = () => {
+export const SignUpForm: React.FC = () => {
 
 	const userField = useRef(null);
 	const emailField = useRef(null);
 	const passwordField = useRef(null);
 	const repeatField = useRef(null);
 
-	const [login] = useMutation(LOGIN);
+	const [signUp] = useMutation(SIGN_UP);
 	const [lock, setLock] = useState(false);
 	const [error, setError] = useState(null);
-	//const router = useRouter();
+	const router = useRouter();
 
-	function handleButtonClick() {
-		const user = userField.current.value;
+	async function handleButtonClick() {
+		const name = userField.current.value;
 		const email = emailField.current.value;
 		const password = passwordField.current.value;
 		const repeat = repeatField.current.value;
 
 		setLock(true);
-		login({
-			 variables: {
-				 payload: {
-					user,
-				 	email,
-					password,
-					repeat
-				 }
-			}
-		}).then(res => {
-			token(res.data.auth.login.accessToken);
-			setError(null);
+
+		if (password !== repeat) {
+			setError('The passwords is not matches');
 			setLock(false);
-			//router.push('/chats');
-		}).catch(e => {
-			if (e.message === `The user was not found with the email: ${email}`) {
-				setError('Invalid email or password');
-				setLock(false);
-			}
-		});
+			return;
+		}
+
+		try {
+			const res = await signUp({
+				variables: {
+					payload: {
+					   	name,
+						email,
+					   	password
+					}
+			   	}
+			});
+
+			token(res.data.auth.register.accessToken);
+			setError(null);
+			router.push('/dialogs');
+		}
+		catch(e) {
+			if (e.message === `The user was not found with the email: ${email}`) setError('Invalid email or password');
+		}
+		finally {
+			setLock(false);
+		}
 	}
 
 	return (
@@ -113,8 +121,8 @@ export const SignupForm: React.FC = () => {
 					<input 
 						type='password' 
 						className={classes.input__shape} 
-						placeholder={'Repeat Password'} 
-						ref={passwordField}
+						placeholder={'Repeat password'} 
+						ref={repeatField}
 					/>
 				</div>
 
@@ -132,12 +140,12 @@ export const SignupForm: React.FC = () => {
 				</Button>
 			</div>
 
-			<Link href={'#'}>
-				<Typography className={classes.form__link}>or Login in</Typography>
+			<Link href={'/signin'}>
+				<Typography className={classes.form__link}>or sign in</Typography>
 			</Link>
             
 		</Grid>
 	);
 }
 
-export default SignupForm;
+export default SignUpForm;

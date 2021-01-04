@@ -1,9 +1,9 @@
 import { gql } from '@apollo/client';
 
-export const LOGIN = gql`
-    mutation Login($payload: AuthLoginDTO!) {
+export const SIGN_UP = gql`
+    mutation($payload: AuthRegisterDTO!) {
         auth {
-            login(payload: $payload) {
+            register(payload: $payload) {
                 accessToken
                 refreshToken
             }

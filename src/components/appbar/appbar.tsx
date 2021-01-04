@@ -11,16 +11,12 @@ import { useQuery } from '@apollo/client';
 import ArrowDown from '@public/keyboard_arrow_down.svg';
 import Button from '@material-ui/core/Button';
 
-export interface Props {
+export interface AppBarProps {
 	username: string;
 	avatar: string;
 }
 
-export const AppBar: NextPage<any> = () => {
-	const { loading, data, error } = useQuery(GET_AUTH_USER);
-
-	if (loading || error) return null;
-
+export const AppBar: NextPage<AppBarProps> = ({ username, avatar }) => {
 	return (
 		<UpBar position="sticky" className={classes.app_bar}>
 			<Toolbar className={classes.app_bar__layout}>
@@ -34,7 +30,7 @@ export const AppBar: NextPage<any> = () => {
 					</div>
 				</div>
 				<Button className={classes.layout__right}>
-					<p className={classes.account__username}>{data.me.name}</p>
+					<p className={classes.account__username}>{username}</p>
 					<img className={classes.account__avatar} src='./user.jpg' draggable={false}/>
 					<ArrowDown className={classes.account__arrow_icon} />
 				</Button>
