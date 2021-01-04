@@ -6,6 +6,8 @@ import Error from 'next/error';
 import Appbar from '@components/appbar/appbar';
 import SideBar from '@components/sidebar/sidebar';
 import { GET_USER } from '@pages/dialogs/index.graphql';
+import { ChatsLayout } from '@components/layouts/ChatsLayout/ChatsLayout';
+import { Pages, currentPage  } from '@store/pages';
 
 export interface Props {
 	errorCode?: number;
@@ -17,20 +19,19 @@ export interface Props {
 	}
 }
 
-export const Dialogs: NextPage<Props> = ({ errorCode, data }: Props) => {
+export const DialogsPage: NextPage<Props> = ({ errorCode, data }: Props) => {
 	if (errorCode) return <Error statusCode={errorCode}/>;
 
+	currentPage(Pages.DIALOGS);
+
 	return (
-		<Grid container direction="column" justify="center" alignItems="center">
-			<Appbar username={data.me.name} avatar={data.me.avatar} />
-			<Grid container direction="row" alignItems='center'>
-				<SideBar />
-			</Grid>
-		</Grid>
+		<ChatsLayout data={data}>
+			
+		</ChatsLayout>
 	);
 };
 
-Dialogs.getInitialProps = async ({ apolloClient, req }: any = {}) => {
+DialogsPage.getInitialProps = async ({ apolloClient, req }: any = {}) => {
 	try {
 		return await apolloClient.query({ query: GET_USER });
 	}
@@ -39,4 +40,4 @@ Dialogs.getInitialProps = async ({ apolloClient, req }: any = {}) => {
 	}
 }
 
-export default useApollo(Dialogs);
+export default useApollo(DialogsPage);

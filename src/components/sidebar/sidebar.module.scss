@@ -7,6 +7,7 @@
   &__main_menu {
     display: flex;
     flex-direction: column;
+    margin-top: 96px;
   }
 }
 
@@ -43,8 +44,8 @@
   }
 
   &__bottom {
-    position: sticky !important;
+    position: absolute !important;
     left: 0;
-    bottom: 0;
+    bottom: 24px;
   }
 }
