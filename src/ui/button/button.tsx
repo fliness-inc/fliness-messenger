@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { MutableRefObject, useRef } from 'react';
 import classNames from 'classnames';
 import classes from '@ui/button/button.module.scss';
 
 export interface Props {
     className?: string
     children?: JSX.Element | JSX.Element[] | string
-    onClick?: () => void
+    onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
     variant?: 'contained' | 'outlined'
 }
 
@@ -13,10 +13,10 @@ export const Button: React.FC<Props> = ({
     className = '',
     children,
     variant,
-    onClick = () => {}
+    onClick = (event: React.MouseEvent<HTMLButtonElement>) => {}
 }: Props) => {
     return (
-        <button 
+        <button
             className={classNames(
                 classes['btn'],
                 variant === 'contained' ? classes['btn_contained'] : '',

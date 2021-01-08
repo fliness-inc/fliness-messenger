@@ -3,7 +3,6 @@ import classes from '@components/chat-bar/chat-bar.module.scss';
 import classNames from 'classnames';
 import Grid from '@ui/grid/grid';
 import Button from '@ui/button/button';
-
 import SearchIcon from '@public/search-24px.svg';
 import MoreIcon from '@public/more.svg';
 import SideBarIcon from '@public/sidebar.svg';

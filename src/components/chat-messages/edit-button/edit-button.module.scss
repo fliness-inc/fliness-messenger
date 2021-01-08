@@ -1,0 +1,68 @@
+.btn-edit {
+    --size: 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: var(--size);
+    height: var(--size);
+
+    border-radius: 50%;
+    padding: 0;
+
+    &__icon {
+        --size: 16px;
+
+        width: var(--size);
+        height: var(--size);
+        
+        fill: #555;
+    }
+}
+
+.popup {
+    background-color: #fff;
+    box-shadow: 0px 0px 4px rgba(69, 69, 69, 0.25);
+    border-radius: 4px;
+    padding: 5px;
+
+    &-item {
+        padding: 10px 30px;
+        border-radius: 4px;
+        cursor: pointer;
+    
+        &:hover {
+            background-color: #3674FF;
+    
+            & .popup-item__icon {
+                fill: #fff;
+            }
+        
+            & .popup-item__title {
+                color: #fff;   
+            }
+        }
+    
+        &__icon {
+            --size: 20px;
+    
+            width: var(--size);
+            height: var(--size);
+    
+            fill: #C1C1C1;
+    
+            &-delete {
+                & > path {
+                    transform: scale(.0388);
+                }
+            }
+        }
+    
+        &__title {
+            font-size: 16px;
+            color: #1C1C1C;
+            margin: 0 30px;
+        }
+    }
+}

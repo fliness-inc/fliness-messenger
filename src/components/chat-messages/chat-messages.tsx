@@ -3,8 +3,9 @@ import Grid from '@ui/grid/grid';
 import List from '@ui/list/list';
 import classNames from 'classnames';
 import classes from '@components/chat-messages/chat-messages.module.scss';
-import Button from '@ui/button/button';
-import MoreIcon from '@public/more.svg';
+import CheckIcon from '@public/check.svg';
+import ChecksIcon from '@public/combined_shape.svg';
+import EditButton from './edit-button/edit-button';
 
 export interface ItemType {
     id: string
@@ -82,51 +83,48 @@ export const ChatMessages: React.FC<Props> = ({
 
     const me = { username: 'Andrew Piankov' };
 
-    let prevUsername = null; // should be message id
-
     return (
         <List items={items} className={classNames(classes['chat-messages'], className)}>
             {
-                ({ id, username, avatarURL, message, time }: ItemType) => {
-                    const prev = prevUsername;
-                    prevUsername = username;
-                    return (
-                        <Grid key={id} direction='column' className={classes['message']}>
-                            {
-                                prev === username ? null :
-                                    <Grid 
-                                        alignItems='center'
-                                        direction={me.username === username ? 'row-reverse' : 'row'}
-                                    >
-                                        <img src={avatarURL} className={classes['avatar__icon']}/>
-                                        <p className={classes['avatar__name']}>{username}</p>
-                                        <Button className={classes['avatar__btn-edit']}>
-                                            <MoreIcon className={classes['btn-edit__icon']}/>
-                                        </Button>
-                                    </Grid> 
-                            }
-                            
+                ({ id, username, avatarURL, message, time }: ItemType) => (
+                    <Grid key={id} direction='column' className={classes['message']}>
+                        <Grid 
+                            alignItems='center'
+                            direction={me.username === username ? 'row-reverse' : 'row'}
+                        >
+                            <img src={avatarURL} className={classes['avatar__icon']}/>
+                            <p className={classes['avatar__name']}>{username}</p>
+                            <EditButton />
+                        </Grid> 
+                        <Grid 
+                            justify='center' 
+                            direction='column'
+                            alignItems={me.username === username ? 'flex-end' : 'flex-start'}
+                        >
                             <Grid 
-                                justify='center' 
-                                direction='column'
-                                alignItems={me.username === username ? 'flex-end' : 'flex-start'}
+                                alignItems='center' 
+                                direction={me.username === username ? 'row-reverse' : 'row'}
+                                className={classNames(
+                                    classes['message__text'], 
+                                    me.username === username ? classes['message__primary-text'] : ''
+                                )}
                             >
-                                <Grid 
-                                    alignItems='center' 
-                                    direction={me.username === username ? 'row-reverse' : 'row'}
-                                    className={classNames(
-                                        classes['message__text'], 
-                                        me.username === username ? classes['message__primary-text'] : ''
-                                    )}
-                                >
-                                    <p>{message}</p>
-                                </Grid>
-                                <span className={classes['message__time']}>{time}</span>
+                                <p>{message}</p>
                             </Grid>
-                            
+                            <Grid alignItems='center' direction={me.username === username ? 'row-reverse' : 'row'}>
+                                <span className={classes['message__time']}>{time}</span>
+                                <Grid alignItems='center' className={classes['message__loading']}>
+                                {
+                                    me.username !== username ? null : 
+                                    /*<CheckIcon className={classes['message__loading_process']} />*/
+                                    <ChecksIcon className={classes['message__loading_done']} />
+                                }
+                                </Grid>
+                            </Grid>
                         </Grid>
-                    );
-                }
+                        
+                    </Grid>
+                )
             }
         </List>
     );

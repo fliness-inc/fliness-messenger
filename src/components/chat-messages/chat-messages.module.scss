@@ -31,39 +31,18 @@
         color: #000000;
         margin: 0 10px;
     }
-
-    &__btn-edit {
-        --size: 32px;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        width: var(--size);
-        height: var(--size);
-
-        border-radius: 50%;
-        padding: 0;
-    }
-}
-
-.btn-edit {
-    &__icon {
-        --size: 16px;
-
-        width: var(--size);
-        height: var(--size);
-        
-        fill: #555;
-    }
 }
 
 .message {
+    margin: 10px 0;
+
     &__header {
         width: auto;
     }
+
     &__text {
         max-width: 45%;
+        min-width: 300px;
         width: auto;
         background-color: #fff;
         padding: 12px 24px;
@@ -74,6 +53,40 @@
         & > p {
             color: #000000;
             font-size: 16px;
+        }
+    }
+
+    &__loading {
+        --size: 24px;
+
+        width: auto;
+        height: var(--size);
+
+        &_done {
+            --size: 24px;
+
+            width: var(--size);
+            height: var(--size);
+    
+            fill: #3674FF;
+    
+            margin: 0 4px;
+            margin-top: 2px;
+    
+            & > path {
+                transform: scale(.035);
+            }
+        }
+    
+        &_process {
+            --size: 16px;
+    
+            width: var(--size);
+            height: var(--size);
+    
+            fill: #3674FF;
+    
+            margin: 0 4px;
         }
     }
 

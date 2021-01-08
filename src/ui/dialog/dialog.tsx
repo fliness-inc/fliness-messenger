@@ -49,15 +49,10 @@ export const Dialog: React.FC<DialogProps> = ({
 
     useEffect(() => {
         if (!ref.current) {
-            const el = document.createElement('div');
-            el.classList.add(classes['dialog']);
+            const element = document.createElement('div');
+            element.classList.add(classes['dialog']);
             
-            const body = document.getElementsByTagName('body')[0];
-    
-            ref.current = {
-                body: body,
-                el: el
-            }
+            ref.current = element;
         }
 
         setOpen(shouldOpen);
@@ -66,12 +61,12 @@ export const Dialog: React.FC<DialogProps> = ({
 
     useEffect(() => {
         if (!mounted && open) {
-            ref.current.body.appendChild(ref.current.el);
+            document.body.appendChild(ref.current);
             setMounted(true);
             onOpen();
         }
         else if (mounted && !open) {
-            ref.current.body.removeChild(ref.current.el);
+            document.body.removeChild(ref.current);
             setMounted(false);
         };
     }, [open]);
@@ -86,7 +81,7 @@ export const Dialog: React.FC<DialogProps> = ({
             <DialogBackground onClick={handleBackgroundClick}/>
             {children}
         </>,
-        ref.current.el) : null;
+        ref.current) : null;
 }
 
 export default Dialog;

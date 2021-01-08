@@ -61,17 +61,9 @@ export const CreateDialog: React.FC = () => {
     const [open, setOpen] = useState<boolean>(false);
     const [tabIndex, setTabIndex] = useState<number>(1);
 
-    const handleTabIndexChange = (index: number) => {
-        setTabIndex(index);
-    }
-
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-    
-    const handleClose = () => {
-        setOpen(false);
-    };
+    const handleTabIndexChange = (index: number) => setTabIndex(index);
+    const handleClickOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     const items: ItemType[] = [
         {
@@ -131,8 +123,8 @@ export const CreateDialog: React.FC = () => {
                         alignItems='center'
                         justify='flex-end'
                     >
-                        <Button className={classes['btn-cancel']} onClick={() => setOpen(false)}>Cancel</Button>
-                        <Button variant='contained' className={classes['btn-create']} onClick={() => setOpen(false)}>Create</Button>
+                        <Button className={classes['btn-cancel']} onClick={handleClose}>Cancel</Button>
+                        <Button variant='contained' className={classes['btn-create']} onClick={handleClose}>Create</Button>
                     </Grid>
                 </DialogContent>
                     
