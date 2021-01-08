@@ -1,7 +1,7 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import classes from './info.module.scss';
-import classNames from '@lib/classNames';
+import classes from '@components/info/info.module.scss';
+import classNames from 'classnames';
 
 export const Info: React.FC = () => {
 	return (

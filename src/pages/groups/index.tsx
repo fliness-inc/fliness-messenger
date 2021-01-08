@@ -1,7 +1,7 @@
 import React from 'react';
 import { NextPage } from 'next';
 import useApollo from '@lib/use-apollo';
-import { ChatsLayout } from '@components/layouts/ChatsLayout/ChatsLayout';
+import { ChatsLayout } from '@components/layouts/chatsLayout/chatsLayout';
 import Error from 'next/error';
 import { GET_USER } from '@pages/dialogs/index.graphql';
 import { Pages, currentPage  } from '@store/pages';

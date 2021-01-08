@@ -1,79 +1,81 @@
-.app_bar {
-  display: flex;
-  justify-content: center;
-  height: 70px;
-  background-color: #fff !important;
-  box-shadow: 4px 0 16px rgba(69, 69, 69, 0.25) !important;
+.app-bar {
+	height: 70px;
+	background-color: #ffffff;
+    box-shadow: 4px 0 16px rgba(69, 69, 69, 0.25);
+    z-index: 20;
+}
 
-  &__layout {
-    justify-content: space-between;
-  }
+.menu {
+    width: 96px;
+
+    &__btn {
+        --size: 48px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 50% !important;
+        padding: 0 !important;
+
+        width: var(--size);
+		height: var(--size);
+    }
+
+    &__icon {
+        --size: 32px;
+
+		width: var(--size);
+		height: var(--size);
+
+		fill: #999;
+    }
 }
 
 .logo {
-  display: flex;
-  align-items: center;
+    &__icon {
+        --size: 42px;
 
-  &__icon {
-    $size: 42px;
-    margin: 0 24px;
+		width: var(--size);
+        height: var(--size);
+        margin: 0 24px;
+    }
 
-    width: $size;
-    height: $size;
-  }
-
-  &__title {
-    color: #000;
-    font-size: 32px !important;
-    font-weight: 700 !important;
-  }
-}
-
-.menu_icon {
-  $size: 32px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: $size !important;
-  height: $size !important;
-
-  fill: #999;
-}
-
-.layout {
-  &__left, &__right {
-    display: flex;
-    align-items: center;
-  }
+    &__title {
+        font-size: 32px;
+        font-weight: 600;
+    }
 }
 
 .account {
-  border-radius: 0;
+    padding: 0 26px;
 
-  &__username {
-    font-weight: 500;
-    font-size: 18px;
-    color: #999999;
-    text-transform: none;
-  }
+    &__btn {
+        display: flex;
+        align-items: center;
+    }
 
-  &__avatar {
-    $size: 42px;
+    &__avatar {
+        --size: 42px;
 
-    width: $size;
-    height: $size;
+        width: var(--size);
+        height: var(--size);
+        margin: 0 16px;
 
-    border-radius: 50%;
-    margin: 0 16px;
-  }
+        border-radius: 50%;
+    }
 
-  &__arrow_icon {
-    $size: 16px;
+    &__username {
+        font-size: 18px;
+        font-weight: 500;
+        color: #999999;
+    }
 
-    width: $size;
-    height: $size;
-    fill: #999;
-  }
+    &__arrow-icon {
+        --size: 16px;
+
+        width: var(--size);
+        height: var(--size);
+		fill: #999,
+    }
 }

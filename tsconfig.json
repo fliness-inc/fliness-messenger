@@ -38,6 +38,7 @@
             "@/*": ["./*"],
             "@src/*": ["src/*"],
             "@components/*": ["src/components/*"],
+            "@ui/*": ["src/ui/*"],
             "@lib/*": ["src/lib/*"],
             "@store/*": ["src/store/*"],
             "@pages/*": ["src/pages/*"],

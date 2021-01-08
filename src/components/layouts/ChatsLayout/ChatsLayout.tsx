@@ -1,12 +1,7 @@
-import { NextPage } from 'next';
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
-import useApollo from '@lib/use-apollo';
-import { useQuery } from '@apollo/client';
-import Error from 'next/error';
+import Grid from '@ui/grid/grid';
 import Appbar from '@components/appbar/appbar';
 import SideBar from '@components/sidebar/sidebar';
-import { gql } from '@apollo/client';
 
 export interface Props {
 	data: {
@@ -15,16 +10,18 @@ export interface Props {
 			avatar: string
 		}
 	}
-	childrens?: JSX.Element[]
+	children?: JSX.Element | JSX.Element[] 
 }
 
-export const ChatsLayout: React.FC<Props> = ({ childrens, data }) => {
+export const ChatsLayout: React.FC<Props> = ({ children, data }) => {
     return (
-		<Grid container direction="column" justify="center" alignItems="center">
+		<Grid direction='column' justify='center' alignItems='center'>
 			<Appbar username={data.me.name} avatar={data.me.avatar} />
-			<Grid container direction="row" alignItems='center'>
+			<Grid direction='row' wrap='nowrap'>
 				<SideBar />
-				{childrens}
+				<Grid direction='row'>
+					{children}
+				</Grid>
 			</Grid>
 		</Grid>
 	);

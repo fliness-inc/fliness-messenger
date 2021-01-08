@@ -2,7 +2,7 @@ import React from 'react';
 import { NextPage } from 'next';
 import Error from 'next/error';
 import useApollo from '@lib/use-apollo';
-import { ChatsLayout } from '@components/layouts/ChatsLayout/ChatsLayout';
+import { ChatsLayout } from '@components/layouts/chatsLayout/chatsLayout';
 import { GET_USER } from '@pages/dialogs/index.graphql';
 import { Pages, currentPage  } from '@store/pages';
 

@@ -58,10 +58,12 @@ export const createApolloClient = (initialState, ctx) => {
 
 					const tokens = await res.json();
 
-					if (tokens.data) {
-						ctx.res.setHeader('set-cookie', `jwt-token=${tokens.data.auth.refresh.refreshToken}`);
-						token(tokens.data.auth.refresh.accessToken);
-					}
+					console.log(tokens);
+
+					if (tokens.errors) return;
+
+					ctx.res.setHeader('set-cookie', `jwt-token=${tokens.data.auth.refresh.refreshToken}`);
+					token(tokens.data.auth.refresh.accessToken);
 				}
 			}
 			else {
@@ -91,10 +93,10 @@ export const createApolloClient = (initialState, ctx) => {
 		
 					const tokens = await res.json();
 		
-					if (tokens.data) {
-						Cookie.set('jwt-token', tokens.data.auth.refresh.refreshToken);
-						token(tokens.data.auth.refresh.accessToken);
-					}
+					if (tokens.errors) return;
+
+					Cookie.set('jwt-token', tokens.data.auth.refresh.refreshToken);
+					token(tokens.data.auth.refresh.accessToken);
 				}
 			}
 		}
