@@ -6,6 +6,7 @@ import classes from '@components/chat-messages/chat-messages.module.scss';
 import CheckIcon from '@public/check.svg';
 import ChecksIcon from '@public/combined_shape.svg';
 import EditButton from './edit-button/edit-button';
+import Skeleton from '@ui/skeleton/skeleton';
 
 export interface ItemType {
     id: string
@@ -88,6 +89,14 @@ export const ChatMessages: React.FC<Props> = ({
             {
                 ({ id, username, avatarURL, message, time }: ItemType) => (
                     <Grid key={id} direction='column' className={classes['message']}>
+
+                        {/* <Grid 
+                            alignItems='center'
+                            direction={me.username === username ? 'row-reverse' : 'row'}
+                        >
+                            <Skeleton key={id} width={350} height={60}/>
+                        </Grid>  */}
+
                         <Grid 
                             alignItems='center'
                             direction={me.username === username ? 'row-reverse' : 'row'}
