@@ -1,10 +1,12 @@
 import React from 'react';
 import { NextPage } from 'next';
 import useApollo from '@lib/use-apollo';
-import { ChatsLayout } from '@components/layouts/chatsLayout/chatsLayout';
 import Error from 'next/error';
 import { GET_USER } from '@pages/dialogs/index.graphql';
-import { Pages, currentPage  } from '@store/pages';
+import { PageTypeEnum, currentPageVar } from '@store/pages';
+import SideBar from '@/src/components/side-bar/vertical/side-bar';
+import DefaultLayout from '@components/layouts/default/defualt';
+import ListBar from '@components/list-bar/list-bar';
 
 export interface Props {
     errorCode?: number;
@@ -13,13 +15,19 @@ export interface Props {
 
 export const GroupsPage: NextPage<Props> = ({  errorCode, data }) => {
     if (errorCode) return <Error statusCode={errorCode}/>;
-
-	currentPage(Pages.GROUPS);
+	
+	React.useEffect(() => {
+		currentPageVar(PageTypeEnum.GROUPS);
+	}, []);
 
 	return (
-		<ChatsLayout data={data}>
-			
-		</ChatsLayout>
+		<DefaultLayout 
+			username={data.me.name} 
+			avatarURL={data.me.avatar}
+			sidebar={<SideBar />}
+			listbar={<ListBar title={'Groups'} />}
+		>
+		</DefaultLayout>
 	);
 };
 

@@ -6,25 +6,40 @@ import Button from '@ui/button/button';
 import List from '@ui/list/list';
 import classes from '@components/dialogs/create-dialog/create-dialog.module.scss';
 import classNames from 'classnames';
+import { useQuery } from '@apollo/client';
+import { GET_FRIENDS, GET_USERS } from '@components/dialogs/create-dialog/create-dialog.graphql';
+import Skeleton from '@ui/skeleton/skeleton';
 
 export interface ItemType {
-    id: string
-    title: string
-    avatarURL: string
-    active: boolean
+    node: {
+        id: string
+        name: string
+        avatarURL?: string
+    }
 }
 
 export interface DialogListProps {
-    items: ItemType[]
+    items: ItemType[],
+    skeleton?: boolean
 }
 
 export const DialogList: React.FC<DialogListProps> = ({
-    items
+    items,
+    skeleton = false
 }: DialogListProps) => {
+    const nodes: ItemType[] = items;
+
+    if (skeleton) nodes.push(...[
+        { node: { id: '1', name: '' }},
+        { node: { id: '2', name: '' }},
+        { node: { id: '3', name: '' }},
+        { node: { id: '4', name: '' }},
+    ]);
+
     return (
-        <List items={items} className={classes['tab__list']}>
+        <List items={nodes} className={classes['tab__list']}>
             {
-                ({ id, title, active, avatarURL }: ItemType) => (
+                ({ node: { id, name, avatarURL }}: ItemType) => (
                     <Grid
                         key={id}
                         alignItems='center'
@@ -33,23 +48,28 @@ export const DialogList: React.FC<DialogListProps> = ({
                         justify='space-between'
                         className={classNames(
                             classes['list-item'], 
-                            active ? classes['list-item_active'] : ''
+                            { [classes['list-item_skeleton']]: skeleton }, 
+                            { [classes['list-item_active']]: false }, 
                         )}
                     >
-                        <Grid alignItems='center' justify='space-between' className={classes['list-item__header']}>
-                            <div className={classes['list-item__avatar']}>
-                                <img className={classes['list-item__image']} src={avatarURL} alt=""/>
-                                <span className={classes['list-item__status']}>
-                                    <span className={classes['list-item__online-status']}></span>
-                                </span>
-                            </div>
-                            <Grid 
-                                direction='column'
-                                className={classes['list-item__text']}
-                            >
-                                <p className={classes['list-item__title']}>{title}</p>
+                        {
+                            skeleton ? 
+                            <Skeleton width={250} height={60} /> :
+                            <Grid alignItems='center' justify='space-between' className={classes['list-item__header']}>
+                                <div className={classes['list-item__avatar']}>
+                                    <img className={classes['list-item__image']} src={avatarURL} alt=""/>
+                                    <span className={classes['list-item__status']}>
+                                        <span className={classes['list-item__online-status']}></span>
+                                    </span>
+                                </div>
+                                <Grid 
+                                    direction='column'
+                                    className={classes['list-item__text']}
+                                >
+                                    <p className={classes['list-item__title']}>{name}</p>
+                                </Grid>
                             </Grid>
-                        </Grid>
+                        }
                     </Grid>
                 )
             }
@@ -65,26 +85,11 @@ export const CreateDialog: React.FC = () => {
     const handleClickOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const items: ItemType[] = [
-        {
-            id: '1',
-            title: 'Adward Uri',
-            avatarURL: 'img/pexels-photo-2613260.jpeg',
-            active: false,
-        },
-        {
-            id: '2',
-            title: 'Adward Uri',
-            avatarURL: 'img/pexels-photo-2613260.jpeg',
-            active: false,
-        },
-        {
-            id: '3',
-            title: 'Adward Uri',
-            avatarURL: 'img/pexels-photo-2613260.jpeg',
-            active: false,
-        }
-    ];
+    const getUsersQuery = useQuery(GET_USERS);
+    const getFreindsQuery = useQuery(GET_FRIENDS);
+
+    if (getUsersQuery.error) alert(getUsersQuery.error);
+    if (getFreindsQuery.error) alert(getFreindsQuery.error);
 
     return (
         <>
@@ -98,30 +103,49 @@ export const CreateDialog: React.FC = () => {
                 <DialogContent className={classes['create-dialog-form']}>
                     <h1 className={classes['create-dialog-form__title']}>Create a Dialog</h1>
 
-                    <Tabs
-                        value={tabIndex}
-                        onChange={handleTabIndexChange}
-                        className={classes['create-dialog-form__tabs']}
-                    >
-                        <Tab index={1}>
-                            <p className={classes['tab__title']}>All Users</p>
-                        </Tab>
-                        <Tab index={2}>
-                            <p className={classes['tab__title']}>Friends</p>
-                        </Tab>
-                    </Tabs>
+                    <Grid alignItems='center' justify='center'>
+                        <Tabs
+                            value={tabIndex}
+                            onChange={handleTabIndexChange}
+                            className={classes['create-dialog-form__tabs']}
+                        >
+                            <Tab index={1}>
+                                <p className={classes['tab__title']}>All Users</p>
+                            </Tab>
+                            <Tab index={2}>
+                                <p className={classes['tab__title']}>Friends</p>
+                            </Tab>
+                        </Tabs>
+                    </Grid>
                         
-                    <TabPanel value={tabIndex} index={1}>
-                        <DialogList items={items} />
+                    <TabPanel 
+                        value={tabIndex} 
+                        index={1} 
+                        className={classes['tab-panel__list']}
+                    >
+                        {
+                            getUsersQuery.loading ? 
+                            <DialogList items={[]} skeleton /> :   
+                            <DialogList items={getUsersQuery.data.users.edges} /> 
+                        }
                     </TabPanel>
 
-                    <TabPanel value={tabIndex} index={2}>
-                        <DialogList items={items.slice(0, 2)} />
+                    <TabPanel 
+                        value={tabIndex} 
+                        index={2}
+                        className={classes['tab-panel__list']}
+                    >
+                       {
+                            getFreindsQuery.loading ? 
+                            <DialogList items={[]} skeleton /> :   
+                            <DialogList items={getFreindsQuery.data.me.friends.edges} /> 
+                        }
                     </TabPanel>
 
                     <Grid 
                         alignItems='center'
                         justify='flex-end'
+                        className={classes['create-dialog-form__btns']}
                     >
                         <Button className={classes['btn-cancel']} onClick={handleClose}>Cancel</Button>
                         <Button variant='contained' className={classes['btn-create']} onClick={handleClose}>Create</Button>

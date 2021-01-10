@@ -3,8 +3,11 @@ import Grid from '@ui/grid/grid';
 import List from '@ui/list/list';
 import Search from '@components/search/search';
 import CreateDialog from '@components/dialogs/create-dialog/create-dialog';
-import classes from '@components/listbar/listbar.module.scss';
+import classes from '@components/list-bar/list-bar.module.scss';
 import classNames from 'classnames';
+import { menuStateVar, MenuStateEnum } from '@store/menu';
+import { gql, useQuery } from '@apollo/client';
+import SideBar from '@components/side-bar/side-bar';
 
 export interface ItemType {
     id: string
@@ -115,10 +118,22 @@ export const ListBar: React.FC<Props> = ({ title }) => {
         }
     ];
 
+    const { data: { localState: { menuState } } } = useQuery(gql`
+        query {
+            localState @client {
+                menuState
+            }
+        }
+    `);
+
     return (
         <Grid
             direction='column'
-            className={classes['list-bar']}
+            className={classNames(
+                classes['list-bar'], 
+                { [classes['list-bar_show']]: menuState === MenuStateEnum.MOVING_ACTIVE },
+                { [classes['list-bar_hidden']]: menuState === MenuStateEnum.MOVING_DEACTIVE }
+            )}
         >
             <Grid direction='column' className={classes['list-bar__header']}>
                 <h1 className={classes['list-bar__title']}>{title}</h1>
@@ -129,7 +144,7 @@ export const ListBar: React.FC<Props> = ({ title }) => {
                     direction='row'
                     className={classes['list-bar__btns']}
                 >
-                    <CreateDialog />
+                    {/* <CreateDialog /> */}
                 </Grid>
             </Grid>
             <List items={items} className={classes['list']}>
@@ -172,6 +187,11 @@ export const ListBar: React.FC<Props> = ({ title }) => {
                     )
                 }
             </List>
+            {
+                menuState === MenuStateEnum.MOVING_ON_TOP_WITH_SIDE_BAR_ACTIVE ?
+                <SideBar.Horizontal /> :
+                null
+            }
         </Grid>
     );
 };

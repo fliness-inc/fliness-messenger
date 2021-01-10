@@ -1,11 +1,25 @@
-import { ApolloClient, InMemoryCache, HttpLink, split, ApolloProvider } from '@apollo/client';
+import { ApolloClient, InMemoryCache, HttpLink, split, ApolloProvider, gql } from '@apollo/client';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { setContext } from '@apollo/client/link/context';
-import { token } from '@store/auth';
+import { tokenVar } from '@store/auth';
+import { menuStateVar } from '@store/menu';
+import { currentPageVar } from '@store/pages';
 import withApollo from 'next-with-apollo';
 import React from 'react';
 import Cookie from 'js-cookie';
+
+const typeDefs = gql`
+	extend type Query {
+		localState: LocalState!
+	}
+
+	type LocalState {
+		menuState: String!
+		currentPage: String!
+		token: String!
+	}
+`;
 
 export const createApolloClient = (initialState, ctx) => {
 
@@ -15,7 +29,7 @@ export const createApolloClient = (initialState, ctx) => {
 			options: {
 			  reconnect: true,
 			  connectionParams: {
-				  authToken: token()
+				  authToken: tokenVar()
 			  },
 			},
 		})
@@ -27,7 +41,7 @@ export const createApolloClient = (initialState, ctx) => {
 	});
 
 	const authLink = setContext(async () => {
-		if (!token()) {
+		if (!tokenVar()) {
 			if (ctx) {
 				const cookies = ctx.req.headers['cookie']?.split(';');
 				const jwtToken = cookies?.some(cookie => cookie?.split('=')[0] === 'jwt-token');
@@ -58,12 +72,10 @@ export const createApolloClient = (initialState, ctx) => {
 
 					const tokens = await res.json();
 
-					console.log(tokens);
-
 					if (tokens.errors) return;
 
 					ctx.res.setHeader('set-cookie', `jwt-token=${tokens.data.auth.refresh.refreshToken}`);
-					token(tokens.data.auth.refresh.accessToken);
+					tokenVar(tokens.data.auth.refresh.accessToken);
 				}
 			}
 			else {
@@ -96,14 +108,14 @@ export const createApolloClient = (initialState, ctx) => {
 					if (tokens.errors) return;
 
 					Cookie.set('jwt-token', tokens.data.auth.refresh.refreshToken);
-					token(tokens.data.auth.refresh.accessToken);
+					tokenVar(tokens.data.auth.refresh.accessToken);
 				}
 			}
 		}
 
 		return {
 			headers: {
-				authorization: token() ? `Bearer ${token()}` : '',
+				authorization: tokenVar() ? `Bearer ${tokenVar()}` : '',
 			}
 		}
 	});
@@ -125,7 +137,24 @@ export const createApolloClient = (initialState, ctx) => {
 
 	return new ApolloClient({
 		link,
-		cache: new InMemoryCache().restore(initialState || {})
+		cache: new InMemoryCache({
+			typePolicies: {
+				Query: {
+					fields: {
+						localState: {
+							read() {
+								return { 
+									menuState: menuStateVar(),
+									token: tokenVar(),
+									currentPage: currentPageVar(),
+								};
+							}
+						}
+					}
+				}
+			}
+		}).restore(initialState || {}),
+		typeDefs,
 	});
 }
 

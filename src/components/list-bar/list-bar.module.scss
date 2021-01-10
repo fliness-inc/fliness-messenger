@@ -1,19 +1,24 @@
 .list-bar {
     width: 440px;
-    min-width: 440px;
-    border-right: 1px solid #e1e1e1;
-    overflow-y: auto;
     height: calc(100vh - 70px);
-    position: relative;
 
-    &::-webkit-scrollbar {
-        width: 6px;
-    }
+    flex-shrink: 0;
+    flex-grow: 0;
 
-    &::-webkit-scrollbar-thumb {
-        border-radius: 10px;
-        background-color: #d1d1d1;
-    }
+    background-color: #fff;
+    border-right: 1px solid #e1e1e1;
+    
+	z-index: 1;
+
+    &_show {
+        display: flex;
+        /* animation: show_list_animation 1s cubic-bezier(0.4, 0, 0.2, 1) forwards; */
+    } 
+
+    &_hidden {
+        display: none;
+        /* animation: hide_list_animation 1s cubic-bezier(0.4, 0, 0.2, 1) forwards; */
+    }    
 
     &__title {
         font-size: 28px;
@@ -21,13 +26,12 @@
     }
 
     &__header {
-        position: sticky;
+        width: 440px;
+
+        flex-shrink: 0;
+
         padding: 0 16px;
         padding-top: 16px;
-        top: 0;
-        left: 0;
-        background-color: #fff;
-        z-index: 1;
     }
 
     &__btns {
@@ -37,7 +41,24 @@
 }
 
 .list {
-    padding: 0 16px;
+    width: 440px;
+
+    flex-shrink: 1;
+    flex-grow: 0;
+
+    padding: 0 10px;
+    padding-left: 16px;
+
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background-color: #d1d1d1;
+    }
 }
 
 .sorting {
@@ -45,7 +66,7 @@
 }
 
 .list-item {
-    padding: 8px 28px;
+    padding: 8px 24px;
     margin: 2px 0; 
     cursor: pointer;
     border-radius: 4px;
@@ -201,5 +222,25 @@
         height: var(--size);
         background-color: #00C980;
         border-radius: 50%;
+    }
+}
+
+@keyframes show_list_animation {
+    0% {
+        width: 0;
+    }
+
+    100% {
+        width: 440px;
+    }
+}
+
+@keyframes hide_list_animation {
+    0% {
+        width: 440px;
+    }
+
+    100% {
+        width: 0;
     }
 }

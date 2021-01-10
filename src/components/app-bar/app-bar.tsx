@@ -1,17 +1,43 @@
 import { NextPage } from 'next';
+import React from 'react';
 import MenuIcon from '@public/menu.svg';
 import LogoIcon from '@public/logo.svg';
 import ArrowDown from '@public/keyboard_arrow_down.svg';
-import classes from '@components/appbar/appbar.module.scss';
+import classes from '@components/app-bar/app-bar.module.scss';
 import Grid from '@ui/grid/grid';
 import Button from '@ui/button/button';
+import { menuStateVar, MenuStateEnum } from '@store/menu';
+import { gql, useQuery } from '@apollo/client';
 
 export interface AppBarProps {
 	username: string;
-	avatar: string;
+	avatarURL: string;
 }
 
-export const AppBar: NextPage<AppBarProps> = ({ username, avatar }) => {
+export const AppBar: NextPage<AppBarProps> = ({ username, avatarURL }) => {
+	const handleMenuButtonClick = React.useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+		switch(menuStateVar()) {
+			case MenuStateEnum.MOVING_ACTIVE:
+				menuStateVar(MenuStateEnum.MOVING_DEACTIVE);
+				break;
+			case MenuStateEnum.MOVING_DEACTIVE:
+				menuStateVar(MenuStateEnum.MOVING_ACTIVE);
+				break;
+			case MenuStateEnum.MOVING_ON_TOP_ACTIVE:
+				menuStateVar(MenuStateEnum.MOVING_ON_TOP_DEACTIVE);
+				break;
+			case MenuStateEnum.MOVING_ON_TOP_DEACTIVE:
+				menuStateVar(MenuStateEnum.MOVING_ON_TOP_ACTIVE);
+				break;
+			case MenuStateEnum.MOVING_ON_TOP_WITH_SIDE_BAR_ACTIVE:
+				menuStateVar(MenuStateEnum.MOVING_ON_TOP_WITH_SIDE_BAR_DEACTIVE);
+				break;
+			case MenuStateEnum.MOVING_ON_TOP_WITH_SIDE_BAR_DEACTIVE:
+				menuStateVar(MenuStateEnum.MOVING_ON_TOP_WITH_SIDE_BAR_ACTIVE);
+				break;
+		}
+	}, []);
+
 	return (
 		<Grid 
 			direction='row' 
@@ -21,11 +47,11 @@ export const AppBar: NextPage<AppBarProps> = ({ username, avatar }) => {
 			<Grid justify='space-between'>
 				<Grid alignItems='center' justify='flex-start'>
 					<Grid alignItems='center' justify='center' className={classes['menu']}>
-						<Button className={classes['menu__btn']}>
+						<Button className={classes['menu__btn']} onClick={handleMenuButtonClick}>
 							<MenuIcon className={classes['menu__icon']} />
 						</Button>
 					</Grid>
-					<Grid alignItems='center'>
+					<Grid alignItems='center' className={classes['logo']}>
 						<LogoIcon className={classes['logo__icon']}/>
 						<h1 className={classes['logo__title']}>Fliness</h1>
 					</Grid>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import classes from '@ui/dialog/dialog.module.scss';
 import classNames from 'classnames';
@@ -43,45 +43,61 @@ export const Dialog: React.FC<DialogProps> = ({
     onClose = () => {},
     children 
 }: DialogProps) => {
-    const ref = useRef(null);
-    const [open, setOpen] = useState(false);
-    const [mounted, setMounted] = useState(false);
+    const ref = React.useRef<{ el: HTMLDivElement, mounted: boolean }>({ el: null, mounted: false });
+    const [open, setOpen] = React.useState(false);
 
-    useEffect(() => {
-        if (!ref.current) {
-            const element = document.createElement('div');
-            element.classList.add(classes['dialog']);
-            
-            ref.current = element;
-        }
+    const handleWindowResize = React.useCallback(() => {
+        if (!open) return;
+        
+        onClose();
+        setOpen(false);
+    }, []);
 
+    React.useEffect(() => {
+        const el = document.createElement('div');
+        el.classList.add(classes['dialog']);
+        
+        ref.current = {
+            el,
+            mounted: false,
+        };
+
+        window.addEventListener('resize', handleWindowResize);
+
+        return () => {
+            if (ref.current.mounted) document.body.removeChild(ref.current.el);
+            window.removeEventListener('resize', handleWindowResize);
+        };
+    }, []);
+
+    React.useEffect(() => {
         setOpen(shouldOpen);
-
     }, [shouldOpen]);
 
-    useEffect(() => {
-        if (!mounted && open) {
-            document.body.appendChild(ref.current);
-            setMounted(true);
+    React.useEffect(() => {
+        if (!ref.current.mounted && open) {
+            document.body.appendChild(ref.current.el);
+            ref.current.mounted = true;
+            
             onOpen();
         }
-        else if (mounted && !open) {
-            document.body.removeChild(ref.current);
-            setMounted(false);
+        else if (ref.current.mounted && !open) {
+            document.body.removeChild(ref.current.el);
+            ref.current.mounted = false;
         };
     }, [open]);
 
-    const handleBackgroundClick = () => {
+    const handleBackgroundClick = React.useCallback(() => {
         onClose();
         setOpen(false);
-    }
+    }, []);
 
-    return mounted ? ReactDOM.createPortal(
+    return open ? ReactDOM.createPortal(
         <>
             <DialogBackground onClick={handleBackgroundClick}/>
             {children}
         </>,
-        ref.current) : null;
+        ref.current.el) : null;
 }
 
 export default Dialog;

@@ -16,8 +16,8 @@ export class AppDocument extends Document {
 					/>
 				</Head>
 				<body>
-				<Main />
-				<NextScript />
+					<Main />
+					<NextScript />
 				</body>
 			</Html>
 		);

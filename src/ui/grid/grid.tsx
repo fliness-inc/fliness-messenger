@@ -12,7 +12,7 @@ export interface Props {
         'end' | 'flex-start' | 'flex-end' | 
         'space-between' | 'space-around'
     wrap?: 'nowrap' | 'wrap' | 'wrap-reverse'
-    children?: JSX.Element | JSX.Element[] | string
+    children?: JSX.Element | JSX.Element[] | string | (JSX.Element | JSX.Element[] | string)[]
 }
 
 export const Grid: React.FC<Props> = ({

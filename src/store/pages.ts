@@ -1,10 +1,10 @@
 import { makeVar } from '@apollo/client';
 
-export enum Pages {
+export enum PageTypeEnum {
     DIALOGS = 'DIALOGS',
     GROUPS = 'GROUPS',
     CHANNELS = 'CHANNELS',
     SETTINGS = 'SETTINGS'
 }
 
-export const currentPage = makeVar(Pages.DIALOGS);
+export const currentPageVar = makeVar(PageTypeEnum.DIALOGS);

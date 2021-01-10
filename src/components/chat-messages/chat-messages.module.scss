@@ -1,7 +1,8 @@
 .chat-messages {
     flex: 1;
     background-color: #F1F1F1;
-    padding: 32px;
+    padding: 20px;
+    padding-right: calc(20px - 6px); // 6px scroll bar
     height: calc(100% - 84px);
     overflow-y: auto;
 

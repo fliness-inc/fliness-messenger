@@ -6,7 +6,11 @@
 }
 
 .menu {
-    width: 96px;
+    --size: 86px;
+
+    width: var(--size);
+    min-width: var(--size);
+    max-width: var(--size);
 
     &__btn {
         --size: 56px;
@@ -48,11 +52,12 @@
 }
 
 .account {
-    padding: 0 26px;
+    padding: 0 20px;
 
     &__btn {
         display: flex;
         align-items: center;
+        padding: 5px 15px !important;
     }
 
     &__avatar {
@@ -77,5 +82,11 @@
         width: var(--size);
         height: var(--size);
 		fill: #999,
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .logo {
+        display: none;
     }
 }

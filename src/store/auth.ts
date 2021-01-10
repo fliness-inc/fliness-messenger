@@ -1,3 +1,3 @@
 import { makeVar } from '@apollo/client';
 
-export const token = makeVar(null);
+export const tokenVar = makeVar(null);
