@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Dialog, { DialogContent } from '@ui/dialog/dialog';
+import { DialogContent } from '@ui/dialog/dialog';
 import Grid from '@ui/grid/grid';
 import Tabs, { Tab, TabPanel } from '@ui/tabs/tabs';
 import Button from '@ui/button/button';
@@ -9,6 +9,12 @@ import classNames from 'classnames';
 import { useQuery } from '@apollo/client';
 import { GET_FRIENDS, GET_USERS } from '@components/dialogs/create-dialog/create-dialog.graphql';
 import Skeleton from '@ui/skeleton/skeleton';
+import dynamic from 'next/dynamic';
+
+const Dialog = dynamic(
+    () => import('../../../ui/dialog/dialog'),
+    { ssr: false }
+);
 
 export interface ItemType {
     node: {
@@ -88,8 +94,8 @@ export const CreateDialog: React.FC = () => {
     const getUsersQuery = useQuery(GET_USERS);
     const getFreindsQuery = useQuery(GET_FRIENDS);
 
-    if (getUsersQuery.error) alert(getUsersQuery.error);
-    if (getFreindsQuery.error) alert(getFreindsQuery.error);
+    if (getUsersQuery.error) console.log(getUsersQuery.error);
+    if (getFreindsQuery.error) console.log(getFreindsQuery.error);
 
     return (
         <>
@@ -124,7 +130,7 @@ export const CreateDialog: React.FC = () => {
                         className={classes['tab-panel__list']}
                     >
                         {
-                            getUsersQuery.loading ? 
+                            getUsersQuery.loading || getUsersQuery.error ? 
                             <DialogList items={[]} skeleton /> :   
                             <DialogList items={getUsersQuery.data.users.edges} /> 
                         }
@@ -136,7 +142,7 @@ export const CreateDialog: React.FC = () => {
                         className={classes['tab-panel__list']}
                     >
                        {
-                            getFreindsQuery.loading ? 
+                            getFreindsQuery.loading || getFreindsQuery.error ? 
                             <DialogList items={[]} skeleton /> :   
                             <DialogList items={getFreindsQuery.data.me.friends.edges} /> 
                         }

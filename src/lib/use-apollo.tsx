@@ -1,4 +1,13 @@
-import { ApolloClient, InMemoryCache, HttpLink, split, ApolloProvider, gql } from '@apollo/client';
+import { 
+	ApolloClient, 
+	InMemoryCache, 
+	HttpLink, 
+	split, 
+	ApolloProvider,
+	gql, 
+	ApolloQueryResult, 
+	ApolloLink 
+} from '@apollo/client';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { setContext } from '@apollo/client/link/context';
@@ -7,7 +16,9 @@ import { menuStateVar } from '@store/menu';
 import { currentPageVar } from '@store/pages';
 import withApollo from 'next-with-apollo';
 import React from 'react';
-import Cookie from 'js-cookie';
+import Cookie from '@lib/cookie';
+import { NextPageContext } from 'next';
+import JWTLink from './apollo-link-jwt';
 
 const typeDefs = gql`
 	extend type Query {
@@ -21,7 +32,11 @@ const typeDefs = gql`
 	}
 `;
 
-export const createApolloClient = (initialState, ctx) => {
+const getUserAgent = (ctx: NextPageContext) => {
+	return ctx ? ctx?.req?.headers['user-agent'] : window.navigator.userAgent;
+}
+
+export const createApolloClient = (initialState, ctx: NextPageContext) => {
 
 	const wsLink = typeof window !== 'undefined'
 		? new WebSocketLink({
@@ -40,84 +55,48 @@ export const createApolloClient = (initialState, ctx) => {
 		credentials: 'include',
 	});
 
-	const authLink = setContext(async () => {
-		if (!tokenVar()) {
-			if (ctx) {
-				const cookies = ctx.req.headers['cookie']?.split(';');
-				const jwtToken = cookies?.some(cookie => cookie?.split('=')[0] === 'jwt-token');
-
-				if (jwtToken) {
-					const res = await fetch(process.env.NEXT_PUBLIC_API_HTTP_URL, {
-						body: JSON.stringify({
-							operationName: 'RefreshTokens',
-							query: `
-								mutation RefreshTokens {
-									auth {
-										refresh {
-											accessToken,
-											refreshToken
-										}
-									}
-								}`
-						}),
-						headers: {
-							'cookie': ctx.req.headers['cookie'],
-							'content-type': 'application/json',
-							'user-agent':  ctx.req.headers['user-agent']
-						},
-						method: 'POST',
-						credentials: 'include',
-						mode: 'cors'
-					});
-
-					const tokens = await res.json();
-
-					if (tokens.errors) return;
-
-					ctx.res.setHeader('set-cookie', `jwt-token=${tokens.data.auth.refresh.refreshToken}`);
-					tokenVar(tokens.data.auth.refresh.accessToken);
-				}
-			}
-			else {
-				if (Cookie.get('jwt-token')) {
-					const res = await fetch(process.env.NEXT_PUBLIC_API_HTTP_URL, {
-						body: JSON.stringify({
-							operationName: 'RefreshTokens',
-							query: `
-								mutation RefreshTokens {
-									auth {
-										refresh {
-											accessToken,
-											refreshToken
-										}
-									}
-								}`
-						}),
-						headers: {
-							'cookie': `jwt-token=${Cookie.get('jwt-token')}`,
-							'content-Type': 'application/json',
-							'user-agent': window.navigator.userAgent
-						},
-						method: 'POST',
-						credentials: 'include',
-						mode: 'cors'
-					});
-		
-					const tokens = await res.json();
-		
-					if (tokens.errors) return;
-
-					Cookie.set('jwt-token', tokens.data.auth.refresh.refreshToken);
-					tokenVar(tokens.data.auth.refresh.accessToken);
-				}
-			}
-		}
-
-		return {
+	const contextLink = setContext(async () => ({
 			headers: {
-				authorization: tokenVar() ? `Bearer ${tokenVar()}` : '',
+				Authorization: tokenVar() ? `Bearer ${tokenVar()}` : '',
 			}
-		}
+		})
+	);
+
+	const authLink = new JWTLink({
+		fetchRequest: () => ({
+			url: process.env.NEXT_PUBLIC_API_HTTP_URL,
+			params: {
+				body: JSON.stringify({
+					query: `
+						mutation {
+							auth {
+								refresh {
+									accessToken,
+									refreshToken
+								}
+							}
+						}`
+				}),
+				headers: {
+					'cookie': Cookie.getString(ctx),
+					'content-type': 'application/json',
+					'user-agent':  getUserAgent(ctx),
+				},
+				method: 'POST',
+				credentials: 'include',
+				mode: 'cors',
+			}
+		}),
+		fetchResponse: ({ data, errors }: ApolloQueryResult<any>) => {
+			if (errors) {
+				console.error(errors);
+				return;
+			}
+
+			tokenVar(data.auth.refresh.accessToken);
+			Cookie.set(ctx, 'jwt-token', data.auth.refresh.refreshToken);
+		},
+		fetchError: (e: Error) => console.error(e)
 	});
 
 	const link =
@@ -131,9 +110,9 @@ export const createApolloClient = (initialState, ctx) => {
 				  	);
 			  	},
 			  	wsLink,
-		  		authLink.concat(httpLink),
+		  		ApolloLink.from([authLink, contextLink, httpLink]),
 		  )
-		  : authLink.concat(httpLink);
+		  : ApolloLink.from([authLink, contextLink, httpLink]);
 
 	return new ApolloClient({
 		link,
@@ -141,6 +120,11 @@ export const createApolloClient = (initialState, ctx) => {
 			typePolicies: {
 				Query: {
 					fields: {
+						me: {
+							merge(existing = [], incoming: any) {
+								return { ...existing, ...incoming };
+							}
+						},
 						localState: {
 							read() {
 								return { 

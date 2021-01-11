@@ -10,7 +10,7 @@ import ChatBar from '@components/chat-bar/chat-bar';
 import ChatMessages from '@components/chat-messages/chat-messages';
 import classes from '@pages/dialogs/index.module.scss';
 import ChatInput from '@components/chat-input/chat-input';
-import SideBar from '@/src/components/side-bar/vertical/side-bar';
+import SideBar from '@components/side-bar/vertical/side-bar';
 import DefaultLayout from '@components/layouts/default/defualt';
 
 export interface Props {
@@ -46,13 +46,10 @@ export const DialogsPage: NextPage<Props> = ({ errorCode, data }: Props) => {
 	);
 };
 
-DialogsPage.getInitialProps = async ({ apolloClient, req }: any = {}) => {
-	try {
-		return await apolloClient.query({ query: GET_USER });
-	}
-	catch(e) {
-		return { errorCode: e.graphQLErrors[0].extensions.statusCode || null };
-	}
+DialogsPage.getInitialProps = async ({ apolloClient, req, context }: any = {}) => {
+	return apolloClient.query({ query: GET_USER })
+		.then(({ data }) => ({ data }))
+		.catch(e => ({ errorCode: e.graphQLErrors[0].extensions.statusCode || null }));
 }
 
 export default useApollo(DialogsPage);

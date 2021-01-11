@@ -5,7 +5,7 @@ import Search from '@components/search/search';
 import CreateDialog from '@components/dialogs/create-dialog/create-dialog';
 import classes from '@components/list-bar/list-bar.module.scss';
 import classNames from 'classnames';
-import { menuStateVar, MenuStateEnum } from '@store/menu';
+import { MenuStateEnum } from '@store/menu';
 import { gql, useQuery } from '@apollo/client';
 import SideBar from '@components/side-bar/side-bar';
 
@@ -144,7 +144,7 @@ export const ListBar: React.FC<Props> = ({ title }) => {
                     direction='row'
                     className={classes['list-bar__btns']}
                 >
-                    {/* <CreateDialog /> */}
+                    <CreateDialog />
                 </Grid>
             </Grid>
             <List items={items} className={classes['list']}>

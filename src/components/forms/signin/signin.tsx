@@ -8,19 +8,18 @@ import LogoIcon from '@public/logo.svg';
 import Button from '@material-ui/core/Button';
 import EmailIcon from '@public/email.svg';
 import UnlockIcon from '@public/unlock.svg';
-import { token } from '@store/auth';
+import { tokenVar } from '@store/auth';
 import { SIGN_IN } from '@components/forms/signin/signin.graphql';
 import Padlock from '@public/padlock.svg';
 import Link from "next/link";
 
 export const SinInForm: React.FC = () => {
-
-	const emailField = useRef(null);
-	const passwordField = useRef(null);
+	const emailField = useRef<HTMLInputElement | null>(null);
+	const passwordField = useRef<HTMLInputElement | null>(null);
 
 	const [signIn] = useMutation(SIGN_IN);
-	const [lock, setLock] = useState(false);
-	const [error, setError] = useState(null);
+	const [lock, setLock] = useState<boolean>(false);
+	const [error, setError] = useState<string | null>(null);
 	const router = useRouter();
 
 	async function handleButtonClick() {
@@ -29,26 +28,24 @@ export const SinInForm: React.FC = () => {
 
 		setLock(true);
 
-		try {
-			const res = await signIn({
-				variables: {
-					payload: {
-						email,
-					   	password,
-					}
-			   	}
-		   	});
-
-			token(res.data.auth.login.accessToken);
+		signIn({
+			variables: {
+				payload: {
+					email,
+					password,
+				}
+			}
+		})
+		.then(({ data }) => {
+			tokenVar(data.auth.login.accessToken);
 			setError(null);
 			router.push('/dialogs');
-		}
-		catch(e) {
-			if (e.message === `The user was not found with the email: ${email}`) setError('Invalid email or password');
-		}
-		finally {
-			setLock(false);
-		}
+		})
+		.catch(e => {
+			if (e.message === `The user was not found with the email: ${email}`) 
+				setError('Invalid email or password');
+		})
+		.finally(() => setLock(false));
 	}
 
 	return (

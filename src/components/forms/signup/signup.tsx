@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 import EmailIcon from '@public/email.svg';
 import UserIcon from '@public/user.svg';
 import UnlockIcon from '@public/unlock.svg';
-import { token } from '@store/auth';
+import { tokenVar } from '@store/auth';
 import { SIGN_UP } from '@components/forms/signup/signup.graphql';
 import Padlock from '@public/padlock.svg';
 import Link from "next/link";
@@ -40,27 +40,25 @@ export const SignUpForm: React.FC = () => {
 			return;
 		}
 
-		try {
-			const res = await signUp({
-				variables: {
-					payload: {
-					   	name,
-						email,
-					   	password
-					}
-			   	}
-			});
-
-			token(res.data.auth.register.accessToken);
+		signUp({
+			variables: {
+				payload: {
+					   name,
+					email,
+					   password
+				}
+			}
+		})
+		.then(({ data }) => {
+			tokenVar(data.auth.register.accessToken);
 			setError(null);
 			router.push('/dialogs');
-		}
-		catch(e) {
-			if (e.message === `The user was not found with the email: ${email}`) setError('Invalid email or password');
-		}
-		finally {
-			setLock(false);
-		}
+		})
+		.catch(e => {
+			if (e.message === `The user was not found with the email: ${email}`) 
+				setError('Invalid email or password');
+		})
+		.finally(() => setLock(false));
 	}
 
 	return (
