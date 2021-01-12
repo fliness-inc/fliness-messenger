@@ -27,3 +27,26 @@ export const GET_FRIENDS = gql`
         }
     }
 `;
+
+export const CREATE_DIALOG = gql`
+    mutation($payload: ChatCreateDTO!) {
+        me {
+            chats {
+                create(payload: $payload) {
+                    id
+                    members {
+                        edges {
+                            node {
+                                user {
+                                    id
+                                    name
+                                    avatar
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+`;

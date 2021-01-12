@@ -4,8 +4,8 @@ import classes from '@ui/skeleton/skeleton.module.scss';
 
 export interface Props {
     className?: string
-    width: number
-    height: number
+    width: string
+    height: string
     radius?: string
 }
 
