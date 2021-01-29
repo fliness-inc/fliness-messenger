@@ -6,21 +6,24 @@ export interface Props {
     className?: string
     children?: JSX.Element | JSX.Element[] | string
     onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
-    variant?: 'contained' | 'outlined'
+    variant?: 'contained' | 'outlined',
+    disabled?: boolean
 }
 
 export const Button: React.FC<Props> = ({
     className = '',
     children,
     variant,
-    onClick = (event: React.MouseEvent<HTMLButtonElement>) => {}
+    onClick = (event: React.MouseEvent<HTMLButtonElement>) => {},
+    disabled = false
 }: Props) => {
     return (
         <button
             className={classNames(
                 classes['btn'],
-                variant === 'contained' ? classes['btn_contained'] : '',
-                variant === 'outlined' ? classes['btn_outlined'] : '',
+                { [classes['btn_contained']]: variant === 'contained' },
+                { [classes['btn_outlined']]: variant === 'outlined' },
+                { [classes['btn_disabled']]: disabled },
                 className
             )}
             onClick={onClick}

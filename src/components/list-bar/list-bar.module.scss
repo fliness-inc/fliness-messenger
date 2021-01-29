@@ -5,8 +5,8 @@
     flex-shrink: 0;
     flex-grow: 0;
 
-    background-color: #fff;
-    border-right: 1px solid #e1e1e1;
+    background-color: var(--color-list-bar-bg);
+    border-right: 1px solid var(--color-list-bar-border);
     
 	z-index: 1;
 
@@ -57,7 +57,7 @@
 
     &::-webkit-scrollbar-thumb {
         border-radius: 10px;
-        background-color: #d1d1d1;
+        background-color: var(--color-list-bar-scroll-bg);
     }
 }
 
@@ -73,58 +73,58 @@
     transition: background-color .1s ease-out;
 
     &:not(.list-item_active):hover {
-        background-color: #3674FF;
+        background-color: var(--color-list-bar-item-hover-bg);
 
         .list-item__title {
-            color: #fff;
+            color: var(--color-list-bar-item-title-hover-color);
         }
 
         .list-item__desc {
-            color: #f1f1f1;
+            color: var(--color-list-bar-item-desc-hover-color);
         }
 
         .list-item__status {
-            background-color: #3674FF;
+            background-color: var(--color-list-bar-item-status-hover-bg);
         }
 
         .list-item__time {
-            color: #f1f1f1;
+            color: var(--color-list-bar-item-time-hover-color);
         }
 
         .list-item__nums {
-            background-color: #fff;
+            background-color: var(--color-list-bar-item-nums-hover-bg);
         }
 
         .list-item__nums > span {
-            color: #3674FF;
+            color: var(--color-list-bar-item-nums-hover-color);
         }
     }
 
     &_active {
-        background-color: #3674FF;
+        background-color: var(--color-list-bar-item-active-bg);
 
         .list-item__title {
-            color: #fff;
+            color: var(--color-list-bar-item-title-active-color);
         }
 
         .list-item__desc {
-            color: #f1f1f1;
+            color: var(--color-list-bar-item-desc-active-color);
         }
 
         .list-item__status {
-            background-color: #3674FF;
+            background-color: var(--color-list-bar-item-status-active-bg);
         }
 
         .list-item__time {
-            color: #f1f1f1;
+            color: var(--color-list-bar-item-time-active-color);
         }
 
         .list-item__nums {
-            background-color: #fff;
+            background-color: var(--color-list-bar-item-nums-active-bg);
         }
 
         .list-item__nums > span {
-            color: #3674FF;
+            color: var(--color-list-bar-item-nums-active-color);
         }
     }
 
@@ -149,7 +149,7 @@
         bottom: 0;
         width: var(--size);
         height: var(--size);
-        background-color: #fff;
+        background-color: var(--color-list-bar-item-status-bg);
         border-radius: 50%;
     }
 
@@ -171,13 +171,13 @@
     &__title {
         display: flex;
         font-size: 22px;
-        color: #000;
+        color: var(--color-list-bar-item-title-color);
         font-weight: 600;
     }
 
     &__desc {
         font-size: 14px;
-        color: #c1c1c1;
+        color: var(--color-list-bar-item-desc-color);
         font-weight: 500;
         letter-spacing: .03rem;
     }
@@ -191,7 +191,7 @@
 
     &__time {
         font-size: 18px;
-        color: #999;
+        color: var(--color-list-bar-item-time-color);
         font-weight: 500;
         text-align: end;
     }
@@ -204,14 +204,14 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: #3674FF;
+        background-color: var(--color-list-bar-item-nums-bg);
         border-radius: 50%;
         align-self: flex-end;
         margin-top: 2px; /* dont touch, it's a magic! (~0-0)~ */
     }
 
     &__nums > span {
-        color: #fff;
+        color: var(--color-list-bar-item-nums-color);
         font-size: 14px;
         font-weight: 500;
     }
@@ -220,7 +220,7 @@
         --size: 12px;
         width: var(--size);
         height: var(--size);
-        background-color: #00C980;
+        background-color: var(--color-list-bar-item-online-status-bg);
         border-radius: 50%;
     }
 }

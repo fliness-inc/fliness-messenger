@@ -17,12 +17,12 @@
         width: var(--size);
         height: var(--size);
         
-        fill: #555;
+        fill: var(--color-edit-btn-icon);
     }
 }
 
 .popup {
-    background-color: #fff;
+    background-color: var(--color-edit-btn-popup-bg);
     box-shadow: 0px 0px 4px rgba(69, 69, 69, 0.25);
     border-radius: 4px;
     padding: 5px;
@@ -33,14 +33,14 @@
         cursor: pointer;
     
         &:hover {
-            background-color: #3674FF;
+            background-color: var(--color-edit-btn-popup-item-hover-bg);
     
             & .popup-item__icon {
-                fill: #fff;
+                fill: var(--color-edit-btn-popup-item-icon-hover);
             }
         
             & .popup-item__title {
-                color: #fff;   
+                color: var(--color-edit-btn-popup-item-title-hover);
             }
         }
     
@@ -50,7 +50,7 @@
             width: var(--size);
             height: var(--size);
     
-            fill: #C1C1C1;
+            fill: var(--color-edit-btn-popup-item-icon);
     
             &-delete {
                 & > path {
@@ -61,7 +61,7 @@
     
         &__title {
             font-size: 16px;
-            color: #1C1C1C;
+            color: var(--color-edit-btn-popup-item-title);
             margin: 0 30px;
         }
     }

@@ -49,7 +49,10 @@ export const DialogsPage: NextPage<Props> = ({ errorCode, data }: Props) => {
 DialogsPage.getInitialProps = async ({ apolloClient, req, context }: any = {}) => {
 	return apolloClient.query({ query: GET_USER })
 		.then(({ data }) => ({ data }))
-		.catch(e => ({ errorCode: e.graphQLErrors[0].extensions.statusCode || null }));
+		.catch(e => ({ errorCode: e.graphQLErrors ?
+			e.graphQLErrors[0].extensions.statusCode || null : // graphql error
+			e // system error
+		}));
 }
 
 export default useApollo(DialogsPage);

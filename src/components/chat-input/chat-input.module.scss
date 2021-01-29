@@ -1,6 +1,6 @@
 .chat-input {
     padding: 5px 20px;
-    border-top: 1px solid #e1e1e1;
+    border-top: 1px solid var(--color-chat-input-border);
 
     &__btn {
         --size: 48px;
@@ -27,13 +27,13 @@
 
     &__input {
         border: 0;
-        color: #AAAAAA;
+        color: var(--color-chat-input-field);
         font-weight: 500;
         font-size: 17px;
         margin: 0 15px;
 
         &::placeholder {
-            color: #AAAAAA;
+            color:var(--color-chat-input-field);
         }
     }
 }
@@ -45,6 +45,6 @@
         width: var(--size);
         height: var(--size);
 
-        fill: #999;
+        fill:var(--color-chat-input-btn-color);
     }
 }

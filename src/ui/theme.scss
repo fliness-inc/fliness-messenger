@@ -1,0 +1,134 @@
+/* app-bar */
+
+:root, body[data-color-mode=light] {
+    --color-app-bar-bg: var(--color-white);
+    --color-app-bar-menu-icon: var(--color-gray-300);
+    --color-app-bar-acoount-text: var(--color-gray-300);
+}
+
+/* chat-bar */
+
+:root, body[data-color-mode=light] {
+    --color-chat-bar-border: var(--color-gray-100);
+    --color-chat-bar-title: var(--color-black);
+    --color-chat-bar-status: var(--color-gray-200);
+    --color-chat-bar-status-icon: var(--color-green-200);
+    --color-chat-bar-btn-color: var(--color-gray-600);
+}
+
+/* chat-input */
+
+:root, body[data-color-mode=light] {
+    --color-chat-input-border: var(--color-gray-100);
+    --color-chat-input-field: var(--color-gray-300);
+    --color-chat-input-btn-color: var(--color-gray-300);
+}
+
+/* chat-messages */
+
+:root, body[data-color-mode=light] {
+    --color-chat-messages-bg: var(--color-gray-50);
+    --color-chat-messages-scroll-bg: var(--color-gray-200);
+    --color-chat-messages-avatar-name: var(--color-black);
+    --color-chat-messages-message-text-bg: var(--color-white);
+    --color-chat-messages-message-text-border: var(--color-gray-100);
+    --color-chat-messages-message-text-color: var(--color-black);
+    --color-chat-messages-loading-done: var(--color-blue-400);
+    --color-chat-messages-loading-process: var(--color-blue-400);
+    --color-chat-messages-primary-text-bg: var(--color-blue-400);
+    --color-chat-messages-primary-text-color: var(--color-white);
+    --color-chat-messages-time-color: var(--color-gray-300);
+    
+    --color-edit-btn-icon: var(--color-gray-600);
+    --color-edit-btn-popup-bg: var(--color-white);
+    --color-edit-btn-popup-item-hover-bg: var(--color-blue-400);
+    --color-edit-btn-popup-item-icon: var(--color-gray-200);
+    --color-edit-btn-popup-item-title: var(--color-gray-900);
+    --color-edit-btn-popup-item-icon-hover: var(--color-white);
+    --color-edit-btn-popup-item-title-hover: var(--color-white);
+}
+
+/* side-bar */
+
+:root, body[data-color-mode=light] {
+    --color-side-bar-bg: var(--color-white);
+    --color-side-bar-menu-item-fill: var(--color-gray-200);
+
+    --color-side-bar-menu-item-active: var(--color-blue-400);
+    --color-side-bar-menu-item-active-border: var(--color-blue-400);
+
+    --color-side-bar-menu-item-hover-bg: var(--color-blue-10);
+    --color-side-bar-menu-item-hover-fill: var(--color-blue-400);
+}
+
+/* list-bar */
+
+:root, body[data-color-mode=light] {
+    --color-list-bar-bg: var(--color-white);
+    --color-list-bar-border: var(--color-gray-100);
+    --color-list-bar-scroll-bg: var(--color-gray-200);
+
+    --color-list-bar-item-hover-bg: var(--color-blue-400);
+
+    --color-list-bar-item-status-bg: var(--color-white);
+    --color-list-bar-item-title-color: var(--color-black);
+    --color-list-bar-item-desc-color: var(--color-gray-200);
+    --color-list-bar-item-time-color: var(--color-gray-300);
+    --color-list-bar-item-nums-bg: var(--color-blue-400);
+    --color-list-bar-item-nums-color: var(--color-white);
+    --color-list-bar-item-online-status-bg: var(--color-green-200);
+
+    --color-list-bar-item-title-hover-color: var(--color-white);
+    --color-list-bar-item-desc-hover-color: var(--color-gray-50);
+    --color-list-bar-item-status-hover-bg: var(--color-blue-400);
+    --color-list-bar-item-time-hover-color: var(--color-gray-50);
+    --color-list-bar-item-nums-hover-bg: var(--color-white);
+    --color-list-bar-item-nums-hover-color: var(--color-blue-400);
+    
+    --color-list-bar-item-active-bg: var(--color-blue-400);
+
+    --color-list-bar-item-title-active-color: var(--color-white);
+    --color-list-bar-item-desc-active-color: var(--color-gray-50);
+    --color-list-bar-item-status-active-bg: var(--color-blue-400);
+    --color-list-bar-item-time-active-color: var(--color-gray-50);
+    --color-list-bar-item-nums-active-bg: var(--color-white);
+    --color-list-bar-item-nums-active-color: var(--color-blue-400);
+}
+
+/* tabs */
+
+:root, body[data-color-mode=light] {
+    --color-tabs-border: var(--color-blue-400);
+    --color-tab-selected-color: var(--color-white);
+    --color-tab-selected-bg: var(--color-blue-400);
+}
+
+/* progress */
+
+:root, body[data-color-mode=light] {
+    --color-progress-circle: var(--color-blue-400);
+}
+
+/* dialog */
+
+:root, body[data-color-mode=light] {
+    --color-dialog-bg-color: var(--color-black);
+    --color-dialog-content-color: var(--color-white);
+    --color-dialog-content-scroll: var(--color-gray-100);
+}
+
+/* btn */
+
+:root, body[data-color-mode=light] {
+    --color-btn-hover-bg-color: var(--color-gray-100);
+    --color-btn-active-bg-color: var(--color-gray-150);
+
+    --color-btn-contained-color: var(--color-white);
+    --color-btn-contained-bg-color: var(--color-blue-400);
+    --color-btn-contained-hover-bg-color: var(--color-gray-450);
+    --color-btn-contained-active-bg-color: var(--color-gray-350);
+
+    --color-btn-outlined-border: var(--color-blue-400);
+}
+
+/**/

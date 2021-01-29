@@ -8,27 +8,27 @@
     font-size: 14px;
 
     &:hover {
-        background-color: #eee;
+        background-color: var(--color-btn-hover-bg-color);
     }
 
     &:active {
-        background-color: #ddd;
+        background-color: var(--color-btn-active-bg-color);
     }
 
     &_contained {
-        background-color: #3674FF;
-        color: #fff;
+        background-color: var(--color-btn-contained-bg-color);
+        color: var(--color-btn-contained-color);
 
         &:hover {
-            background-color: #0D59FF;
+            background-color: var(--color-btn-contained-hover-bg-color);
         }
     
         &:active {
-            background-color: #6394fd;
+            background-color: var(--color-btn-contained-active-bg-color);
         }
     }
 
     &_outlined {
-        border: 1px solid #3674FF;
+        border: 1px solid var(--color-btn-outlined-border);
     } 
 }

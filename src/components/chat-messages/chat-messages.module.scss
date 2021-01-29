@@ -1,6 +1,6 @@
 .chat-messages {
     flex: 1;
-    background-color: #F1F1F1;
+    background-color: var(--color-chat-messages-bg);
     padding: 20px;
     padding-right: calc(20px - 6px); // 6px scroll bar
     height: calc(100% - 84px);
@@ -12,7 +12,7 @@
 
     &::-webkit-scrollbar-thumb {
         border-radius: 10px;
-        background-color: #d1d1d1;
+        background-color: var(--color-chat-messages-scroll-bg);
     }
 }
 
@@ -29,7 +29,7 @@
     &__name {
         font-size: 16px;
         font-weight: 500;
-        color: #000000;
+        color: var(--color-chat-messages-avatar-name);
         margin: 0 10px;
     }
 }
@@ -45,14 +45,14 @@
         max-width: 45%;
         min-width: 300px;
         width: auto;
-        background-color: #fff;
+        background-color: var(--color-chat-messages-message-text-bg);
         padding: 12px 24px;
         border-radius: 4px;
-        border: 1px solid #D1D1D1;
+        border: 1px solid var(--color-chat-messages-message-text-border);
         margin: 10px 0;
         
         & > p {
-            color: #000000;
+            color: var(--color-chat-messages-message-text-color);
             font-size: 16px;
         }
     }
@@ -69,7 +69,7 @@
             width: var(--size);
             height: var(--size);
     
-            fill: #3674FF;
+            fill: var(--color-chat-messages-loading-done);
     
             margin: 0 4px;
             margin-top: 2px;
@@ -85,22 +85,22 @@
             width: var(--size);
             height: var(--size);
     
-            fill: #3674FF;
+            fill: var(--color-chat-messages-loading-process);
     
             margin: 0 4px;
         }
     }
 
     &__primary-text {
-        background-color: #3674FF;
+        background-color: var(--color-chat-messages-primary-text-bg);
 
         & > p {
-            color: #fff;
+            color: var(--color-chat-messages-primary-text-color);
         }
     }
 
     &__time {
         font-size: 14px;
-        color: #AAAAAA;
+        color: var(--color-chat-messages-time-color);
     }
 }

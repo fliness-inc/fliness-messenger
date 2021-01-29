@@ -32,7 +32,7 @@ export const DialogBackground: React.FC<DialogBackgroundProps> =
 
 export interface DialogProps {
     open: boolean,
-    lock: boolean,
+    lock?: boolean,
     onOpen?: () => void,
     onClose?: () => void,
     children?: JSX.Element | JSX.Element[]
@@ -40,7 +40,7 @@ export interface DialogProps {
 
 export const Dialog: React.FC<DialogProps> = ({ 
     open: shouldOpen, 
-    lock: shouldBeLocked, 
+    lock: shouldBeLocked = false, 
     onOpen = () => {},
     onClose = () => {},
     children 

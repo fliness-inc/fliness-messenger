@@ -7,6 +7,7 @@ export const GET_USERS = gql`
                 node {
                     id
                     name
+                    avatarURL
                 }
             }
         }
@@ -21,6 +22,7 @@ export const GET_FRIENDS = gql`
                     node {
                         id
                         name
+                        avatarURL
                     }
                 }
             }
@@ -40,7 +42,7 @@ export const CREATE_DIALOG = gql`
                                 user {
                                     id
                                     name
-                                    avatar
+                                    avatarURL
                                 }
                             }
                         }

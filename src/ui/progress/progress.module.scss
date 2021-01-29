@@ -6,7 +6,7 @@
             display: block;
 
             & > circle {
-                stroke: #3674FF;
+                stroke: var(--color-progress-circle);
             }
         }
 

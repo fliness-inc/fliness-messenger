@@ -4,7 +4,7 @@ export const GET_USER = gql`
     query {
         me {
             name
-            avatar
+            avatarURL
         }
     }
 `;

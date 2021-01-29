@@ -62,7 +62,7 @@ export const DefaultLayout: React.FC<Props> = ({
                 {children}
 			</Grid>
 
-            <Dialog 
+			<Dialog 
 				open={menuState === MenuStateEnum.MOVING_ON_TOP_ACTIVE} 
 				onClose={() => menuStateVar(MenuStateEnum.MOVING_ON_TOP_DEACTIVE)}
 			>
