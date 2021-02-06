@@ -1,8 +1,16 @@
 import { gql } from '@apollo/client';
 
-export const GET_USERS = gql`
+export const GET_ME = gql`
   query {
-    users {
+    me {
+      id
+    }
+  }
+`;
+
+export const GET_USERS = gql`
+  query($filter: UsersFilter!) {
+    users(filter: $filter) {
       edges {
         node {
           id
@@ -15,10 +23,10 @@ export const GET_USERS = gql`
 `;
 
 export const GET_FRIENDS = gql`
-  query {
+  query($filter: FriendsFilter!) {
     me {
       id
-      friends {
+      friends(filter: $filter) {
         edges {
           node {
             id

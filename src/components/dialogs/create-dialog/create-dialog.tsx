@@ -4,8 +4,9 @@ import Grid from '@ui/grid/grid';
 import Tabs, { Tab, TabPanel } from '@ui/tabs/tabs';
 import Button from '@ui/button/button';
 import classes from '@components/dialogs/create-dialog/create-dialog.module.scss';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation, useQuery, useLazyQuery } from '@apollo/client';
 import {
+  GET_ME,
   GET_FRIENDS,
   GET_USERS,
   CREATE_DIALOG,
@@ -24,11 +25,40 @@ export const CreateDialog: React.FC = () => {
   const handleClose = () => setOpen(false);
 
   const [createDialog] = useMutation(CREATE_DIALOG);
-  const getUsersQuery = useQuery(GET_USERS);
-  const getFreindsQuery = useQuery(GET_FRIENDS);
+  const meQuery = useQuery(GET_ME);
+  const [getUsersQuery, usersQuery] = useLazyQuery(GET_USERS);
+  const [getFriendsQuery, friendsQuery] = useLazyQuery(GET_FRIENDS);
 
-  if (getUsersQuery.error) console.error(getUsersQuery.error);
-  if (getFreindsQuery.error) console.error(getFreindsQuery.error);
+  React.useEffect(() => {
+    if (meQuery.error || meQuery.loading) return;
+
+    getUsersQuery({
+      variables: {
+        filter: {
+          field: {
+            name: 'ID',
+            op: 'NOT_EQUAL',
+            val: meQuery.data.me.id,
+          },
+        },
+      },
+    });
+
+    getFriendsQuery({
+      variables: {
+        filter: {
+          field: {
+            name: 'ID',
+            op: 'NOT_EQUAL',
+            val: meQuery.data.me.id,
+          },
+        },
+      },
+    });
+  }, [meQuery]);
+
+  if (usersQuery.error) console.error(usersQuery.error);
+  if (friendsQuery.error) console.error(friendsQuery.error);
 
   const handleActiveItemChanged = (index: string) => setActiveItemIndex(index);
   const handleCreateButtonClike = () => {
@@ -106,10 +136,10 @@ export const CreateDialog: React.FC = () => {
               className={classes['tab-panel__list']}
             >
               <DialogListWrapper
-                loading={getUsersQuery.loading}
-                error={getUsersQuery.error !== undefined}
+                loading={usersQuery.loading}
+                error={usersQuery.error !== undefined}
                 items={() =>
-                  getUsersQuery.data.users.edges.map(({ node }) => ({
+                  usersQuery.data.users.edges.map(({ node }) => ({
                     node: {
                       ...node,
                       active: node.id === activeItemIndex,
@@ -126,10 +156,10 @@ export const CreateDialog: React.FC = () => {
               className={classes['tab-panel__list']}
             >
               <DialogListWrapper
-                loading={getFreindsQuery.loading}
-                error={getFreindsQuery.error !== undefined}
+                loading={friendsQuery.loading}
+                error={friendsQuery.error !== undefined}
                 items={() =>
-                  getFreindsQuery.data.me.friends.edges.map(({ node }) => ({
+                  friendsQuery.data.me.friends.edges.map(({ node }) => ({
                     node: {
                       ...node,
                       active: node.id === activeItemIndex,
@@ -152,7 +182,16 @@ export const CreateDialog: React.FC = () => {
                 className={classes['btn-create']}
                 onClick={handleCreateButtonClike}
                 variant="contained"
-                disabled
+                disabled={
+                  (tabIndex === 1 &&
+                    (usersQuery.loading ||
+                      usersQuery.error === null ||
+                      !usersQuery.data?.users.edges.length)) ||
+                  (tabIndex === 2 &&
+                    (friendsQuery.loading ||
+                      friendsQuery.error === null ||
+                      !friendsQuery.data?.me.friends.edges.length))
+                }
               >
                 Create
               </Button>

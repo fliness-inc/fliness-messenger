@@ -23,10 +23,10 @@ export const Button: React.FC<Props> = ({
         classes['btn'],
         { [classes['btn_contained']]: variant === 'contained' },
         { [classes['btn_outlined']]: variant === 'outlined' },
-        { [classes['btn_disabled']]: disabled },
         className
       )}
       onClick={onClick}
+      disabled={disabled}
     >
       {children}
     </button>

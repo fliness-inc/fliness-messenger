@@ -163,13 +163,19 @@ body[data-color-mode='light'] {
 body[data-color-mode='light'] {
   --color-btn-hover-bg-color: var(--color-gray-100);
   --color-btn-active-bg-color: var(--color-gray-150);
+  --color-btn-disabled-bg-color: var(--color-gray-200);
 
   --color-btn-contained-color: var(--color-white);
   --color-btn-contained-bg-color: var(--color-blue-400);
-  --color-btn-contained-hover-bg-color: var(--color-gray-450);
-  --color-btn-contained-active-bg-color: var(--color-gray-350);
+  --color-btn-contained-hover-bg-color: var(--color-blue-100);
+  --color-btn-contained-active-bg-color: var(--color-blue-500);
+  --color-btn-contained-disabled-bg-color: var(--color-gray-200);
 
-  --color-btn-outlined-border: var(--color-blue-400);
+  --color-btn-outlined-border: var(--color-gray-200);
+  --color-btn-outlined-hover-bg-color: var(--color-gray-100);
+  --color-btn-outlined-disabled-border: transparent;
+  --color-btn-outlined-disabled-color: var(--color-gray-200);
+  --color-btn-outlined-disabled-bg-color: transparent;
 }
 
 /**/
