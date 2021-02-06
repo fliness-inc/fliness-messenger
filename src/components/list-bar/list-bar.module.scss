@@ -1,246 +1,261 @@
 .list-bar {
+  position: relative;
+
+  width: 440px;
+  height: calc(100vh - 70px);
+
+  flex-shrink: 0;
+  flex-grow: 0;
+
+  background-color: var(--color-list-bar-bg);
+  border-right: 1px solid var(--color-list-bar-border);
+
+  z-index: 1;
+
+  &_show {
+    display: flex;
+    /* animation: show_list_animation 1s cubic-bezier(0.4, 0, 0.2, 1) forwards; */
+  }
+
+  &_hidden {
+    display: none;
+    /* animation: hide_list_animation 1s cubic-bezier(0.4, 0, 0.2, 1) forwards; */
+  }
+
+  &__title {
+    font-size: 28px;
+    padding: 10px 24px;
+  }
+
+  &__header {
     width: 440px;
-    height: calc(100vh - 70px);
 
     flex-shrink: 0;
-    flex-grow: 0;
 
-    background-color: var(--color-list-bar-bg);
-    border-right: 1px solid var(--color-list-bar-border);
-    
-	z-index: 1;
+    padding: 0 16px;
+    padding-top: 16px;
+  }
 
-    &_show {
-        display: flex;
-        /* animation: show_list_animation 1s cubic-bezier(0.4, 0, 0.2, 1) forwards; */
-    } 
-
-    &_hidden {
-        display: none;
-        /* animation: hide_list_animation 1s cubic-bezier(0.4, 0, 0.2, 1) forwards; */
-    }    
-
-    &__title {
-        font-size: 28px;
-        padding: 10px 24px;
-    }
-
-    &__header {
-        width: 440px;
-
-        flex-shrink: 0;
-
-        padding: 0 16px;
-        padding-top: 16px;
-    }
-
-    &__btns {
-        padding: 0 24px;
-        padding-bottom: 10px;
-    }
+  &__btns {
+    padding: 0 24px;
+    padding-bottom: 10px;
+  }
 }
 
 .list {
-    width: 440px;
+  width: 440px;
 
-    flex-shrink: 1;
-    flex-grow: 0;
+  flex-shrink: 1;
+  flex-grow: 0;
 
-    padding: 0 10px;
-    padding-left: 16px;
+  padding: 0 10px;
+  padding-left: 16px;
 
-    overflow-y: auto;
+  overflow-y: auto;
 
-    &::-webkit-scrollbar {
-        width: 6px;
-    }
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
 
-    &::-webkit-scrollbar-thumb {
-        border-radius: 10px;
-        background-color: var(--color-list-bar-scroll-bg);
-    }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: var(--color-list-bar-scroll-bg);
+  }
 }
 
 .sorting {
-    width: 100px;
+  width: 100px;
 }
 
 .list-item {
-    padding: 8px 24px;
-    margin: 2px 0; 
-    cursor: pointer;
-    border-radius: 4px;
-    transition: background-color .1s ease-out;
+  padding: 8px 24px;
+  margin: 2px 0;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.1s ease-out;
 
-    &:not(.list-item_active):hover {
-        background-color: var(--color-list-bar-item-hover-bg);
+  &:not(.list-item_active):not(.list-item_skeleton):hover {
+    background-color: var(--color-list-bar-item-hover-bg);
 
-        .list-item__title {
-            color: var(--color-list-bar-item-title-hover-color);
-        }
-
-        .list-item__desc {
-            color: var(--color-list-bar-item-desc-hover-color);
-        }
-
-        .list-item__status {
-            background-color: var(--color-list-bar-item-status-hover-bg);
-        }
-
-        .list-item__time {
-            color: var(--color-list-bar-item-time-hover-color);
-        }
-
-        .list-item__nums {
-            background-color: var(--color-list-bar-item-nums-hover-bg);
-        }
-
-        .list-item__nums > span {
-            color: var(--color-list-bar-item-nums-hover-color);
-        }
+    .list-item__title {
+      color: var(--color-list-bar-item-title-hover-color);
     }
 
-    &_active {
-        background-color: var(--color-list-bar-item-active-bg);
-
-        .list-item__title {
-            color: var(--color-list-bar-item-title-active-color);
-        }
-
-        .list-item__desc {
-            color: var(--color-list-bar-item-desc-active-color);
-        }
-
-        .list-item__status {
-            background-color: var(--color-list-bar-item-status-active-bg);
-        }
-
-        .list-item__time {
-            color: var(--color-list-bar-item-time-active-color);
-        }
-
-        .list-item__nums {
-            background-color: var(--color-list-bar-item-nums-active-bg);
-        }
-
-        .list-item__nums > span {
-            color: var(--color-list-bar-item-nums-active-color);
-        }
+    .list-item__desc {
+      color: var(--color-list-bar-item-desc-hover-color);
     }
 
-    &__avatar {
-        position: relative;
+    .list-item__status {
+      background-color: var(--color-list-bar-item-status-hover-bg);
     }
 
-    &__image {
-        width: 54px;
-        height: 54px;
-        border-radius: 50%;
+    .list-item__time {
+      color: var(--color-list-bar-item-time-hover-color);
     }
 
-    &__status {
-        --size: 18px;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        width: var(--size);
-        height: var(--size);
-        background-color: var(--color-list-bar-item-status-bg);
-        border-radius: 50%;
+    .list-item__nums {
+      background-color: var(--color-list-bar-item-nums-hover-bg);
     }
 
-    &__header {
-        max-width: 70%;
-        overflow: hidden;
+    .list-item__nums > span {
+      color: var(--color-list-bar-item-nums-hover-color);
+    }
+  }
+
+  &_active {
+    background-color: var(--color-list-bar-item-active-bg);
+
+    .list-item__title {
+      color: var(--color-list-bar-item-title-active-color);
     }
 
-    &__text {
-        margin: 0 24px;
+    .list-item__desc {
+      color: var(--color-list-bar-item-desc-active-color);
     }
 
-    &__text, &__info {
-        width: auto;
-        height: 48px;
-        justify-content: space-around;
+    .list-item__status {
+      background-color: var(--color-list-bar-item-status-active-bg);
     }
 
-    &__title {
-        display: flex;
-        font-size: 22px;
-        color: var(--color-list-bar-item-title-color);
-        font-weight: 600;
+    .list-item__time {
+      color: var(--color-list-bar-item-time-active-color);
     }
 
-    &__desc {
-        font-size: 14px;
-        color: var(--color-list-bar-item-desc-color);
-        font-weight: 500;
-        letter-spacing: .03rem;
-    }
-    
-    &__title, &__desc {
-        width: 25%;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
+    .list-item__nums {
+      background-color: var(--color-list-bar-item-nums-active-bg);
     }
 
-    &__time {
-        font-size: 18px;
-        color: var(--color-list-bar-item-time-color);
-        font-weight: 500;
-        text-align: end;
+    .list-item__nums > span {
+      color: var(--color-list-bar-item-nums-active-color);
     }
+  }
 
-    &__nums {
-        --size: 20px;
+  &__avatar {
+    position: relative;
+  }
 
-        width: var(--size);
-        height: var(--size);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: var(--color-list-bar-item-nums-bg);
-        border-radius: 50%;
-        align-self: flex-end;
-        margin-top: 2px; /* dont touch, it's a magic! (~0-0)~ */
-    }
+  &__image {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+  }
 
-    &__nums > span {
-        color: var(--color-list-bar-item-nums-color);
-        font-size: 14px;
-        font-weight: 500;
-    }
+  &__status {
+    --size: 18px;
 
-    &__online-status {
-        --size: 12px;
-        width: var(--size);
-        height: var(--size);
-        background-color: var(--color-list-bar-item-online-status-bg);
-        border-radius: 50%;
-    }
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: var(--size);
+    height: var(--size);
+    background-color: var(--color-list-bar-item-status-bg);
+    border-radius: 50%;
+  }
+
+  &__header {
+    width: 70%;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  &__text,
+  &__info {
+    height: 48px;
+    justify-content: space-around;
+  }
+
+  &__text {
+    overflow: hidden;
+    margin-left: 24px;
+  }
+
+  &__info {
+    display: inline-flex;
+    width: auto;
+  }
+
+  &__title {
+    font-size: 22px;
+    color: var(--color-list-bar-item-title-color);
+    font-weight: 600;
+  }
+
+  &__desc {
+    font-size: 14px;
+    color: var(--color-list-bar-item-desc-color);
+    font-weight: 500;
+    letter-spacing: 0.03rem;
+  }
+
+  &__title,
+  &__desc {
+    width: inherit;
+    display: block;
+
+    overflow: hidden;
+    overflow-wrap: break-word;
+
+    text-align: left;
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+  }
+
+  &__time {
+    font-size: 18px;
+    color: var(--color-list-bar-item-time-color);
+    font-weight: 500;
+    text-align: end;
+  }
+
+  &__nums {
+    --size: 20px;
+
+    width: var(--size);
+    height: var(--size);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-list-bar-item-nums-bg);
+    border-radius: 50%;
+    align-self: flex-end;
+    margin-top: 2px; /* dont touch, it's a magic! (~0-0)~ */
+  }
+
+  &__nums > span {
+    color: var(--color-list-bar-item-nums-color);
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  &__online-status {
+    --size: 12px;
+    width: var(--size);
+    height: var(--size);
+    background-color: var(--color-list-bar-item-online-status-bg);
+    border-radius: 50%;
+  }
 }
 
 @keyframes show_list_animation {
-    0% {
-        width: 0;
-    }
+  0% {
+    width: 0;
+  }
 
-    100% {
-        width: 440px;
-    }
+  100% {
+    width: 440px;
+  }
 }
 
 @keyframes hide_list_animation {
-    0% {
-        width: 440px;
-    }
+  0% {
+    width: 440px;
+  }
 
-    100% {
-        width: 0;
-    }
+  100% {
+    width: 0;
+  }
 }

@@ -2,32 +2,35 @@
 @import '../ui/theme.scss';
 
 * {
-    padding: 0;
-    margin: 0;
-    user-select: none;
-    font-family: 'Roboto';
-    box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  user-select: none;
+  font-family: 'Roboto';
+  box-sizing: border-box;
 }
 
 body {
-    min-width: 530px;
+  min-width: 530px;
 }
 
 p {
-    width: auto;
-    display: inline;
-    margin: 0;
-    padding: 0;
-    font-family: 'Roboto';
-    font-size: 16px;
+  display: block;
+
+  width: auto;
+  display: inline;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto';
+  font-size: 16px;
 }
 
 input {
-    display: flex;
-    flex: 1;
-    font-family: 'Roboto';
+  display: flex;
+  flex: 1;
+  font-family: 'Roboto';
 }
 
-input:focus, button:focus {
-    outline-style: none;
+input:focus,
+button:focus {
+  outline-style: none;
 }

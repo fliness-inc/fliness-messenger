@@ -7,27 +7,27 @@ import classes from './index.module.scss';
 import Info from '@components/info/info';
 
 export const SignIn: NextPage = () => {
-	return (
-		<Grid
-			container
-			direction='column'
-			justify='center' 
-			alignItems='center'
-			className={classes.page}
-		>
-			<WaveIcon className={classes.page__background} />
-			<Grid 
-				container
-				direction='row' 
-				justify='space-between' 
-				alignItems='center'
-				className={classes.container}
-			>
-				<Info />
-				<LoginForm />
-			</Grid>
-		</Grid>
-	);
+  return (
+    <Grid
+      container
+      direction="column"
+      justify="center"
+      alignItems="center"
+      className={classes.page}
+    >
+      <WaveIcon className={classes.page__background} />
+      <Grid
+        container
+        direction="row"
+        justify="space-between"
+        alignItems="center"
+        className={classes.container}
+      >
+        <Info />
+        <LoginForm />
+      </Grid>
+    </Grid>
+  );
 };
 
 export default useApollo(SignIn);

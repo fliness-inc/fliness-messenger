@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint \"{src,tests,}/**/*.ts*\" --fix"
+    "lint": "eslint \"{src,tests,}/**/*.ts*\" --fix",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.tsx\" \"src/**/*.scss\""
   },
   "dependencies": {
     "@apollo/client": "^3.2.3",

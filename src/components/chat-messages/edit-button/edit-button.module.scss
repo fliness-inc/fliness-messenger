@@ -1,68 +1,68 @@
 .btn-edit {
-    --size: 32px;
+  --size: 32px;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: var(--size);
+  height: var(--size);
+
+  border-radius: 50%;
+  padding: 0;
+
+  &__icon {
+    --size: 16px;
 
     width: var(--size);
     height: var(--size);
 
-    border-radius: 50%;
-    padding: 0;
-
-    &__icon {
-        --size: 16px;
-
-        width: var(--size);
-        height: var(--size);
-        
-        fill: var(--color-edit-btn-icon);
-    }
+    fill: var(--color-edit-btn-icon);
+  }
 }
 
 .popup {
-    background-color: var(--color-edit-btn-popup-bg);
-    box-shadow: 0px 0px 4px rgba(69, 69, 69, 0.25);
-    border-radius: 4px;
-    padding: 5px;
+  background-color: var(--color-edit-btn-popup-bg);
+  box-shadow: 0px 0px 4px rgba(69, 69, 69, 0.25);
+  border-radius: 4px;
+  padding: 5px;
 
-    &-item {
-        padding: 10px 30px;
-        border-radius: 4px;
-        cursor: pointer;
-    
-        &:hover {
-            background-color: var(--color-edit-btn-popup-item-hover-bg);
-    
-            & .popup-item__icon {
-                fill: var(--color-edit-btn-popup-item-icon-hover);
-            }
-        
-            & .popup-item__title {
-                color: var(--color-edit-btn-popup-item-title-hover);
-            }
-        }
-    
-        &__icon {
-            --size: 20px;
-    
-            width: var(--size);
-            height: var(--size);
-    
-            fill: var(--color-edit-btn-popup-item-icon);
-    
-            &-delete {
-                & > path {
-                    transform: scale(.0388);
-                }
-            }
-        }
-    
-        &__title {
-            font-size: 16px;
-            color: var(--color-edit-btn-popup-item-title);
-            margin: 0 30px;
-        }
+  &-item {
+    padding: 10px 30px;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--color-edit-btn-popup-item-hover-bg);
+
+      & .popup-item__icon {
+        fill: var(--color-edit-btn-popup-item-icon-hover);
+      }
+
+      & .popup-item__title {
+        color: var(--color-edit-btn-popup-item-title-hover);
+      }
     }
+
+    &__icon {
+      --size: 20px;
+
+      width: var(--size);
+      height: var(--size);
+
+      fill: var(--color-edit-btn-popup-item-icon);
+
+      &-delete {
+        & > path {
+          transform: scale(0.0388);
+        }
+      }
+    }
+
+    &__title {
+      font-size: 16px;
+      color: var(--color-edit-btn-popup-item-title);
+      margin: 0 30px;
+    }
+  }
 }

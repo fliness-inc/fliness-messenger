@@ -1,77 +1,77 @@
 .chat-bar {
-    padding: 0 20px;
-    height: 84px;
-    border-bottom: 1px solid var(--color-chat-bar-border);
+  padding: 0 20px;
+  height: 84px;
+  border-bottom: 1px solid var(--color-chat-bar-border);
 
-    &__avatar {
-        &-icon {
-            --size: 60px;
+  &__avatar {
+    &-icon {
+      --size: 60px;
 
-            width: var(--size);
-            height: var(--size);
+      width: var(--size);
+      height: var(--size);
 
-            display: flex;
-            flex-shrink: 0;
+      display: flex;
+      flex-shrink: 0;
 
-            border-radius: 50%;
-        }
+      border-radius: 50%;
+    }
+  }
+
+  &__text {
+    margin: 0 20px;
+  }
+
+  &__title {
+    font-weight: 600;
+    font-size: 22px;
+    color: var(--color-chat-bar-title);
+  }
+
+  &__status {
+    color: var(--color-chat-bar-status);
+    font-weight: 500;
+    font-size: 15px;
+
+    &-icon {
+      --size: 8px;
+
+      width: var(--size);
+      height: var(--size);
+
+      background-color: var(--color-chat-bar-status-icon);
+      border-radius: 50%;
+      margin: 0 6px;
+    }
+  }
+
+  &__tool-btn {
+    --size: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: var(--size);
+    height: var(--size);
+
+    border-radius: 50% !important;
+    margin: 0 6px;
+
+    padding: 5px 15px !important;
+
+    &-icon {
+      --size: 24px;
+
+      width: var(--size);
+      height: var(--size);
+
+      fill: var(--color-chat-bar-btn-color);
     }
 
-    &__text {
-        margin: 0 20px; 
+    &:last-child {
+      &-icon {
+        transform: rotate(90deg);
+      }
     }
-
-    &__title {
-        font-weight: 600;
-        font-size: 22px;
-        color: var(--color-chat-bar-title);
-    }
-
-    &__status {
-        color: var(--color-chat-bar-status);
-        font-weight: 500;
-        font-size: 15px;
-
-        &-icon {
-            --size: 8px;
-
-            width: var(--size);
-            height: var(--size);
-
-            background-color: var(--color-chat-bar-status-icon);
-            border-radius: 50%;
-            margin: 0 6px;
-        }
-    }
-
-    &__tool-btn {
-        --size: 48px;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        width: var(--size);
-        height: var(--size);
-
-        border-radius: 50% !important;
-        margin: 0 6px; 
-
-        padding: 5px 15px !important;
-
-        &-icon {
-            --size: 24px;
-
-            width: var(--size);
-            height: var(--size);
-
-            fill: var(--color-chat-bar-btn-color);
-        }
-
-        &:last-child {
-            &-icon {
-                transform: rotate(90deg);
-            }
-        }
-    }
+  }
 }

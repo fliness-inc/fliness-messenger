@@ -1,10 +1,11 @@
 import { gql } from '@apollo/client';
 
-export const GET_AUTH_USER = gql`
-  query MeQuery {
+export const GET_USER = gql`
+  query {
     me {
+      id
       name
-      avatar
+      avatarURL
     }
   }
 `;

@@ -4,26 +4,32 @@ import classes from '@components/info/info.module.scss';
 import classNames from 'classnames';
 
 export const Info: React.FC = () => {
-	return (
-		<Grid
-			container
-			direction='row'
-			alignItems='center'
-			justify='space-between'
-			className={classes.info}
-		>
-			<img src={'./info.png'} className={classes.phone}/>
-			<Grid
-				container
-				direction='column' 
-				className={classes.info}
-			>
-				<p className={classNames(classes.text, classes.text_h1)}>Fliness Messenger</p>
-				<p className={classNames(classes.text, classes.text_h2)}>New Ways to Navigate<br/>Your Messenger</p>
-				<p className={classNames(classes.text, classes.text_h3)}>All of your favorite features,<br/> organized to make it faster<br/> to find what you want</p>
-			</Grid>
-		</Grid>
-	);
-}
+  return (
+    <Grid
+      container
+      direction="row"
+      alignItems="center"
+      justify="space-between"
+      className={classes.info}
+    >
+      <img src={'/info.png'} className={classes.phone} />
+      <Grid container direction="column" className={classes.info}>
+        <p className={classNames(classes.text, classes.text_h1)}>
+          Fliness Messenger
+        </p>
+        <p className={classNames(classes.text, classes.text_h2)}>
+          New Ways to Navigate
+          <br />
+          Your Messenger
+        </p>
+        <p className={classNames(classes.text, classes.text_h3)}>
+          All of your favorite features,
+          <br /> organized to make it faster
+          <br /> to find what you want
+        </p>
+      </Grid>
+    </Grid>
+  );
+};
 
 export default Info;

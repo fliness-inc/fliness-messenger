@@ -1,34 +1,34 @@
 .btn {
-    padding: 10px 20px;
-    transition: background .3s ease-out;
-    cursor: pointer;
-    background-color: transparent;
-    border: 0;
-    border-radius: 4px;
-    font-size: 14px;
+  padding: 10px 20px;
+  transition: background 0.3s ease-out;
+  cursor: pointer;
+  background-color: transparent;
+  border: 0;
+  border-radius: 4px;
+  font-size: 14px;
+
+  &:hover {
+    background-color: var(--color-btn-hover-bg-color);
+  }
+
+  &:active {
+    background-color: var(--color-btn-active-bg-color);
+  }
+
+  &_contained {
+    background-color: var(--color-btn-contained-bg-color);
+    color: var(--color-btn-contained-color);
 
     &:hover {
-        background-color: var(--color-btn-hover-bg-color);
+      background-color: var(--color-btn-contained-hover-bg-color);
     }
 
     &:active {
-        background-color: var(--color-btn-active-bg-color);
+      background-color: var(--color-btn-contained-active-bg-color);
     }
+  }
 
-    &_contained {
-        background-color: var(--color-btn-contained-bg-color);
-        color: var(--color-btn-contained-color);
-
-        &:hover {
-            background-color: var(--color-btn-contained-hover-bg-color);
-        }
-    
-        &:active {
-            background-color: var(--color-btn-contained-active-bg-color);
-        }
-    }
-
-    &_outlined {
-        border: 1px solid var(--color-btn-outlined-border);
-    } 
+  &_outlined {
+    border: 1px solid var(--color-btn-outlined-border);
+  }
 }

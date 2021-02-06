@@ -4,111 +4,122 @@ import classes from '@ui/dialog/dialog.module.scss';
 import classNames from 'classnames';
 
 export interface DialogContentProps {
-    className?: string
-    children?: JSX.Element | JSX.Element[]
+  className?: string;
+  children?: JSX.Element | JSX.Element[];
 }
 
-export const DialogContent: React.FC<DialogContentProps> = 
-    ({ children, className }: DialogContentProps) => 
-{
-    return (
-        <div className={classNames(classes['dialog__content'], className)}>{children}</div>
-    );
+export const DialogContent: React.FC<DialogContentProps> = ({
+  children,
+  className,
+}: DialogContentProps) => {
+  return (
+    <div className={classNames(classes['dialog__content'], className)}>
+      {children}
+    </div>
+  );
 };
 
-
 export interface DialogBackgroundProps {
-    className?: string
-    onClick?: () => void
+  className?: string;
+  onClick?: () => void;
 }
 
-export const DialogBackground: React.FC<DialogBackgroundProps> = 
-    ({ className, onClick = () => {} }: DialogBackgroundProps) => 
-{
-    return (
-        <div className={classNames(classes['dialog__background'], className)} onClick={onClick}></div>
-    );
+export const DialogBackground: React.FC<DialogBackgroundProps> = ({
+  className,
+  onClick = () => {},
+}: DialogBackgroundProps) => {
+  return (
+    <div
+      className={classNames(classes['dialog__background'], className)}
+      onClick={onClick}
+    ></div>
+  );
 };
 
 export interface DialogProps {
-    open: boolean,
-    lock?: boolean,
-    onOpen?: () => void,
-    onClose?: () => void,
-    children?: JSX.Element | JSX.Element[]
+  open: boolean;
+  lock?: boolean;
+  onOpen?: () => void;
+  onClose?: () => void;
+  children?: JSX.Element | JSX.Element[];
 }
 
-export const Dialog: React.FC<DialogProps> = ({ 
-    open: shouldOpen, 
-    lock: shouldBeLocked = false, 
-    onOpen = () => {},
-    onClose = () => {},
-    children 
+export const Dialog: React.FC<DialogProps> = ({
+  open: shouldOpen,
+  lock: shouldBeLocked = false,
+  onOpen = () => {},
+  onClose = () => {},
+  children,
 }: DialogProps) => {
-    const ref = React.useRef<{ el: HTMLDivElement, mounted: boolean }>({ el: null, mounted: false });
-    const [open, setOpen] = React.useState(false);
-    const [locked, setLock] = React.useState(false);
+  const ref = React.useRef<{ el: HTMLDivElement; mounted: boolean }>({
+    el: null,
+    mounted: false,
+  });
+  const [open, setOpen] = React.useState(false);
+  const [locked, setLock] = React.useState(false);
 
-    const handleWindowResize = React.useCallback(() => {
-        if (!open || locked) return;
-        
-        onClose();
-        setOpen(false);
-    }, [open, locked]);
+  const handleWindowResize = React.useCallback(() => {
+    if (!open || locked) return;
 
-    React.useEffect(() => {
-        const el = document.createElement('div');
-        el.classList.add(classes['dialog']);
-        
-        ref.current = {
-            el,
-            mounted: false,
-        };
+    onClose();
+    setOpen(false);
+  }, [open, locked]);
 
-        window.addEventListener('resize', handleWindowResize);
+  React.useEffect(() => {
+    const el = document.createElement('div');
+    el.classList.add(classes['dialog']);
 
-        return () => {
-            if (ref.current.mounted) document.body.removeChild(ref.current.el);
-            window.removeEventListener('resize', handleWindowResize);
-        };
-    }, []);
+    ref.current = {
+      el,
+      mounted: false,
+    };
 
-    React.useEffect(() => {
-        setOpen(shouldOpen);
-    }, [shouldOpen]);
+    window.addEventListener('resize', handleWindowResize);
 
-    React.useEffect(() => {
-        setLock(shouldBeLocked);
-    }, [shouldBeLocked]);
+    return () => {
+      if (ref.current.mounted) document.body.removeChild(ref.current.el);
+      window.removeEventListener('resize', handleWindowResize);
+    };
+  }, []);
 
-    React.useEffect(() => {
-        if (locked) return;
+  React.useEffect(() => {
+    setOpen(shouldOpen);
+  }, [shouldOpen]);
 
-        if (!ref.current.mounted && open) {
-            document.body.appendChild(ref.current.el);
-            ref.current.mounted = true;
-            
-            onOpen();
-        }
-        else if (ref.current.mounted && !open) {
-            document.body.removeChild(ref.current.el);
-            ref.current.mounted = false;
-        };
-    }, [open, locked]);
+  React.useEffect(() => {
+    setLock(shouldBeLocked);
+  }, [shouldBeLocked]);
 
-    const handleBackgroundClick = React.useCallback(() => {
-        if (locked) return;
+  React.useEffect(() => {
+    if (locked) return;
 
-        onClose();
-        setOpen(false);
-    }, [locked]);
+    if (!ref.current.mounted && open) {
+      document.body.appendChild(ref.current.el);
+      ref.current.mounted = true;
 
-    return open ? ReactDOM.createPortal(
+      onOpen();
+    } else if (ref.current.mounted && !open) {
+      document.body.removeChild(ref.current.el);
+      ref.current.mounted = false;
+    }
+  }, [open, locked]);
+
+  const handleBackgroundClick = React.useCallback(() => {
+    if (locked) return;
+
+    onClose();
+    setOpen(false);
+  }, [locked]);
+
+  return open
+    ? ReactDOM.createPortal(
         <>
-            <DialogBackground onClick={handleBackgroundClick}/>
-            {children}
+          <DialogBackground onClick={handleBackgroundClick} />
+          {children}
         </>,
-        ref.current.el) : null;
-}
+        ref.current.el
+      )
+    : null;
+};
 
 export default Dialog;

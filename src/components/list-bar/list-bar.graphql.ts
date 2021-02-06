@@ -1,23 +1,23 @@
 import { gql } from '@apollo/client';
 
-export const GET_USER = gql`
+export const GET_LOCAL_STATE = gql`
   query {
-    me {
-      id
-      name
-      avatarURL
+    localState @client {
+      menuState
+      currentChat
     }
   }
 `;
 
-export const GET_CURRENT_CHAT = gql`
-  query($chatFilter: ChatsFilter!, $memberFilter: MembersFilter!) {
+export const GET_DIALOGS = gql`
+  query($filter: ChatsFilter!) {
     me {
-      chats(filter: $chatFilter) {
+      id
+      chats(filter: $filter) {
         edges {
           node {
             id
-            members(filter: $memberFilter) {
+            members {
               edges {
                 node {
                   id

@@ -1,93 +1,92 @@
-
 .app-bar {
-	height: 70px;
-	background-color: var(--color-app-bar-bg);
-    box-shadow: 4px 0 16px rgba(69, 69, 69, 0.25);
-    z-index: 20;
+  height: 70px;
+  background-color: var(--color-app-bar-bg);
+  box-shadow: 4px 0 16px rgba(69, 69, 69, 0.25);
+  z-index: 20;
 }
 
 .menu {
-    --size: 86px;
+  --size: 86px;
+
+  width: var(--size);
+  min-width: var(--size);
+  max-width: var(--size);
+
+  &__btn {
+    --size: 56px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50% !important;
+    padding: 0 !important;
 
     width: var(--size);
-    min-width: var(--size);
-    max-width: var(--size);
+    height: var(--size);
+  }
 
-    &__btn {
-        --size: 56px;
+  &__icon {
+    --size: 32px;
 
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    width: var(--size);
+    height: var(--size);
 
-        border-radius: 50% !important;
-        padding: 0 !important;
-
-        width: var(--size);
-		height: var(--size);
-    }
-
-    &__icon {
-        --size: 32px;
-
-		width: var(--size);
-		height: var(--size);
-
-		fill: var(--color-app-bar-menu-icon);
-    }
+    fill: var(--color-app-bar-menu-icon);
+  }
 }
 
 .logo {
-    &__icon {
-        --size: 42px;
+  &__icon {
+    --size: 42px;
 
-		width: var(--size);
-        height: var(--size);
-        margin: 0 24px;
-    }
+    width: var(--size);
+    height: var(--size);
+    margin: 0 24px;
+  }
 
-    &__title {
-        font-size: 32px;
-        font-weight: 600;
-    }
+  &__title {
+    font-size: 32px;
+    font-weight: 600;
+  }
 }
 
 .account {
-    padding: 0 20px;
+  padding: 0 20px;
 
-    &__btn {
-        display: flex;
-        align-items: center;
-        padding: 5px 15px !important;
-    }
+  &__btn {
+    display: flex;
+    align-items: center;
+    padding: 5px 15px !important;
+  }
 
-    &__avatar {
-        --size: 42px;
+  &__avatar {
+    --size: 42px;
 
-        width: var(--size);
-        height: var(--size);
-        margin: 0 16px;
+    width: var(--size);
+    height: var(--size);
+    margin: 0 16px;
 
-        border-radius: 50%;
-    }
+    border-radius: 50%;
+  }
 
-    &__username {
-        font-size: 18px;
-        font-weight: 500;
-        color:var(--color-app-bar-acoount-text);
-    }
+  &__username {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--color-app-bar-acoount-text);
+  }
 
-    &__arrow-icon {
-        --size: 16px;
+  &__arrow-icon {
+    --size: 16px;
 
-        width: var(--size);
-        height: var(--size);
-		fill:var(--color-app-bar-acoount-text);
-    }
+    width: var(--size);
+    height: var(--size);
+    fill: var(--color-app-bar-acoount-text);
+  }
 }
 
 @media screen and (max-width: 640px) {
-    .logo {
-        display: none;
-    }
+  .logo {
+    display: none;
+  }
 }

@@ -1,58 +1,83 @@
 import { NextPage } from 'next';
 import React from 'react';
-import Grid from '@ui/grid/grid';
 import useApollo from '@lib/use-apollo';
 import Error from 'next/error';
 import { GET_USER } from '@pages/dialogs/index.graphql';
 import ListBar from '@components/list-bar/list-bar';
 import { PageTypeEnum, currentPageVar } from '@store/pages';
-import ChatBar from '@components/chat-bar/chat-bar';
-import ChatMessages from '@components/chat-messages/chat-messages';
-import classes from '@pages/dialogs/index.module.scss';
-import ChatInput from '@components/chat-input/chat-input';
 import SideBar from '@components/side-bar/vertical/side-bar';
+import Grid from '@ui/grid/grid';
 import DefaultLayout from '@components/layouts/default/defualt';
+import classes from '@pages/dialogs/index.module.scss';
+import classNames from 'classnames';
+import DialogsIcon from '@public/chat_bubble_outline.svg';
+import { currentChatVar } from '@store/chats';
+import Request, { RequestResponse } from '@lib/request';
 
-export interface Props {
-	errorCode?: number;
-	data: {
-		me: {
-			name: string;
-			avatar: string;
-		}
-	}
+export interface Data {
+  me: {
+    name: string;
+    avatarURL: string;
+  };
 }
 
-export const DialogsPage: NextPage<Props> = ({ errorCode, data }: Props) => {
-	if (errorCode) return <Error statusCode={errorCode}/>;
-	
-	React.useEffect(() => {
-		currentPageVar(PageTypeEnum.DIALOGS);
-	}, []);
+export const DialogsPage: NextPage<RequestResponse<Data>> = ({
+  error,
+  statusCode,
+  data,
+}: RequestResponse<Data>) => {
+  if (error) return <Error statusCode={statusCode} />;
 
-	return (
-		<DefaultLayout 
-			username={data.me.name} 
-			avatarURL={data.me.avatar} 
-			sidebar={<SideBar />}
-			listbar={<ListBar title={'Dialogs'}/>}
-		>
-			<Grid direction='column' className={classes['chat-messages']}>
-				<ChatBar title={'Blanka Turaria'} avatarURL={'img/pexels-photo-2613260.jpeg'} />
-				<ChatMessages />
-				<ChatInput />
-			</Grid>
-		</DefaultLayout>
-	);
+  React.useEffect(() => {
+    currentPageVar(PageTypeEnum.DIALOGS);
+    currentChatVar(null);
+  }, []);
+
+  const {
+    me: { name, avatarURL },
+  } = data;
+
+  return (
+    <DefaultLayout
+      username={name}
+      avatarURL={avatarURL}
+      sidebar={<SideBar />}
+      listbar={<ListBar title={'Dialogs'} />}
+    >
+      <Grid
+        direction="column"
+        alignItems="center"
+        justify="center"
+        className={classNames(
+          classes['chat-messages'],
+          classes['chat-messages__plug']
+        )}
+      >
+        <Grid
+          direction="column"
+          alignItems="center"
+          className={classes['plug']}
+        >
+          <DialogsIcon className={classes['plug__icon']} />
+          <p className={classes['plug__title']}>Please select a dialog</p>
+          <p className={classes['plug__desc']}>to start messaging</p>
+        </Grid>
+      </Grid>
+    </DefaultLayout>
+  );
 };
 
-DialogsPage.getInitialProps = async ({ apolloClient, req, context }: any = {}) => {
-	return apolloClient.query({ query: GET_USER })
-		.then(({ data }) => ({ data }))
-		.catch(e => ({ errorCode: e.graphQLErrors ?
-			e.graphQLErrors[0].extensions.statusCode || null : // graphql error
-			e // system error
-		}));
-}
+DialogsPage.getInitialProps = async ({ apolloClient }: any = {}) => {
+  const getCurrentChatResponse = await Request.make(apolloClient, {
+    query: GET_USER,
+  });
+
+  if (getCurrentChatResponse.error) return getCurrentChatResponse;
+
+  return {
+    statusCode: 200,
+    data: getCurrentChatResponse.data,
+  };
+};
 
 export default useApollo(DialogsPage);
