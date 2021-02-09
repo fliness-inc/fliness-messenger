@@ -1,9 +1,7 @@
 import React from 'react';
-import classNames from 'classnames';
 import classes from '@components/chat-input/chat-input.module.scss';
 import Grid from '@ui/grid/grid';
 import Button from '@ui/button/button';
-
 import ClipIcon from '@public/paper-clip.svg';
 import PlaneIcon from '@public/paper-plane.svg';
 import CameraIcon from '@public/camera.svg';

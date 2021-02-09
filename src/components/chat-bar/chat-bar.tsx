@@ -1,6 +1,5 @@
 import React from 'react';
 import classes from '@components/chat-bar/chat-bar.module.scss';
-import classNames from 'classnames';
 import Grid from '@ui/grid/grid';
 import Button from '@ui/button/button';
 import SearchIcon from '@public/search-24px.svg';

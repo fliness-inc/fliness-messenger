@@ -7,7 +7,6 @@ import classes from '@components/app-bar/app-bar.module.scss';
 import Grid from '@ui/grid/grid';
 import Button from '@ui/button/button';
 import { menuStateVar, MenuStateEnum } from '@store/menu';
-import { gql, useQuery } from '@apollo/client';
 
 export interface AppBarProps {
   username: string;

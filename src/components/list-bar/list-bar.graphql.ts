@@ -43,3 +43,31 @@ export const GET_DIALOGS = gql`
     }
   }
 `;
+
+export const SUBS_CHAT_ADDED = gql`
+  subscription {
+    chatAdded {
+      id
+      members {
+        edges {
+          node {
+            id
+            user {
+              id
+              name
+              avatarURL
+            }
+          }
+        }
+      }
+      messages {
+        edges {
+          node {
+            id
+            text
+          }
+        }
+      }
+    }
+  }
+`;

@@ -45,7 +45,7 @@ export const createApolloClient = (initialState, ctx: NextPageContext) => {
           options: {
             reconnect: true,
             connectionParams: {
-              authToken: tokenVar(),
+              Authorization: tokenVar() ? `Bearer ${tokenVar()}` : '',
             },
           },
         })

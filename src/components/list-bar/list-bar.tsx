@@ -6,9 +6,13 @@ import CreateDialog from '@components/dialogs/create-dialog/create-dialog';
 import classes from '@components/list-bar/list-bar.module.scss';
 import classNames from 'classnames';
 import { MenuStateEnum } from '@store/menu';
-import { gql, useQuery } from '@apollo/client';
+import { gql, useQuery, useSubscription } from '@apollo/client';
 import SideBar from '@components/side-bar/side-bar';
-import { GET_DIALOGS, GET_LOCAL_STATE } from './list-bar.graphql';
+import {
+  GET_DIALOGS,
+  GET_LOCAL_STATE,
+  SUBS_CHAT_ADDED,
+} from './list-bar.graphql';
 import Skeleton from '@ui/skeleton/skeleton';
 import { currentChatVar } from '@store/chats';
 import { useRouter } from 'next/router';
@@ -35,7 +39,8 @@ export const ListBar: React.FC<Props> = ({ title }) => {
       localState: { menuState, currentChat: currentChat },
     },
   } = useQuery(GET_LOCAL_STATE);
-  const { error, data, loading } = useQuery(GET_DIALOGS, {
+
+  const { subscribeToMore, error, data, loading } = useQuery(GET_DIALOGS, {
     variables: {
       filter: {
         field: {
@@ -44,6 +49,28 @@ export const ListBar: React.FC<Props> = ({ title }) => {
           val: 'DIALOG',
         },
       },
+    },
+  });
+
+  subscribeToMore({
+    document: SUBS_CHAT_ADDED,
+    updateQuery: (prev, { subscriptionData }) => {
+      if (!subscriptionData.data) return prev;
+
+      const newChat = { node: subscriptionData.data.chatAdded };
+
+      if (prev.me.chats.edges.find(({ node }) => node.id === newChat.node.id))
+        return prev;
+
+      return Object.assign({}, prev, {
+        me: {
+          ...prev.me,
+          chats: {
+            ...prev.me.chats,
+            edges: [...prev.me.chats.edges, newChat],
+          },
+        },
+      });
     },
   });
 
