@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import classes from '@ui/grid/grid.module.scss';
 
-export interface Props {
+export interface GridProps {
   className?: string;
   direction?: 'row' | 'column' | 'row-reverse' | 'column-revers';
   justify?:
@@ -32,14 +32,14 @@ export interface Props {
   onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
-export const Grid: React.FC<Props> = ({
+export const Grid: React.FC<GridProps> = ({
   className = '',
   direction = 'row',
   justify = 'flex-start',
   alignItems = 'flex-start',
   onClick = (e: React.MouseEvent<HTMLDivElement>) => {},
   children,
-}: Props) => {
+}: GridProps) => {
   return (
     <div
       className={classNames(

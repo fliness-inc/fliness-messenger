@@ -10,4 +10,4 @@ export enum MenuStateEnum {
   MOVING_ON_TOP_WITH_SIDE_BAR_DEACTIVE = 'MOVING_ON_TOP_WITH_SIDE_BAR_DEACTIVE',
 }
 
-export const menuStateVar = makeVar<MenuStateEnum>(MenuStateEnum.NONE);
+export const menuStateVar = makeVar<MenuStateEnum>(MenuStateEnum.MOVING_ACTIVE);

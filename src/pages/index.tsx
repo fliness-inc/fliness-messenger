@@ -19,7 +19,7 @@ export const IndexPage: NextPage<RequestResponse<Data>> = ({
 
   React.useEffect(() => {
     if (statusCode === 200) router.push('/dialogs');
-    else router.push('/signin');
+    else router.push('/sign-in');
   }, []);
 
   return <></>;

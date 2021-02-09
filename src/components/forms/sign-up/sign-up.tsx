@@ -3,14 +3,14 @@ import { useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import classes from './signup.module.scss';
+import classes from './sign-up.module.scss';
 import LogoIcon from '@public/logo.svg';
 import Button from '@material-ui/core/Button';
 import EmailIcon from '@public/email.svg';
 import UserIcon from '@public/user.svg';
 import UnlockIcon from '@public/unlock.svg';
 import { tokenVar } from '@store/auth';
-import { SIGN_UP } from '@components/forms/signup/signup.graphql';
+import { SIGN_UP } from './sign-up.graphql';
 import Padlock from '@public/padlock.svg';
 import Link from 'next/link';
 
@@ -52,7 +52,7 @@ export const SignUpForm: React.FC = () => {
       },
     })
       .then(({ data }) => {
-        tokenVar(data.auth.register.accessToken);
+        tokenVar(data.auth.signUp.accessToken);
         setError(null);
         router.push('/dialogs');
       })
@@ -142,7 +142,7 @@ export const SignUpForm: React.FC = () => {
         </Button>
       </div>
 
-      <Link href={'/signin'}>
+      <Link href={'/sign-in'}>
         <Typography className={classes.form__link}>or sign in</Typography>
       </Link>
     </Grid>

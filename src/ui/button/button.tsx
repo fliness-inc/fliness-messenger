@@ -2,7 +2,7 @@ import React, { MutableRefObject, useRef } from 'react';
 import classNames from 'classnames';
 import classes from '@ui/button/button.module.scss';
 
-export interface Props {
+export interface ButtonProps {
   className?: string;
   children?: JSX.Element | JSX.Element[] | string;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
@@ -10,13 +10,13 @@ export interface Props {
   disabled?: boolean;
 }
 
-export const Button: React.FC<Props> = ({
+export const Button: React.FC<ButtonProps> = ({
   className = '',
   children,
   variant,
   onClick = (event: React.MouseEvent<HTMLButtonElement>) => {},
   disabled = false,
-}: Props) => {
+}: ButtonProps) => {
   return (
     <button
       className={classNames(

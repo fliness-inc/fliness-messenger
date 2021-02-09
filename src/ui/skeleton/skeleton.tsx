@@ -2,19 +2,19 @@ import React from 'react';
 import classNames from 'classnames';
 import classes from '@ui/skeleton/skeleton.module.scss';
 
-export interface Props {
+export interface SkeletonProps {
   className?: string;
   width: string;
   height: string;
   radius?: string;
 }
 
-export const Skeleton: React.FC<Props> = ({
+export const Skeleton: React.FC<SkeletonProps> = ({
   className,
   width,
   height,
   radius = '4px',
-}: Props) => {
+}: SkeletonProps) => {
   return (
     <span
       className={classNames(

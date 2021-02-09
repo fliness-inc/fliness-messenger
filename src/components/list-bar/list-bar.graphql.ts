@@ -46,7 +46,7 @@ export const GET_DIALOGS = gql`
 
 export const SUBS_CHAT_ADDED = gql`
   subscription {
-    chatAdded {
+    CHAT_CREATED_EVENT {
       id
       members {
         edges {

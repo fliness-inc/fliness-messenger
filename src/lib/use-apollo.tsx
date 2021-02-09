@@ -20,6 +20,7 @@ import Cookie from '@lib/cookie';
 import { NextPageContext } from 'next';
 import JWTLink from './apollo-link-jwt';
 import { currentChatVar } from '@store/chats';
+import { SubscriptionClient } from 'subscriptions-transport-ws';
 
 const typeDefs = gql`
   extend type Query {
@@ -33,20 +34,25 @@ const typeDefs = gql`
   }
 `;
 
-const getUserAgent = (ctx: NextPageContext) => {
+const __getUserAgent = (ctx: NextPageContext) => {
   return ctx ? ctx?.req?.headers['user-agent'] : window.navigator.userAgent;
 };
 
 export const createApolloClient = (initialState, ctx: NextPageContext) => {
+  let __updateToken = (token: string) => {};
+
   const wsLink =
     typeof window !== 'undefined'
       ? new WebSocketLink({
           uri: process.env.NEXT_PUBLIC_API_WS_URL,
           options: {
             reconnect: true,
-            connectionParams: {
-              Authorization: tokenVar() ? `Bearer ${tokenVar()}` : '',
-            },
+            connectionParams: new Promise((res, rej) => {
+              __updateToken = token =>
+                res({
+                  Authorization: token,
+                });
+            }),
           },
         })
       : null;
@@ -76,12 +82,13 @@ export const createApolloClient = (initialState, ctx: NextPageContext) => {
 									refreshToken
 								}
 							}
-						}`,
+						}
+          `,
         }),
         headers: {
           cookie: Cookie.getString(ctx),
           'content-type': 'application/json',
-          'user-agent': getUserAgent(ctx),
+          'user-agent': __getUserAgent(ctx),
         },
         method: 'POST',
         credentials: 'include',
@@ -98,6 +105,8 @@ export const createApolloClient = (initialState, ctx: NextPageContext) => {
       Cookie.set(ctx, 'jwt-token', data.auth.refresh.refreshToken, {
         path: '/',
       });
+
+      __updateToken(data.auth.refresh.refreshToken);
     },
     fetchError: (e: Error) => console.error(e),
   });

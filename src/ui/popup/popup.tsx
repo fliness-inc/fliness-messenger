@@ -1,13 +1,6 @@
-import React, {
-  useState,
-  useEffect,
-  useRef,
-  MutableRefObject,
-  ReactSVGElement,
-} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import classes from '@ui/popup/popup.module.scss';
-import classNames from 'classnames';
 
 export interface PopupContextProps {
   className?: string;
@@ -73,19 +66,19 @@ export const PopupBackground: React.FC<PopupBackgroundProps> = ({
   );
 };
 
-export interface Props {
+export interface PopupProps {
   anchor: HTMLElement | null;
   open: boolean;
   onClose: () => void;
   children?: JSX.Element | JSX.Element[] | string;
 }
 
-export const Popup: React.FC<Props> = ({
+export const Popup: React.FC<PopupProps> = ({
   anchor,
   open: shouldOpen,
   onClose = () => {},
   children,
-}: Props) => {
+}: PopupProps) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const [open, setOpen] = useState(false);
   const [pos, setPos] = useState({ x: 0, y: 0, width: 0, height: 0 });

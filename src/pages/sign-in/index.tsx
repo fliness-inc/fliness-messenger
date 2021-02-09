@@ -2,7 +2,7 @@ import { NextPage } from 'next';
 import useApollo from '@lib/use-apollo';
 import Grid from '@material-ui/core/Grid';
 import WaveIcon from '@public/wave.svg';
-import LoginForm from '@components/forms/signin/signin';
+import LoginForm from '@components/forms/sign-in/sign-in';
 import classes from './index.module.scss';
 import Info from '@components/info/info';
 

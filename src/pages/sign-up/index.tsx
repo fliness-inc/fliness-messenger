@@ -2,7 +2,7 @@ import React from 'react';
 import useApollo from '@lib/use-apollo';
 import Grid from '@material-ui/core/Grid';
 import WaveIcon from '@public/wave.svg';
-import SignupForm from '@components/forms/signup/signup';
+import SignupForm from '@components/forms/sign-up/sign-up';
 import classes from './index.module.scss';
 import Info from '@components/info/info';
 

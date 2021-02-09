@@ -67,7 +67,9 @@ export const DialogsPage: NextPage<RequestResponse<Data>> = ({
   );
 };
 
-DialogsPage.getInitialProps = async ({ apolloClient }: any = {}) => {
+DialogsPage.getInitialProps = async (ctx: any = {}) => {
+  const { apolloClient } = ctx;
+
   const getCurrentChatResponse = await Request.make(apolloClient, {
     query: GET_USER,
   });
