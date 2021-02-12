@@ -13,6 +13,7 @@ import classNames from 'classnames';
 import DialogsIcon from '@public/chat_bubble_outline.svg';
 import { currentChatVar } from '@store/chats';
 import Request, { RequestResponse } from '@lib/request';
+import Head from 'next/head';
 
 export interface Data {
   me: {
@@ -38,32 +39,37 @@ export const DialogsPage: NextPage<RequestResponse<Data>> = ({
   } = data;
 
   return (
-    <DefaultLayout
-      username={name}
-      avatarURL={avatarURL}
-      sidebar={<SideBar />}
-      listbar={<ListBar title={'Dialogs'} />}
-    >
-      <Grid
-        direction="column"
-        alignItems="center"
-        justify="center"
-        className={classNames(
-          classes['chat-messages'],
-          classes['chat-messages__plug']
-        )}
+    <>
+      <Head>
+        <title>Fliness Messenger - Dialogs</title>
+      </Head>
+      <DefaultLayout
+        username={name}
+        avatarURL={avatarURL}
+        sidebar={<SideBar />}
+        listbar={<ListBar title={'Dialogs'} />}
       >
         <Grid
           direction="column"
           alignItems="center"
-          className={classes['plug']}
+          justify="center"
+          className={classNames(
+            classes['chat-messages'],
+            classes['chat-messages__plug']
+          )}
         >
-          <DialogsIcon className={classes['plug__icon']} />
-          <p className={classes['plug__title']}>Please select a dialog</p>
-          <p className={classes['plug__desc']}>to start messaging</p>
+          <Grid
+            direction="column"
+            alignItems="center"
+            className={classes['plug']}
+          >
+            <DialogsIcon className={classes['plug__icon']} />
+            <p className={classes['plug__title']}>Please select a dialog</p>
+            <p className={classes['plug__desc']}>to start messaging</p>
+          </Grid>
         </Grid>
-      </Grid>
-    </DefaultLayout>
+      </DefaultLayout>
+    </>
   );
 };
 

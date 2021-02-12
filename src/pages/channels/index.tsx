@@ -8,6 +8,7 @@ import SideBar from '@components/side-bar/vertical/side-bar';
 import DefaultLayout from '@components/layouts/default/defualt';
 import ListBar from '@components/list-bar/list-bar';
 import Request from '@lib/request';
+import Head from 'next/head';
 
 export interface Props {
   statusCode?: number;
@@ -27,12 +28,17 @@ export const ChannelsPage: NextPage<Props> = ({
   }, []);
 
   return (
-    <DefaultLayout
-      username={data.me.name}
-      avatarURL={data.me.avatar}
-      sidebar={<SideBar />}
-      listbar={<ListBar title={'Channels'} />}
-    ></DefaultLayout>
+    <>
+      <Head>
+        <title>Fliness Messenger - Channels</title>
+      </Head>
+      <DefaultLayout
+        username={data.me.name}
+        avatarURL={data.me.avatar}
+        sidebar={<SideBar />}
+        listbar={<ListBar title={'Channels'} />}
+      ></DefaultLayout>
+    </>
   );
 };
 

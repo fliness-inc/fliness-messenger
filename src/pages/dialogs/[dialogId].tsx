@@ -15,6 +15,7 @@ import SideBar from '@components/side-bar/vertical/side-bar';
 import DefaultLayout from '@components/layouts/default/defualt';
 import { currentChatVar } from '@store/chats';
 import Request from '@lib/request';
+import Head from 'next/head';
 
 export interface Props {
   error?: Error;
@@ -54,18 +55,23 @@ export const DialogPage: NextPage<Props> = ({
   } = chats[0].node.members.edges[0];
 
   return (
-    <DefaultLayout
-      username={name}
-      avatarURL={avatarURL}
-      sidebar={<SideBar />}
-      listbar={<ListBar title={'Dialogs'} />}
-    >
-      <Grid direction="column" className={classes['chat-messages']}>
-        <ChatBar title={member.name} avatarURL={member.avatarURL} />
-        <ChatMessages />
-        <ChatInput />
-      </Grid>
-    </DefaultLayout>
+    <>
+      <Head>
+        <title>Fliness Messenger - {member.name}</title>
+      </Head>
+      <DefaultLayout
+        username={name}
+        avatarURL={avatarURL}
+        sidebar={<SideBar />}
+        listbar={<ListBar title={'Dialogs'} />}
+      >
+        <Grid direction="column" className={classes['chat-messages']}>
+          <ChatBar title={member.name} avatarURL={member.avatarURL} />
+          <ChatMessages />
+          <ChatInput />
+        </Grid>
+      </DefaultLayout>
+    </>
   );
 };
 

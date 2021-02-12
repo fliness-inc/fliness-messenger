@@ -38,6 +38,9 @@ export const SideBar: React.FC = () => {
         case PageTypeEnum.CHANNELS:
           router.push('/channels');
           break;
+        case PageTypeEnum.SETTINGS:
+          router.push('/settings');
+          break;
       }
     },
     []
