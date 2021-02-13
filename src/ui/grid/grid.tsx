@@ -32,28 +32,33 @@ export interface GridProps {
   onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
-export const Grid: React.FC<GridProps> = ({
-  className = '',
-  direction = 'row',
-  justify = 'flex-start',
-  alignItems = 'flex-start',
-  onClick = (e: React.MouseEvent<HTMLDivElement>) => {},
-  children,
-}: GridProps) => {
-  return (
-    <div
-      className={classNames(
-        classes['grid'],
-        classes[`grid_dir-${direction}`],
-        classes[`grid_justify-${justify}`],
-        classes[`grid_align-${alignItems}`],
-        className
-      )}
-      onClick={onClick}
-    >
-      {children}
-    </div>
-  );
-};
+export const Grid = React.forwardRef(
+  (props: GridProps, ref: React.MutableRefObject<HTMLDivElement>) => {
+    const {
+      className = '',
+      direction = 'row',
+      justify = 'flex-start',
+      alignItems = 'flex-start',
+      onClick = (e: React.MouseEvent<HTMLDivElement>) => {},
+      children,
+    } = props;
+
+    return (
+      <div
+        ref={ref}
+        className={classNames(
+          classes['grid'],
+          classes[`grid_dir-${direction}`],
+          classes[`grid_justify-${justify}`],
+          classes[`grid_align-${alignItems}`],
+          className
+        )}
+        onClick={onClick}
+      >
+        {children}
+      </div>
+    );
+  }
+);
 
 export default Grid;

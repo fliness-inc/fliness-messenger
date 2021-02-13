@@ -67,8 +67,8 @@ export const DialogPage: NextPage<Props> = ({
       >
         <Grid direction="column" className={classes['chat-messages']}>
           <ChatBar title={member.name} avatarURL={member.avatarURL} />
-          <ChatMessages />
-          <ChatInput />
+          <ChatMessages></ChatMessages>
+          <ChatInput></ChatInput>
         </Grid>
       </DefaultLayout>
     </>

@@ -7,16 +7,16 @@ export interface ListProps {
   children: (any) => JSX.Element;
 }
 
-export const List: React.FC<ListProps> = ({
-  className,
-  items,
-  children = item => item,
-}: ListProps) => {
-  return (
-    <Grid direction="column" className={className}>
-      {items.map(item => children(item))}
-    </Grid>
-  );
-};
+export const List = React.forwardRef(
+  (props: ListProps, ref: React.MutableRefObject<HTMLDivElement>) => {
+    const { className, items, children = item => item } = props;
+
+    return (
+      <Grid ref={ref} direction="column" className={className}>
+        {items.map(item => children(item))}
+      </Grid>
+    );
+  }
+);
 
 export default List;

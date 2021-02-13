@@ -35,8 +35,13 @@ body[data-color-mode='light'] {
 body[data-color-mode='light'] {
   --color-chat-messages-bg: var(--color-gray-50);
   --color-chat-messages-plug-bg: var(--color-gray-50);
+  --color-chat-messages-plug-icon-fill: var(--color-gray-300);
+  --color-chat-messages-plug-title-color: var(--color-gray-300);
+  --color-chat-messages-plug-desc-color: var(--color-gray-250);
   --color-chat-messages-scroll-bg: var(--color-gray-200);
   --color-chat-messages-avatar-name: var(--color-black);
+  --color-chat-messages-avatar-plug-color: var(--color-white);
+  --color-chat-messages-avatar-plug-bg-color: var(--color-gray-300);
   --color-chat-messages-message-text-bg: var(--color-white);
   --color-chat-messages-message-text-border: var(--color-gray-100);
   --color-chat-messages-message-text-color: var(--color-black);
@@ -53,10 +58,6 @@ body[data-color-mode='light'] {
   --color-edit-btn-popup-item-title: var(--color-gray-900);
   --color-edit-btn-popup-item-icon-hover: var(--color-white);
   --color-edit-btn-popup-item-title-hover: var(--color-white);
-
-  --color-chat-messages-plug-icon-fill: var(--color-gray-300);
-  --color-chat-messages-plug-title-color: var(--color-gray-300);
-  --color-chat-messages-plug-desc-color: var(--color-gray-250);
 }
 
 /* side-bar */

@@ -9,12 +9,8 @@ export interface SkeletonProps {
   radius?: string;
 }
 
-export const Skeleton: React.FC<SkeletonProps> = ({
-  className,
-  width,
-  height,
-  radius = '4px',
-}: SkeletonProps) => {
+export const Skeleton: React.FC<SkeletonProps> = (props: SkeletonProps) => {
+  const { className, width, height, radius = '4px' } = props;
   return (
     <span
       className={classNames(
