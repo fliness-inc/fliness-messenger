@@ -10,6 +10,7 @@ import {
 } from './list-bar.graphql';
 import { currentChatVar } from '@store/chats';
 import { useRouter } from 'next/router';
+import { AvatarIcon } from './avatar-icon';
 
 export interface ItemType {
   id: string;
@@ -137,11 +138,7 @@ export const List: React.FC = props => {
               className={classes['list-item__header']}
             >
               <div className={classes['list-item__avatar']}>
-                <img
-                  className={classes['list-item__image']}
-                  src={avatarURL}
-                  alt=""
-                />
+                <AvatarIcon username={title} url={avatarURL}></AvatarIcon>
                 <span className={classes['list-item__status']}>
                   <span className={classes['list-item__online-status']}></span>
                 </span>
