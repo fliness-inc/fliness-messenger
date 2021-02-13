@@ -5,6 +5,7 @@ import Button from '@ui/button/button';
 import SearchIcon from '@public/search-24px.svg';
 import MoreIcon from '@public/more.svg';
 import SideBarIcon from '@public/sidebar.svg';
+import { AvatarIcon } from './avatar-icon';
 
 export interface Props {
   title: string;
@@ -19,7 +20,7 @@ export const ChatBar: React.FC<Props> = ({ title, avatarURL }: Props) => {
       className={classes['chat-bar']}
     >
       <Grid alignItems="center" className={classes['chat-bar__avatar']}>
-        <img src={avatarURL} className={classes['chat-bar__avatar-icon']} />
+        <AvatarIcon username={title} url={avatarURL}></AvatarIcon>
         <Grid direction="column" className={classes['chat-bar__text']}>
           <p className={classes['chat-bar__title']}>{title}</p>
           <Grid alignItems="center">

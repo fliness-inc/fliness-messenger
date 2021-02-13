@@ -59,7 +59,10 @@ export const SideBar: React.FC = () => {
           Icon={DialogsIcon}
           className={classes['menu__item_horizontal']}
           onClick={handleMenuItemClick.bind(this, PageTypeEnum.DIALOGS)}
-          active={currentPage === PageTypeEnum.DIALOGS}
+          active={
+            currentPage === PageTypeEnum.DIALOGS ||
+            currentPage === PageTypeEnum.DIALOG
+          }
         />
         <MenuItem
           Icon={GroupsIcon}

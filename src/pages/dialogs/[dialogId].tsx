@@ -33,7 +33,7 @@ export const DialogPage: NextPage<Props> = ({
   const { query } = useRouter();
 
   React.useEffect(() => {
-    currentPageVar(PageTypeEnum.DIALOGS);
+    currentPageVar(PageTypeEnum.DIALOG);
     currentChatVar(
       Array.isArray(query.dialogId) ? query.dialogId[0] : query.dialogId
     );
