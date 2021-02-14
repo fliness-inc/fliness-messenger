@@ -104,7 +104,7 @@ class Init {
       if (value[0] === '"') value = value.slice(1, -1);
 
       try {
-        var foundKey = DefaultConverter.read(parts[0]);
+        const foundKey = DefaultConverter.read(parts[0]);
         jar[foundKey] = this.converter.read(value, foundKey);
 
         if (key === foundKey) break;

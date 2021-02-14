@@ -1,4 +1,4 @@
-import { ApolloClient, QueryOptions, useQuery } from '@apollo/client';
+import { ApolloClient, QueryOptions } from '@apollo/client';
 
 export interface RequestResponse<D = any, E = Error> {
   error?: E;

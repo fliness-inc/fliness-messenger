@@ -39,7 +39,7 @@ export const Grid = React.forwardRef(
       direction = 'row',
       justify = 'flex-start',
       alignItems = 'flex-start',
-      onClick = (e: React.MouseEvent<HTMLDivElement>) => {},
+      onClick = () => {},
       children,
     } = props;
 

@@ -17,7 +17,7 @@ export const DialogListWrapper: React.FC<DialogListWrapperProps> = ({
   loading,
   error,
   items,
-  onActiveItemChanged = (index: string) => {},
+  onActiveItemChanged = () => {},
 }) => {
   if (loading || error) return <DialogList items={[]} skeleton />;
 

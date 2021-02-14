@@ -1,4 +1,4 @@
-import React, { MutableRefObject, useRef } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import classes from '@ui/button/button.module.scss';
 
@@ -14,7 +14,7 @@ export const Button: React.FC<ButtonProps> = ({
   className = '',
   children,
   variant,
-  onClick = (event: React.MouseEvent<HTMLButtonElement>) => {},
+  onClick = () => {},
   disabled = false,
 }: ButtonProps) => {
   return (

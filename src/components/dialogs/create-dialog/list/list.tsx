@@ -27,10 +27,7 @@ export interface DialogListProps {
 export const DialogList: React.FC<DialogListProps> = ({
   items,
   skeleton = false,
-  onActiveItemChanged = (
-    index: string,
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {},
+  onActiveItemChanged = () => {},
 }: DialogListProps) => {
   const nodes: ItemType[] = items;
 

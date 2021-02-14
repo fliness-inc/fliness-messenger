@@ -26,25 +26,22 @@ export const SideBar: React.FC = () => {
     }
   `);
 
-  const handleMenuItemClick = React.useCallback(
-    (type: PageTypeEnum, event: React.MouseEvent<HTMLButtonElement>) => {
-      switch (type) {
-        case PageTypeEnum.DIALOGS:
-          router.push('/dialogs');
-          break;
-        case PageTypeEnum.GROUPS:
-          router.push('/groups');
-          break;
-        case PageTypeEnum.CHANNELS:
-          router.push('/channels');
-          break;
-        case PageTypeEnum.SETTINGS:
-          router.push('/settings');
-          break;
-      }
-    },
-    []
-  );
+  const handleMenuItemClick = React.useCallback((type: PageTypeEnum) => {
+    switch (type) {
+      case PageTypeEnum.DIALOGS:
+        router.push('/dialogs');
+        break;
+      case PageTypeEnum.GROUPS:
+        router.push('/groups');
+        break;
+      case PageTypeEnum.CHANNELS:
+        router.push('/channels');
+        break;
+      case PageTypeEnum.SETTINGS:
+        router.push('/settings');
+        break;
+    }
+  }, []);
 
   return (
     <>

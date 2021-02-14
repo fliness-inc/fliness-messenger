@@ -37,7 +37,7 @@ export const GroupsPage: NextPage<Props> = ({ errorCode, data }) => {
   );
 };
 
-GroupsPage.getInitialProps = async ({ apolloClient, req }: any = {}) => {
+GroupsPage.getInitialProps = async ({ apolloClient }: any = {}) => {
   const getCurrentChatResponse = await Request.make(apolloClient, {
     query: GET_USER,
   });

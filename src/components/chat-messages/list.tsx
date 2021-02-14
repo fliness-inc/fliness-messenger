@@ -3,7 +3,6 @@ import classes from './chat-messages.module.scss';
 import { Grid, List } from '@ui/ui';
 import classNames from 'classnames';
 import EditButton from './edit-button/edit-button';
-import CheckIcon from '@public/check.svg';
 import ChecksIcon from '@public/combined_shape.svg';
 import { MessageLoader, Message } from './message-loader';
 import { ChatMessagesSkeletonList } from './list-skeleton';
@@ -11,9 +10,7 @@ import { AvatarIcon } from './avatar-icon';
 
 export interface ChatMessagesListProps {}
 
-export const ChatMessagesList: React.FC<ChatMessagesListProps> = (
-  props: ChatMessagesListProps
-) => {
+export const ChatMessagesList: React.FC<ChatMessagesListProps> = () => {
   const [ref, setRef] = React.useState<HTMLDivElement | null>(null);
 
   React.useEffect(() => {

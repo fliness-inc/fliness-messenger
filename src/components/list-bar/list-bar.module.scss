@@ -25,6 +25,7 @@
   &__title {
     font-size: 28px;
     padding: 10px 24px;
+    color: var(--color-list-bar-title-color);
   }
 
   &__header {
@@ -104,6 +105,14 @@
     .list-item__nums > span {
       color: var(--color-list-bar-item-nums-hover-color);
     }
+
+    .list-item__image-stub {
+      background-color: var(--color-list-bar-item-avatar-stup-hover-bg-color);
+
+      & > span {
+        color: var(--color-list-bar-item-avatar-stup-hover-color);
+      }
+    }
   }
 
   &_active {
@@ -127,6 +136,14 @@
 
     .list-item__nums {
       background-color: var(--color-list-bar-item-nums-active-bg);
+    }
+
+    .list-item__image-stub {
+      background-color: var(--color-list-bar-item-avatar-stup-active-bg-color);
+
+      & > span {
+        color: var(--color-list-bar-item-avatar-stup-active-color);
+      }
     }
 
     .list-item__nums > span {

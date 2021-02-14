@@ -12,7 +12,7 @@ export interface Props {
   className?: string;
 }
 
-export const ChatInput: React.FC<Props> = ({ className }: Props) => {
+export const ChatInput: React.FC<Props> = () => {
   const ref = useRef<HTMLInputElement | null>(null);
   const [sendMessage] = useMutation(SEND_MESSAGE);
   const getCurrentChatQuery = useQuery(GET_CURRENT_CHAT);

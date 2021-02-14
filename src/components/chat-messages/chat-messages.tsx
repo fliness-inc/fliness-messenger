@@ -17,9 +17,7 @@ export interface ItemType {
 
 export interface ChatMessagesProps {}
 
-export const ChatMessages: React.FC<ChatMessagesProps> = (
-  props: ChatMessagesProps
-) => {
+export const ChatMessages: React.FC<ChatMessagesProps> = () => {
   return <DynamicList />;
 };
 

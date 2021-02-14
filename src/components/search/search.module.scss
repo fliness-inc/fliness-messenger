@@ -5,8 +5,9 @@
   & > input {
     padding: 8px 15px;
     font-size: 18px;
-    color: #999;
+    color: var(--color-search-text-color);
     border-radius: 4px;
-    border: 1px solid #dedede;
+    border: 1px solid var(--color-search-border-color);
+    background-color: var(--color-search-bg-color);
   }
 }

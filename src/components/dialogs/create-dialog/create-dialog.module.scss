@@ -8,6 +8,7 @@
 
   &__title {
     font-weight: 600;
+    color: var(--color-create-dilaog-title-color);
   }
 
   &__btn {
@@ -51,7 +52,7 @@
   font-size: 18px;
   font-weight: 500;
   color: var(--color-create-dialog-btn-color);
-  border: 2px solid var(--color-create-dialog-btn-border);
+  border: 1px solid var(--color-create-dialog-btn-border);
   padding: 8px 16px;
 
   &-cancel,
@@ -59,6 +60,10 @@
     font-weight: 600;
     text-transform: uppercase;
     margin: 10px;
+  }
+
+  &-cancel {
+    color: var(--color-create-dialog-btn-cencel-color);
   }
 
   &-create {
@@ -88,14 +93,16 @@
     transition: background-color 0.1s ease-out;
 
     &:not(.list-item___btn_active):not(.list-item___btn_skeleton):hover {
-      background-color: var(--color-create-dialog-list-item-hover-bg);
+      background-color: var(--color-create-dialog-list-item-hover-bg-color);
 
       .list-item__title {
         color: var(--color-create-dialog-list-item-hover-title-color);
       }
 
       .list-item__status {
-        background-color: var(--color-create-dialog-list-item-hover-status-bg);
+        background-color: var(
+          --color-create-dialog-list-item-hover-status-bg-color
+        );
       }
     }
 
@@ -119,13 +126,15 @@
       ) !important;
 
       .list-item__title {
-        color: var(--color-create-dialog-list-item-selected-title-color);
+        color: var(
+          --color-create-dialog-list-item-selected-title-color
+        ) !important;
       }
 
       .list-item__status {
         background-color: var(
           --color-create-dialog-list-item-selected-status-bg
-        );
+        ) !important;
       }
     }
   }

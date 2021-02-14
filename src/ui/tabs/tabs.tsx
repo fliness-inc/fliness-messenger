@@ -10,16 +10,14 @@ export interface TabProps {
   onClick?: (index: number | string) => void;
 }
 
-export const Tab: React.FC<TabProps> = ({
-  index,
-  children,
-  className,
-  selected = false,
-  onClick = (index: number | string) => {},
-}: TabProps) => {
-  function __onClick(index) {
-    onClick(index);
-  }
+export const Tab: React.FC<TabProps> = (props: TabProps) => {
+  const {
+    index,
+    children,
+    className,
+    selected = false,
+    onClick = () => {},
+  } = props;
 
   return (
     <div

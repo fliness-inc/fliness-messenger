@@ -20,7 +20,6 @@ import Cookie from '@lib/cookie';
 import { NextPageContext } from 'next';
 import JWTLink from './apollo-link-jwt';
 import { currentChatVar } from '@store/chats';
-import { SubscriptionClient } from 'subscriptions-transport-ws';
 
 const typeDefs = gql`
   extend type Query {
@@ -39,7 +38,7 @@ const __getUserAgent = (ctx: NextPageContext) => {
 };
 
 export const createApolloClient = (initialState, ctx: NextPageContext) => {
-  let __updateToken = (token: string) => {};
+  let __updateToken = (token: string): void | string => token;
 
   const wsLink =
     typeof window !== 'undefined'
@@ -47,7 +46,7 @@ export const createApolloClient = (initialState, ctx: NextPageContext) => {
           uri: process.env.NEXT_PUBLIC_API_WS_URL,
           options: {
             reconnect: true,
-            connectionParams: new Promise((res, rej) => {
+            connectionParams: new Promise(res => {
               __updateToken = token =>
                 res({
                   Authorization: token,

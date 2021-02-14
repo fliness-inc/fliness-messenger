@@ -1,6 +1,6 @@
 .app-bar {
   height: 70px;
-  background-color: var(--color-app-bar-bg);
+  background-color: var(--color-app-bar-bg-color);
   box-shadow: 4px 0 16px rgba(69, 69, 69, 0.25);
   z-index: 20;
 }
@@ -32,7 +32,7 @@
     width: var(--size);
     height: var(--size);
 
-    fill: var(--color-app-bar-menu-icon);
+    fill: var(--color-app-bar-menu-icon-fill);
   }
 }
 
@@ -48,6 +48,7 @@
   &__title {
     font-size: 32px;
     font-weight: 600;
+    color: var(--color-app-bar-logo-title-color);
   }
 }
 
@@ -73,7 +74,7 @@
   &__username {
     font-size: 18px;
     font-weight: 500;
-    color: var(--color-app-bar-acoount-text);
+    color: var(--color-app-bar-acoount-text-color);
   }
 
   &__arrow-icon {
@@ -81,7 +82,7 @@
 
     width: var(--size);
     height: var(--size);
-    fill: var(--color-app-bar-acoount-text);
+    fill: var(--color-app-bar-acoount-text-color);
   }
 }
 

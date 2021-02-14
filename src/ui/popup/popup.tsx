@@ -14,7 +14,6 @@ export interface PopupContextProps {
 }
 
 export const PopupContext: React.FC<PopupContextProps> = ({
-  className,
   children,
   root: { x, y, width, height },
 }) => {
@@ -55,9 +54,8 @@ export interface PopupBackgroundProps {
 }
 
 export const PopupBackground: React.FC<PopupBackgroundProps> = ({
-  className,
   children,
-  onClick = (event: React.MouseEvent<HTMLDivElement>) => {},
+  onClick = () => {},
 }) => {
   return (
     <div onClick={onClick} className={classes['popup__background']}>
@@ -113,7 +111,7 @@ export const Popup: React.FC<PopupProps> = ({
     }
   }, [open]);
 
-  const handleBackgroundClick = (event: React.MouseEvent<HTMLDivElement>) => {
+  const handleBackgroundClick = () => {
     onClose();
     setOpen(false);
   };

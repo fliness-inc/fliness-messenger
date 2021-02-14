@@ -1,6 +1,6 @@
 .skeleton {
   display: block;
-  background-color: rgba(0, 0, 0, 0.11);
+  background-color: var(--color-skeleton-bg-color);
 
   &-pulse {
     animation: pulse 1.5s ease-in-out 0.5s infinite;

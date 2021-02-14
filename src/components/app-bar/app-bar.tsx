@@ -13,32 +13,29 @@ export interface AppBarProps {
   avatarURL: string;
 }
 
-export const AppBar: NextPage<AppBarProps> = ({ username, avatarURL }) => {
-  const handleMenuButtonClick = React.useCallback(
-    (event: React.MouseEvent<HTMLButtonElement>) => {
-      switch (menuStateVar()) {
-        case MenuStateEnum.MOVING_ACTIVE:
-          menuStateVar(MenuStateEnum.MOVING_DEACTIVE);
-          break;
-        case MenuStateEnum.MOVING_DEACTIVE:
-          menuStateVar(MenuStateEnum.MOVING_ACTIVE);
-          break;
-        case MenuStateEnum.MOVING_ON_TOP_ACTIVE:
-          menuStateVar(MenuStateEnum.MOVING_ON_TOP_DEACTIVE);
-          break;
-        case MenuStateEnum.MOVING_ON_TOP_DEACTIVE:
-          menuStateVar(MenuStateEnum.MOVING_ON_TOP_ACTIVE);
-          break;
-        case MenuStateEnum.MOVING_ON_TOP_WITH_SIDE_BAR_ACTIVE:
-          menuStateVar(MenuStateEnum.MOVING_ON_TOP_WITH_SIDE_BAR_DEACTIVE);
-          break;
-        case MenuStateEnum.MOVING_ON_TOP_WITH_SIDE_BAR_DEACTIVE:
-          menuStateVar(MenuStateEnum.MOVING_ON_TOP_WITH_SIDE_BAR_ACTIVE);
-          break;
-      }
-    },
-    []
-  );
+export const AppBar: NextPage<AppBarProps> = ({ username }) => {
+  const handleMenuButtonClick = React.useCallback(() => {
+    switch (menuStateVar()) {
+      case MenuStateEnum.MOVING_ACTIVE:
+        menuStateVar(MenuStateEnum.MOVING_DEACTIVE);
+        break;
+      case MenuStateEnum.MOVING_DEACTIVE:
+        menuStateVar(MenuStateEnum.MOVING_ACTIVE);
+        break;
+      case MenuStateEnum.MOVING_ON_TOP_ACTIVE:
+        menuStateVar(MenuStateEnum.MOVING_ON_TOP_DEACTIVE);
+        break;
+      case MenuStateEnum.MOVING_ON_TOP_DEACTIVE:
+        menuStateVar(MenuStateEnum.MOVING_ON_TOP_ACTIVE);
+        break;
+      case MenuStateEnum.MOVING_ON_TOP_WITH_SIDE_BAR_ACTIVE:
+        menuStateVar(MenuStateEnum.MOVING_ON_TOP_WITH_SIDE_BAR_DEACTIVE);
+        break;
+      case MenuStateEnum.MOVING_ON_TOP_WITH_SIDE_BAR_DEACTIVE:
+        menuStateVar(MenuStateEnum.MOVING_ON_TOP_WITH_SIDE_BAR_ACTIVE);
+        break;
+    }
+  }, []);
 
   return (
     <Grid direction="row" alignItems="center" className={classes['app-bar']}>
