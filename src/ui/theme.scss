@@ -227,22 +227,28 @@ body[data-color-mode='light'] {
   --color-create-dialog-btn-color: var(--color-gray-300);
   --color-create-dialog-btn-border: var(--color-gray-100);
   --color-create-dialog-btn-create-hover-bg: var(--color-blue-500);
+
   --color-create-dialog-tabs-color: var(--color-blue-400);
   --color-create-dialog-progress-bg: var(--color-white);
-  --color-create-dialog-list-item-hover-bg: var(--color-blue-400);
+
+  --color-create-dialog-list-item-hover-bg-color: var(--color-blue-400);
   --color-create-dialog-list-item-hover-title-color: var(--color-white);
-  --color-create-dialog-list-item-hover-status-bg: var(--color-blue-400);
+  --color-create-dialog-list-item-hover-status-bg-color: var(--color-blue-400);
+
   --color-create-dialog-list-item-active-bg: var(--color-blue-300);
   --color-create-dialog-list-item-active-title-color: var(--color-white);
   --color-create-dialog-list-item-active-status-bg: var(--color-blue-300);
+
   --color-create-dialog-list-item-selected-bg: var(--color-blue-500);
   --color-create-dialog-list-item-selected-title-color: var(--color-white);
   --color-create-dialog-list-item-selected-status-bg: var(--color-blue-500);
+
   --color-create-dialog-list-item-image-bg: var(--color-gray-150);
   --color-create-dialog-list-item-image-color: var(--color-white);
   --color-create-dialog-list-item-status-bg: var(--color-white);
   --color-create-dialog-list-item-title-color: var(--color-black);
   --color-create-dialog-list-item-online-status-bg: var(--color-green-200);
+
   --color-create-dialog-tab-panel-scroll: var(--color-gray-200);
 
   --color-create-dilaog-title-color: var(--color-black);
