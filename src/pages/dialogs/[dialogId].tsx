@@ -16,6 +16,7 @@ import DefaultLayout from '@components/layouts/default/defualt';
 import { currentChatVar } from '@store/chats';
 import Request from '@lib/request';
 import Head from 'next/head';
+import InfoBar from '@/src/components/info-bar/info-bar';
 
 export interface Props {
   error?: Error;
@@ -70,6 +71,7 @@ export const DialogPage: NextPage<Props> = ({
           <ChatMessages></ChatMessages>
           <ChatInput></ChatInput>
         </Grid>
+        <InfoBar title={member.name} avatarURL={member.avatarURL} />
       </DefaultLayout>
     </>
   );

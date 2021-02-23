@@ -381,4 +381,22 @@ body[data-color-mode='dark'] {
   --color-skeleton-bg-color: var(--color-gray-650);
 }
 
+/* info-bar */
+
+body[data-color-mode='light'] {
+  --color-info-bar-bg-color: var(--color-white);
+  --color-info-bar-avatar-plug-color: var(--color-white);
+
+  --color-info-bar-title-color: var(--color-black);
+
+  --color-info-bar-border-color: var(--color-gray-100);
+  --color-info-bar-status-color: var(--color-gray-200);
+  --color-info-bar-avatar-plug-bg-color: var(--color-gray-300);
+  --color-info-bar-text-color: var(--color-gray-350);
+  
+  --color-info-bar-user-info-click: var(--color-blue-400);
+  --color-info-bar-block-user: var(--color-red-50);
+  --color-info-bar-status-icon-bg-color: var(--color-green-200);
+}
+
 /**/

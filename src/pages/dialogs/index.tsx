@@ -14,6 +14,7 @@ import DialogsIcon from '@public/chat_bubble_outline.svg';
 import { currentChatVar } from '@store/chats';
 import Request, { RequestResponse } from '@lib/request';
 import Head from 'next/head';
+import InfoBar from '@/src/components/info-bar/info-bar';
 
 export interface Data {
   me: {
@@ -68,6 +69,7 @@ export const DialogsPage: NextPage<RequestResponse<Data>> = ({
             <p className={classes['plug__desc']}>to start messaging</p>
           </Grid>
         </Grid>
+        <InfoBar title={name} avatarURL={avatarURL} />
       </DefaultLayout>
     </>
   );

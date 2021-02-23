@@ -1,0 +1,183 @@
+.info-bar {
+    --size: 404px;
+    width: var(--size);
+    height: calc(100vh - 70px);
+    background-color: var(--color-info-bar-bg-color);
+    border-left: 1px solid var(--color-info-bar-border-color);
+
+    &__header {
+        &-button {
+            --size: 48px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            width: var(--size);
+            height: var(--size);
+
+            border-radius: 50% !important;
+            margin: 20px 20px;
+
+            padding: 5px 15px !important;
+        }
+        &-title {
+            width: 344px;
+            height: 50px;
+            margin-top: 20px;
+            margin-left: 30px;
+            margin-bottom: 40px;
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            text-align: center;
+        }
+        &-close-icon {
+            --size: 15px;
+            width: var(--size);
+            height: var(--size);
+            fill: var(--color-chat-bar-btn-icon-fill);
+        }
+    }
+
+    &__avatar {
+        padding-bottom: 30px;
+        &-grid {
+            margin-left: 30px;
+            margin-right: -200px;
+        }
+        
+        &-img,
+        &-plug {
+            --size: 60px;
+
+            width: var(--size);
+            height: var(--size);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+
+            border-radius: 50%;
+        }
+
+        &-plug {
+            font-weight: 500;
+            font-size: 22px;
+            background-color: var(--color-info-bar-avatar-plug-bg-color);
+            color: var(--color-info-bar-avatar-plug-color);
+        }
+    }
+    
+    &__title {
+        font-weight: 600;
+        font-size: 22px;
+        color: var(--color-info-bar-title-color);
+    }
+    
+    &__status {
+        color: var(--color-info-bar-status-color);
+        font-weight: 500;
+        font-size: 15px;
+    
+        &-icon {
+            --size: 8px;
+    
+            width: var(--size);
+            height: var(--size);
+        
+            background-color: var(--color-info-bar-status-icon-bg-color);
+            border-radius: 50%;
+            margin: 0 6px;
+        }
+    }
+
+    &__info {
+        padding: 20px 55px;
+        border-top: 1px solid var(--color-info-bar-border-color);
+        &-bio-click {
+            padding: 3px 20px;
+            font-weight: bold;
+            font-size: 18px;
+            color: var(--color-info-bar-user-info-click);
+        }
+        &-bio-text {
+            padding: 0 45px;
+            font-weight: bold;
+            font-size: 18px;
+            color: var(--color-info-bar-text-color);
+        }
+        &-user-name {
+            margin-left: 45px;
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        &-user-text {
+            font-weight: bold;
+            margin-left: 45px;
+            margin-top: 3px;
+            font-size: 18px;
+            color: var(--color-info-bar-text-color);
+        }
+    }
+
+    &__notif {
+        padding: 20px 55px;
+        border-top: 1px solid var(--color-info-bar-border-color);
+        &-text {
+            padding: 3px 20px;
+            margin-right: 72px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+    }
+
+    &__files {
+        padding: 10px 10px;
+        border-top: 1px solid var(--color-info-bar-border-color);
+        &-button {
+            width: 365px;
+            height: 50px;
+        }
+        &-image-text {
+            padding: 3px 20px;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 130px;
+        }
+        &-link-text {
+            padding: 0 20px;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 80px;
+        }
+    }
+
+    &__function {
+        padding: 10px 10px;
+        border-top: 1px solid var(--color-info-bar-border-color);
+        &-button {
+            width: 365px;
+            height: 50px;
+        }
+        &-clear-history {
+            padding: 3px 20px;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 110px;
+        }
+        &-delete-chat {
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 100px;
+        }
+        &-block-user {
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 106px;
+            color: var(--color-info-bar-block-user);
+        }
+    }
+}
