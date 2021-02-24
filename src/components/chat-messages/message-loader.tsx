@@ -1,9 +1,10 @@
-import { useLazyQuery, useQuery } from '@apollo/client';
+import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
 import React from 'react';
 import {
   GET_CURRENT_CHAT,
   GET_MESSAGES,
   MESSAGE_CREATED_SUBS,
+  SET_ALL_VIEWS,
 } from './chat-messages.graphql';
 
 export interface Message {
@@ -32,6 +33,7 @@ export const MessageLoader: React.FC<MessageLoaderProps> = (
   const { children, loading, update = () => {} } = props;
 
   const getCurrentChatQuery = useQuery(GET_CURRENT_CHAT);
+  const [setAllViews] = useMutation(SET_ALL_VIEWS);
   const [getMessangesFunc, getMessangesQuery] = useLazyQuery(GET_MESSAGES, {
     variables: {
       filter: {
@@ -63,6 +65,12 @@ export const MessageLoader: React.FC<MessageLoaderProps> = (
   const me = getMessangesQuery.data.me;
   const chats = me.chats.edges;
   const currentChat = chats[0].node;
+
+  setAllViews({
+    variables: {
+      chatId: currentChat.id,
+    },
+  });
 
   getMessangesQuery.subscribeToMore({
     document: MESSAGE_CREATED_SUBS,

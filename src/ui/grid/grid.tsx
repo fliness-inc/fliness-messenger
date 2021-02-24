@@ -8,7 +8,6 @@ export interface GridProps {
   justify?:
     | 'center'
     | 'start'
-    | 'center'
     | 'end'
     | 'flex-start'
     | 'flex-end'
@@ -17,7 +16,6 @@ export interface GridProps {
   alignItems?:
     | 'center'
     | 'start'
-    | 'center'
     | 'end'
     | 'flex-start'
     | 'flex-end'

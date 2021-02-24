@@ -62,3 +62,15 @@ export const MESSAGE_CREATED_SUBS = gql`
     }
   }
 `;
+
+export const SET_ALL_VIEWS = gql`
+  mutation($chatId: UUID!) {
+    me {
+      chats {
+        messages {
+          setAllViews(chatId: $chatId)
+        }
+      }
+    }
+  }
+`;

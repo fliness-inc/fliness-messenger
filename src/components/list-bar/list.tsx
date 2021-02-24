@@ -1,6 +1,6 @@
-import { List as UIList, Grid } from '@ui/ui';
+import { List as UIList } from '@ui/ui';
+import React from 'react';
 import classes from '@components/list-bar/list-bar.module.scss';
-import classNames from 'classnames';
 import { LBSkeleton } from './skeleton';
 import { useQuery } from '@apollo/client';
 import {
@@ -8,33 +8,16 @@ import {
   SUBS_CHAT_ADDED,
   GET_LOCAL_STATE,
 } from './list-bar.graphql';
-import { currentChatVar } from '@store/chats';
-import { useRouter } from 'next/router';
-import { AvatarIcon } from './avatar-icon';
-
-export interface ItemType {
-  id: string;
-  title: string;
-  desc: string;
-  time: string;
-  messages: number;
-  avatarURL: string;
-  active: boolean;
-}
-
-export interface ListProps {
-  dialogs: ItemType[];
-}
+import { ListItem } from './list-item';
 
 export const List: React.FC = props => {
   const {} = props;
-  const router = useRouter();
+
   const {
     data: {
       localState: { currentChat },
     },
   } = useQuery(GET_LOCAL_STATE);
-
   const { subscribeToMore, error, data, loading } = useQuery(GET_DIALOGS, {
     variables: {
       filter: {
@@ -44,10 +27,16 @@ export const List: React.FC = props => {
           val: 'DIALOG',
         },
       },
+      pagination: {
+        last: 1,
+        fields: ['UPDATED_AT'],
+      },
     },
   });
 
   if (loading || error) return <LBSkeleton />;
+
+  /* if (newMessage) console.log(newMessage); */
 
   subscribeToMore({
     document: SUBS_CHAT_ADDED,
@@ -78,83 +67,38 @@ export const List: React.FC = props => {
     },
   } = data;
 
-  const items = chats.map(
-    ({
+  const items = chats.map(chat => {
+    const {
       node: {
         id,
+        numUnreaded,
         members: { edges: members },
+        messages: { edges: messages },
       },
-    }) => {
-      const {
-        node: { user: interlocutor },
-      } = members.find(({ node: { user } }) => user.id !== userId);
-      return {
-        id,
-        title: interlocutor.name,
-        desc: '',
-        time: '',
-        messages: 0,
-        avatarURL: interlocutor.avatarURL,
-        active: currentChat === id,
-      };
-    }
-  );
+    } = chat;
+
+    const {
+      node: { user: companion },
+    } = members.find(({ node: { user } }) => user.id !== userId);
+
+    const desc = messages.length ? messages[0].node.text : '';
+    const time = messages.length ? messages[0].node.createdAt : '';
+
+    return {
+      id,
+      title: companion.name,
+      desc,
+      time,
+      messages: numUnreaded,
+      avatarURL: companion.avatarURL,
+      active: currentChat === id,
+      userId: messages.length ? messages[0].node.member.user.id : '',
+    };
+  });
 
   return (
     <UIList items={items} className={classes['list']}>
-      {({ id, title, desc, time, messages, active, avatarURL }: ItemType) => {
-        const timeElement = time ? (
-          <p className={classes['list-item__time']}>{time}</p>
-        ) : null;
-
-        const messageElement = messages ? (
-          <p className={classes['list-item__nums']}>
-            <span>{messages}</span>
-          </p>
-        ) : null;
-
-        const descElement = desc ? (
-          <p className={classes['list-item__desc']}>{desc}</p>
-        ) : null;
-
-        return (
-          <Grid
-            key={id}
-            alignItems="center"
-            direction="row"
-            wrap="nowrap"
-            justify="space-between"
-            className={classNames(classes['list-item'], {
-              [classes['list-item_active']]: active,
-            })}
-            onClick={() => {
-              currentChatVar(id);
-              router.push(`/dialogs/${id}`);
-            }}
-          >
-            <Grid
-              alignItems="center"
-              justify="space-between"
-              className={classes['list-item__header']}
-            >
-              <div className={classes['list-item__avatar']}>
-                <AvatarIcon username={title} url={avatarURL}></AvatarIcon>
-                <span className={classes['list-item__status']}>
-                  <span className={classes['list-item__online-status']}></span>
-                </span>
-              </div>
-              <Grid direction="column" className={classes['list-item__text']}>
-                <p className={classes['list-item__title']}>{title}</p>
-                {descElement}
-              </Grid>
-            </Grid>
-            <Grid direction="column" className={classes['list-item__info']}>
-              {timeElement}
-              {messageElement}
-            </Grid>
-          </Grid>
-        );
-      }}
+      {props => <ListItem key={props.id} {...props} currentUserId={userId} />}
     </UIList>
   );
 };

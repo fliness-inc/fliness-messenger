@@ -50,7 +50,7 @@ export const SideBar: React.FC = () => {
       <Grid direction="column" className={classes['side-bar__menu']}>
         <MenuItem
           Icon={DialogsIcon}
-          className={classes['menu__item_vertical']}
+          className={classes['  ']}
           onClick={handleMenuItemClick.bind(this, PageTypeEnum.DIALOGS)}
           active={
             currentPage === PageTypeEnum.DIALOGS ||

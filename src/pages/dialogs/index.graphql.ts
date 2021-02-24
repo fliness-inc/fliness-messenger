@@ -29,14 +29,6 @@ export const GET_CURRENT_CHAT = gql`
                 }
               }
             }
-            messages {
-              edges {
-                node {
-                  id
-                  text
-                }
-              }
-            }
           }
         }
       }

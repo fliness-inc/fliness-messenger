@@ -48,7 +48,7 @@ export const DialogPage: NextPage<Props> = ({
     },
   } = data[1];
 
-  if (chats.length !== 1) return <Error statusCode={404} />;
+  /* if (chats.length !== 1) return <Error statusCode={404} />; */
 
   const {
     node: { user: member },
