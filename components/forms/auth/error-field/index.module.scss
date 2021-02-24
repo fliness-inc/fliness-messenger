@@ -1,0 +1,41 @@
+.error {
+  display: flex;
+  align-items: center;
+  min-width: 340px !important;
+  margin: 26px 35px !important;
+  border: 1px solid #fd8b8b;
+  box-sizing: border-box;
+  border-radius: 4px;
+  padding: 5px 0;
+
+  & p {
+    width: 100%;
+    display: block;
+    border: none;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    color: #fd8b8b;
+    padding: 1px 2px;
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    & > svg {
+      $size: 24px;
+
+      width: $size;
+      height: $size;
+      fill: #fd8b8b;
+      margin: 0 16px;
+    }
+  }
+
+  &__hidden {
+    visibility: hidden;
+  }
+}

@@ -1,49 +1,23 @@
 {
-    "include": [
-      "../еь2/src/@types/index.d.ts",
-        "src/**/*",
-        "next-env.d.ts"
-    ],
-    "exclude": [
-        "node_modules"
-    ],
-    "compilerOptions": {
-        "target": "ES5",
-        "module": "esnext",
-        "esModuleInterop": true,
-        "allowJs": true,
-        "baseUrl": "./",
-        "experimentalDecorators": true,
-        "jsx": "preserve",
-        "types": [
-            "node"
-        ],
-        "typeRoots": [
-            "node_modules/@types",
-          "../еь2/src/@types"
-        ],
-        "resolveJsonModule": true,
-        "lib": [
-            "dom",
-            "dom.iterable",
-            "esnext"
-        ],
-        "skipLibCheck": true,
-        "strict": false,
-        "forceConsistentCasingInFileNames": true,
-        "noEmit": true,
-        "moduleResolution": "node",
-        "isolatedModules": true,
-        "paths": {
-            "@/*": ["./*"],
-            "@src/*": ["src/*"],
-            "@components/*": ["src/components/*"],
-            "@ui/*": ["src/ui/*"],
-            "@lib/*": ["src/lib/*"],
-            "@store/*": ["src/store/*"],
-            "@pages/*": ["src/pages/*"],
-            "@layouts/*": ["src/components/layouts/*"],
-            "@public/*": ["public/*"]
-        }
-    }   
+  "compilerOptions": {
+    "target": "ES2018",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "lib": ["ESNext", "ESNext.AsyncIterable", "DOM"],
+    "esModuleInterop": true,
+    "allowJs": true,
+    "sourceMap": true,
+    "baseUrl": "./",
+    "strict": true,
+    "noEmit": true,
+    "checkJs": true,
+    "noImplicitAny": false,
+    "experimentalDecorators": true,
+    "paths": {
+      "~/*": ["./*"],
+      "@/*": ["./*"]
+    },
+    "types": ["@nuxt/types", "@types/node", "jest"]
+  },
+  "exclude": ["node_modules", ".nuxt", "dist"]
 }

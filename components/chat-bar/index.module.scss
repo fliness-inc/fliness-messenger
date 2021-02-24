@@ -1,0 +1,88 @@
+.chatbar {
+  padding: 0 20px;
+  height: 84px;
+  border-bottom: 1px solid var(--color-chat-bar-border-color);
+  background-color: var(--color-chat-bar-bg-color);
+
+  &__avatar {
+    &_img,
+    &_plug {
+      --size: 60px;
+
+      width: var(--size);
+      height: var(--size);
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      border-radius: 50%;
+    }
+
+    &_plug {
+      font-weight: 500;
+      font-size: 22px;
+      background-color: var(--color-chat-bar-avatar-plug-bg-color);
+      color: var(--color-chat-bar-avatar-plug-color);
+    }
+  }
+
+  &__text {
+    margin: 0 20px;
+  }
+
+  &__title {
+    font-weight: 600;
+    font-size: 22px;
+    color: var(--color-chat-bar-title-color);
+  }
+
+  &__status {
+    color: var(--color-chat-bar-status-color);
+    font-weight: 500;
+    font-size: 15px;
+
+    &_icon {
+      --size: 8px;
+
+      width: var(--size);
+      height: var(--size);
+
+      background-color: var(--color-chat-bar-status-icon-bg-color);
+      border-radius: 50%;
+      margin: 0 6px;
+    }
+  }
+
+  &__tool_btn {
+    --size: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: var(--size);
+    height: var(--size);
+
+    border-radius: 50% !important;
+    margin: 0 6px;
+
+    padding: 5px 15px !important;
+
+    &_icon {
+      --size: 24px;
+
+      width: var(--size);
+      height: var(--size);
+
+      fill: var(--color-chat-bar-btn-icon-fill);
+    }
+
+    &:last-child {
+      &_icon {
+        transform: rotate(90deg);
+      }
+    }
+  }
+}

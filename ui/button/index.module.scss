@@ -1,0 +1,114 @@
+.btn {
+  padding: 10px 20px;
+  transition: background 0.3s ease-out;
+  cursor: pointer;
+  background-color: transparent;
+  border: 0;
+  border-radius: 4px;
+  font-size: 14px;
+
+  &:hover:enabled {
+    background-color: var(--color-btn-hover-bg-color);
+  }
+
+  &:active:enabled {
+    background-color: var(--color-btn-active-bg-color);
+  }
+
+  &:disabled {
+    background-color: var(--color-btn-disabled-bg-color);
+
+    &:hover {
+      background-color: var(--color-btn-disabled-bg-color);
+    }
+
+    &:active {
+      background-color: var(--color-btn-disabled-bg-color);
+    }
+  }
+
+  &_contained {
+    background-color: var(--color-btn-contained-bg-color);
+    color: var(--color-btn-contained-color);
+
+    &:hover {
+      background-color: var(--color-btn-contained-hover-bg-color) !important;
+    }
+
+    &:active {
+      background-color: var(--color-btn-contained-active-bg-color) !important;
+    }
+
+    &:disabled {
+      background-color: var(--color-btn-contained-disabled-bg-color);
+
+      &:hover {
+        background-color: var(
+          --color-btn-contained-disabled-bg-color
+        ) !important;
+      }
+
+      &:active {
+        background-color: var(
+          --color-btn-contained-disabled-bg-color
+        ) !important;
+      }
+    }
+  }
+
+  &_outlined {
+    border: 1px solid var(--color-btn-outlined-border);
+    background-color: transparent;
+
+    &:disabled {
+      color: var(--color-btn-outlined-disabled-color);
+      background-color: var(--color-btn-outlined-disabled-bg-color);
+      border-color: var(--color-btn-outlined-disabled-border);
+
+      &:hover {
+        background-color: var(
+          --color-btn-outlined-disabled-bg-color
+        ) !important;
+      }
+
+      &:active {
+        background-color: var(
+          --color-btn-outlined-disabled-bg-color
+        ) !important;
+      }
+    }
+
+    &:hover {
+      background-color: var(--color-btn-outlined-hover-bg-color) !important;
+    }
+
+    &:active {
+      background-color: var(--color-btn-outlined-active-bg-color) !important;
+    }
+  }
+
+  &_text {
+    background-color: transparent;
+
+    &:disabled {
+      color: var(--color-btn-text-disabled-color);
+      background-color: var(--color-btn-text-disabled-bg-color);
+
+      &:hover {
+        background-color: var(--color-btn-text-disabled-bg-color) !important;
+      }
+
+      &:active {
+        background-color: var(--color-btn-text-disabled-bg-color) !important;
+      }
+    }
+
+    &:hover {
+      background-color: var(--color-btn-text-hover-bg-color) !important;
+    }
+
+    &:active {
+      background-color: var(--color-btn-text-active-bg-color) !important;
+    }
+  }
+}

@@ -1,0 +1,36 @@
+* {
+  padding: 0;
+  margin: 0;
+  user-select: none;
+  font-family: 'Roboto';
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 530px;
+}
+
+p {
+  display: inline-flex;
+  width: auto;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto';
+  font-size: 16px;
+}
+
+input {
+  display: flex;
+  flex: 1;
+  font-family: 'Roboto';
+}
+
+input:focus,
+button:focus {
+  outline-style: none;
+}
+
+a {
+  display: inline-flex;
+  text-decoration: none;
+}

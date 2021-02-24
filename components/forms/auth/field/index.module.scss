@@ -1,0 +1,49 @@
+.input {
+  display: flex;
+  align-items: center;
+  min-width: 340px !important;
+  margin: 26px 35px !important;
+  border: 1px solid #dddddd;
+  box-sizing: border-box;
+  border-radius: 4px;
+  padding: 5px 0;
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    & > svg {
+      $size: 24px;
+
+      width: $size;
+      height: $size;
+      fill: #aaa;
+      margin: 0 16px;
+    }
+  }
+
+  &__shape {
+    width: 100%;
+    display: block;
+    border: none;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    color: #888;
+
+    ::-webkit-input-placeholder {
+      color: #aaa;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
