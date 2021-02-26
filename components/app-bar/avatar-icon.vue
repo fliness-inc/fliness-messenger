@@ -18,11 +18,13 @@ export default Vue.extend({
     },
     username: {
       type: String,
-      required: true,
+      default: null,
     },
   },
   computed: {
     upperSymbolUsername() {
+      if (!this.username || !this.username.length) return this.username;
+
       return this.username[0].toUpperCase();
     },
   },

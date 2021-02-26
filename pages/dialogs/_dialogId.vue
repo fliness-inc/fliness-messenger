@@ -4,11 +4,11 @@
       <list-bar title="Dialogs"></list-bar>
     </template>
     <template #content>
-      <!-- <ui-grid direction="column" :class="$style.chat_messages">
+      <ui-grid direction="column" :class="$style.chat_messages">
         <chat-bar></chat-bar>
         <chat-messages></chat-messages>
         <chat-input></chat-input>
-      </ui-grid> -->
+      </ui-grid>
     </template>
   </main-layout>
 </template>

@@ -19,8 +19,8 @@
       <ui-grid align-items="center" justify="flex-end">
         <ui-grid align-item="center" justify="flex-end" :class="$style.account">
           <ui-button variant="text" :class="$style.account__btn">
-            <p :class="$style.account__username">{{ name }}</p>
-            <avatar-icon :url="avatarURL" :username="name"></avatar-icon>
+            <p :class="$style.account__username">{{ me.name }}</p>
+            <avatar-icon :url="me.avatarURL" :username="me.name"></avatar-icon>
             <arrow-icon :class="$style['account__arrow-icon']" />
           </ui-button>
         </ui-grid>
@@ -31,6 +31,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import { mapState } from 'vuex';
 import AvatarIcon from './avatar-icon.vue';
 import Grid from '~/ui/grid/index.vue';
 import Button from '~/ui/button/index.vue';
@@ -40,6 +41,8 @@ import MenuIcon from '~/assets/menu.svg?inline';
 import LogoIcon from '~/assets/logo.svg?inline';
 // @ts-ignore
 import ArrowIcon from '~/assets/keyboard_arrow_down.svg?inline';
+import { GET_ME_INFO_ACTION } from '~/store/me/types';
+import { CHANGE_MENU_STATE_ACTION } from '~/store/flex/types';
 
 export default Vue.extend({
   components: {
@@ -50,21 +53,17 @@ export default Vue.extend({
     'arrow-icon': ArrowIcon,
     'avatar-icon': AvatarIcon,
   },
-  data() {
-    return {
-      name: null,
-      avatarURL: null,
-    };
-  },
   async fetch() {
-    const res = await this.$store.dispatch('me/getMeInfo');
-
-    this.name = res.name;
-    this.avatarURL = res.avatarURL;
+    await this.$store.dispatch(GET_ME_INFO_ACTION);
+  },
+  computed: {
+    ...mapState({
+      me: (state: any) => state.me,
+    }),
   },
   methods: {
-    handleMenuBtnClick() {
-      this.$store.dispatch('flex/changeMenuState');
+    async handleMenuBtnClick() {
+      await this.$store.dispatch(CHANGE_MENU_STATE_ACTION);
     },
   },
 });

@@ -15,7 +15,6 @@ export default {
           email: data.email,
           avatarURL: data.avatarURL,
         });
-        return data;
       })
       .catch((e) => e);
   },

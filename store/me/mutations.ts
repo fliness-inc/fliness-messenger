@@ -1,11 +1,8 @@
 export default {
   setMeInfo(state, payload) {
-    state = {
-      ...state,
-      id: payload.id,
-      email: payload.email,
-      name: payload.name,
-      avatarURL: payload.avatarURL,
-    };
+    state.id = payload.id;
+    state.name = payload.name;
+    state.email = payload.email;
+    state.avatarURL = payload.avatarURL;
   },
 };

@@ -4,6 +4,7 @@
     justify="space-between"
     wrap="nowrap"
     :class="$style.list_item"
+    @click="$emit('click')"
   >
     <ui-button
       variant="contained"
@@ -21,7 +22,7 @@
               :src="avatarURL"
               alt="user avatar"
             />
-            <span v-else> {{ getUpperCaseFirstSymbol() }} </span>
+            <span v-else> {{ upperCaseFirstSymbol }} </span>
           </div>
           <span :class="$style.list_item__status">
             <span :class="$style.list_item__online_status"></span>
@@ -50,15 +51,15 @@ export default Vue.extend({
     },
     avatarURL: {
       type: String,
-      required: true,
+      default: null,
     },
     username: {
       type: String,
       required: true,
     },
   },
-  methods: {
-    getUpperCaseFirstSymbol() {
+  computed: {
+    upperCaseFirstSymbol() {
       return this.username[0].toUpperCase();
     },
   },

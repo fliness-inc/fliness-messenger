@@ -39,6 +39,7 @@ import Search from '~/components/search/index.vue';
 import SideBarHorizontal from '~/components/side-bar/horizontal/index.vue';
 import CreateDialogModal from '~/components/dialogs/create-dialog/index.vue';
 import { MenuStateEnum } from '~/store/flex/state';
+import { GET_CHATS_ACTION } from '~/store/chats/types';
 
 export default Vue.extend({
   components: {
@@ -58,10 +59,14 @@ export default Vue.extend({
   computed: {
     ...mapState({
       menuState: (state: any) => state.flex.menuState,
+      chats: (state: any) => state.chats,
     }),
     showHorizontalSideBar() {
       return this.menuState === MenuStateEnum.MOVING_OVER_WITH_SIDE_BAR_ACTIVE;
     },
+  },
+  async mounted() {
+    await this.$store.dispatch(GET_CHATS_ACTION);
   },
   methods: {
     handleListItemClick() {},
