@@ -14,15 +14,17 @@ export default Vue.extend({
   props: {
     url: {
       type: String,
-      required: true,
+      default: null,
     },
     username: {
       type: String,
-      required: true,
+      default: null,
     },
   },
   computed: {
     upperSymbolUsername() {
+      if (!this.username || !this.username.length) return '';
+
       return this.username[0].toUpperCase();
     },
   },

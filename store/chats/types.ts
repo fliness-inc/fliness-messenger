@@ -25,9 +25,8 @@ export enum ChatTypesEnum {
   CHANNEL = 'CHANNEL',
 }
 
-export interface ChatCreatePayload {
+export interface GetChatsActionPayload {
   type: ChatTypesEnum;
-  userIds: string[];
 }
 
 export interface SetCurrentChatMutationPayload {

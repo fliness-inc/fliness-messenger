@@ -5,6 +5,7 @@ import FlexModule, { NAMESPACE as FLEX_NAMESPACE } from './flex';
 import MeModule, { NAMESPACE as ME_NAMESPACE } from './me';
 import ChatsModule, { NAMESPACE as CHATS_NAMESPACE } from './chats';
 import UsersModule, { NAMESPACE as USERS_NAMESPACE } from './users';
+import PagesModule, { NAMESPACE as PAGES_NAMESPACE } from './pages';
 
 Vue.use(Vuex);
 
@@ -14,4 +15,5 @@ export const modules = {
   [ME_NAMESPACE]: MeModule,
   [CHATS_NAMESPACE]: ChatsModule,
   [USERS_NAMESPACE]: UsersModule,
+  [PAGES_NAMESPACE]: PagesModule,
 };

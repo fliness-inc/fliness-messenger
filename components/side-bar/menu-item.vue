@@ -2,6 +2,7 @@
   <ui-button
     variant="text"
     :class="[$style.menu__item, { [$style.menu__item_active]: active }]"
+    @click="$emit('click')"
   >
     <div :class="$style.item__icon">
       <slot></slot>

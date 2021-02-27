@@ -27,6 +27,7 @@ import ListBar from '~/components/list-bar/index.vue';
 import MainLayout from '~/layouts/main.vue';
 // @ts-ignore
 import DialogsIcon from '~/assets/chat_bubble_outline.svg?inline';
+import * as PagesState from '~/store/pages/types';
 
 export default Vue.extend({
   components: {
@@ -40,6 +41,12 @@ export default Vue.extend({
     return {
       title: 'Fliness Messenger - Dialogs',
     };
+  },
+  async mounted() {
+    const payload: PagesState.SetPageActionPayload = {
+      page: PagesState.Pages.DIALOGS,
+    };
+    await this.$store.dispatch(PagesState.Actions.SET_PAGE, payload);
   },
 });
 </script>

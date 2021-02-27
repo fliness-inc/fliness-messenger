@@ -1,7 +1,7 @@
 <template>
   <ui-grid justify="space-between" align-items="center" :class="$style.chatbar">
     <ui-grid align-items="center" :class="$style.chatbar__avatar">
-      <avatar-icon username="title" url=""></avatar-icon>
+      <avatar-icon :username="title" :url="url"></avatar-icon>
       <ui-grid direction="column" :class="$style.chatbar__text">
         <p :class="$style.chatbar__title">{{ title }}</p>
         <ui-grid align-items="center">
@@ -45,10 +45,15 @@ export default Vue.extend({
     'more-icon': MoreIcon,
     'sidebar-icon': SideBarIcon,
   },
-  data() {
-    return {
-      title: 'Chat Title',
-    };
+  props: {
+    title: {
+      type: String,
+      default: null,
+    },
+    url: {
+      type: String,
+      default: null,
+    },
   },
 });
 </script>
