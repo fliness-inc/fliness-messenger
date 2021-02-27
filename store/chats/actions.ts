@@ -3,6 +3,8 @@ import {
   CREATE_CHAT_ACTION_NAME,
   GET_CHATS_MUTATION_NAME,
   CREATE_CHAT_MUTATION_NAME,
+  GET_CHAT_TYPES_ACTION_NAME,
+  SET_CHAT_TYPES_MUTATION_NAME,
 } from './types';
 import axios from '~/plugins/axios';
 
@@ -25,6 +27,16 @@ export default {
         },
       })
       .then(({ data: { data } }) => commit(CREATE_CHAT_MUTATION_NAME, data))
+      .catch((e) => console.error(e));
+  },
+  [GET_CHAT_TYPES_ACTION_NAME]({ commit, rootState }) {
+    return axios
+      .get('/chats/types', {
+        headers: {
+          Authorization: `Bearer ${rootState.auth.tokens.access}`,
+        },
+      })
+      .then(({ data: { data } }) => commit(SET_CHAT_TYPES_MUTATION_NAME, data))
       .catch((e) => console.error(e));
   },
 };

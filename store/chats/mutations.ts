@@ -1,4 +1,8 @@
-import { CREATE_CHAT_MUTATION_NAME, GET_CHATS_MUTATION_NAME } from './types';
+import {
+  CREATE_CHAT_MUTATION_NAME,
+  GET_CHATS_MUTATION_NAME,
+  SET_CHAT_TYPES_MUTATION_NAME,
+} from './types';
 
 export interface Chat {
   id: string;
@@ -22,9 +26,15 @@ export interface ChatCreatePayload {
 
 export default {
   [GET_CHATS_MUTATION_NAME](state, payload) {
-    console.log(payload);
+    state.all = payload;
   },
   [CREATE_CHAT_MUTATION_NAME](state, payload) {
-    state = [...state, payload];
+    state.all = [...state.all, payload];
+  },
+  [SET_CHAT_TYPES_MUTATION_NAME](state, payload) {
+    state.all = state.all.map((chat) => ({
+      ...chat,
+      type: payload.find((type) => type.id === chat.typeId),
+    }));
   },
 };
