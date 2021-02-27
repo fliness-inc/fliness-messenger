@@ -12,10 +12,12 @@ export default ({ app, redirect, req }) => {
       '/auth/refresh-tokens',
       {},
       {
-        headers: {
-          Cookie: `jwt-token=${token}`,
-          'User-Agent': userAgent,
-        },
+        headers: process.server
+          ? {
+              Cookie: `jwt-token=${token}`,
+              'User-Agent': userAgent,
+            }
+          : {},
       }
     )
     .then(({ data: { data } }) => {

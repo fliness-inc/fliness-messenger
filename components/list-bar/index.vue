@@ -11,28 +11,29 @@
         <create-dialog-modal />
       </ui-grid>
     </ui-grid>
-    <ui-grid v-if="loading" direction="column" :class="$style.list">
-      <ui-grid
-        v-for="i in 10"
-        :key="i"
-        :class="[$style.list_item, $style.list_item_skeleton]"
-      >
-        <ui-skeleton width="100%" height="60px" radius="4px"></ui-skeleton>
-      </ui-grid>
+    <ui-grid direction="column" :class="$style.list">
+      <template v-for="chat in chats">
+        <ui-grid
+          v-if="!getUser(chat.id)"
+          :key="chat.id"
+          :class="[$style.list_item, $style.list_item_skeleton]"
+        >
+          <ui-skeleton width="100%" height="60px" radius="4px"></ui-skeleton>
+        </ui-grid>
+        <list-item
+          v-else
+          :key="chat.id"
+          :username="getUser(chat.id).name"
+          :avatarURL="getUser(chat.id).avatarURL"
+          :title="getUser(chat.id).name"
+          description=""
+          time=""
+          messages=""
+          @click="handleListItemClick(chat.id)"
+        />
+      </template>
     </ui-grid>
-    <ui-grid v-else direction="column" :class="$style.list">
-      <list-item
-        v-for="chat in chats"
-        :key="chat.id"
-        :username="getUser(chat.id).name"
-        :avatarURL="getUser(chat.id).avatarURL"
-        :title="getUser(chat.id).name"
-        description=""
-        time=""
-        messages=""
-        @click="handleListItemClick(chat.id)"
-      />
-    </ui-grid>
+
     <side-bar-horizontal v-if="showHorizontalSideBar"></side-bar-horizontal>
   </ui-grid>
 </template>
@@ -66,11 +67,6 @@ export default Vue.extend({
       required: true,
     },
   },
-  data() {
-    return {
-      loading: true,
-    };
-  },
   computed: {
     ...mapState({
       me: (state: any) => state.me,
@@ -86,32 +82,21 @@ export default Vue.extend({
       return this.members.filter((member) => member.userId !== this.me.id);
     },
   },
-  watch: {
-    chats() {
-      // @ts-ignore
-      this.loading = true;
-    },
-    users() {
-      // @ts-ignore
-      this.loading = false;
-    },
-  },
   async mounted() {
-    // @ts-ignore
-    this.loading = true;
-
     await this.$store.dispatch(GET_CHATS_ACTION, {
       type: ChatTypesEnum.DIALOG,
     });
-
-    // @ts-ignore
-    this.loading = false;
   },
   methods: {
-    handleListItemClick() {},
+    handleListItemClick(chatId: string) {
+      this.$router.push(`/dialogs/${chatId}`);
+    },
     getUser(chatId: string) {
       // @ts-ignore
       const member = this.companions.find((member) => member.chatId === chatId);
+
+      if (!member) return;
+
       return this.users.find((users) => users.id === member.userId);
     },
   },
