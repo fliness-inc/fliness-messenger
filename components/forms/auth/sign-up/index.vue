@@ -71,6 +71,7 @@ import UnlockIcon from '~/assets/unlock.svg?inline';
 import EmailIcon from '~/assets/email.svg?inline';
 // @ts-ignore
 import UserIcon from '~/assets/user.svg?inline';
+import { SIGN_UP_ACTION } from '~/store/auth/types';
 
 export interface Data {
   username: string | null;
@@ -128,7 +129,7 @@ export default Vue.extend({
       this.loading = true;
 
       await this.$store
-        .dispatch('auth/signUp', {
+        .dispatch(SIGN_UP_ACTION, {
           name: this.username,
           email: this.email,
           password: this.password,

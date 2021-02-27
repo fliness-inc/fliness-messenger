@@ -1,7 +1,8 @@
+import { GET_ME_INFO_ACTION_NAME, SET_ME_INFO_MUTATION_NAME } from './types';
 import axios from '~/plugins/axios';
 
 export default {
-  getMeInfo({ commit, rootState }) {
+  [GET_ME_INFO_ACTION_NAME]({ commit, rootState }) {
     return axios
       .get('/me', {
         headers: {
@@ -9,7 +10,7 @@ export default {
         },
       })
       .then(({ data: { data } }) => {
-        commit('setMeInfo', {
+        commit(SET_ME_INFO_MUTATION_NAME, {
           id: data.id,
           name: data.name,
           email: data.email,

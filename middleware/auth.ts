@@ -1,3 +1,4 @@
+import { SET_TOKENS_ACTION } from '~/store/auth/types';
 import axios from '~/plugins/axios';
 
 export default ({ app, redirect, req }) => {
@@ -19,7 +20,7 @@ export default ({ app, redirect, req }) => {
     )
     .then(({ data: { data } }) => {
       app.$cookies.set('jwt-token', data.refreshToken);
-      app.store.commit('auth/setTokens', {
+      app.store.dispatch(SET_TOKENS_ACTION, {
         accessToken: data.accessToken,
         refreshToken: data.refreshToken,
       });

@@ -39,6 +39,10 @@ import Modal from '~/ui/modal/index.vue';
 import AppBar from '~/components/app-bar/index.vue';
 import SideBarVertical from '~/components/side-bar/vertical/index.vue';
 import { MenuStateEnum } from '~/store/flex/state';
+import {
+  SET_MENU_STATE_ACTION,
+  UPDATE_MENU_STATE_ACTION,
+} from '~/store/flex/types';
 
 export default Vue.extend({
   components: {
@@ -68,25 +72,28 @@ export default Vue.extend({
     },
   },
   mounted() {
+    // @ts-ignore
     this.flexObserver();
+    // @ts-ignore
     window.addEventListener('resize', this.flexObserver);
   },
   beforeDestroy() {
+    // @ts-ignore
     window.removeEventListener('resize', this.flexObserver);
   },
   methods: {
     flexObserver() {
-      this.$store.dispatch('flex/updateMenuState');
+      this.$store.dispatch(UPDATE_MENU_STATE_ACTION);
     },
     closeOverMenu() {
-      this.$store.commit(
-        'flex/updateMenuState',
+      this.$store.dispatch(
+        SET_MENU_STATE_ACTION,
         MenuStateEnum.MOVING_OVER_DEACTIVE
       );
     },
     closeOverWithSidebarMenu() {
-      this.$store.commit(
-        'flex/updateMenuState',
+      this.$store.dispatch(
+        SET_MENU_STATE_ACTION,
         MenuStateEnum.MOVING_OVER_WITH_SIDE_BAR_DEACTIVE
       );
     },

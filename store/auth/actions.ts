@@ -1,29 +1,29 @@
+import {
+  SET_TOKENS_ACTION_NAME,
+  SIGN_IN_ACTION_NAME,
+  SIGN_UP_ACTION_NAME,
+  SET_TOKENS_MUTATION_NAME,
+} from './types';
 import axios from '~/plugins/axios';
 
-export interface SignInPayload {
-  email: string;
-  password: string;
-}
-
-export interface SignUpPayload extends SignInPayload {
-  name: string;
-}
-
 export default {
-  signIn({ commit }, payload: SignInPayload) {
+  [SIGN_IN_ACTION_NAME]({ commit }, payload) {
     return axios
       .post('/auth/sign-in', payload)
-      .then(({ data: { data } }) => commit('setTokens', data))
+      .then(({ data: { data } }) => commit(SET_TOKENS_MUTATION_NAME, data))
       .catch((e) => {
         throw e.response.data;
       });
   },
-  signUp({ commit }, payload: SignUpPayload) {
+  [SIGN_UP_ACTION_NAME]({ commit }, payload) {
     return axios
       .post('/auth/sign-up', payload)
-      .then(({ data: { data } }) => commit('setTokens', data))
+      .then(({ data: { data } }) => commit(SET_TOKENS_MUTATION_NAME, data))
       .catch((e) => {
         throw e.response.data;
       });
+  },
+  [SET_TOKENS_ACTION_NAME]({ commit }, payload) {
+    commit(SET_TOKENS_MUTATION_NAME, payload);
   },
 };

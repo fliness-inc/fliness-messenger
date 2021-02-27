@@ -1,13 +1,16 @@
 export const NAMESPACE = 'chats';
 
-export const CREATE_CHAT_MUTATION_NAME = 'createChat';
-export const GET_CHATS_MUTATION_NAME = 'getChats';
-export const SET_CHAT_TYPES_MUTATION_NAME = 'setChatTypes';
+/* Mutations names */
+export const CREATE_CHAT_MUTATION_NAME = 'CREATE_CHAT_MUTATION';
+export const GET_CHATS_MUTATION_NAME = 'GET_CHATS_MUTATION';
+export const SET_CHAT_TYPES_MUTATION_NAME = 'SET_CHAT_TYPES_MUTATION';
 
-export const CREATE_CHAT_ACTION_NAME = 'createChat';
-export const GET_CHATS_ACTION_NAME = 'getChats';
-export const GET_CHAT_TYPES_ACTION_NAME = 'getChatTypes';
+/* Actions names */
+export const CREATE_CHAT_ACTION_NAME = 'CREATE_CHAT_ACTION';
+export const GET_CHATS_ACTION_NAME = 'GET_CHATS_ACTION';
+export const GET_CHAT_TYPES_ACTION_NAME = 'GET_CHAT_TYPES_ACTION';
 
+/* Actions */
 export const CREATE_CHAT_ACTION = `${NAMESPACE}/${CREATE_CHAT_ACTION_NAME}`;
 export const GET_CHATS_ACTION = `${NAMESPACE}/${GET_CHATS_ACTION_NAME}`;
 export const GET_CHAT_TYPES_ACTION = `${NAMESPACE}/${GET_CHAT_TYPES_ACTION_NAME}`;

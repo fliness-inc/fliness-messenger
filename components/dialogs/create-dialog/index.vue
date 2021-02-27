@@ -124,7 +124,7 @@ export default Vue.extend({
   },
   computed: {
     ...mapState({
-      users: (state: any) => state.users.allUsers,
+      users: (state: any) => state.users.all,
     }),
   },
   async mounted() {
