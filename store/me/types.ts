@@ -1,10 +1,28 @@
+export interface State {
+  id: string | null;
+  name: string | null;
+  email: string | null;
+  avatarURL: string | null;
+}
+
+export interface SetMeInfoMutationPayload {
+  id: string;
+  name: string;
+  email: string;
+  avatarURL: string;
+}
+
 export const NAMESPACE = 'me';
 
 /* Mutations names */
-export const SET_ME_INFO_MUTATION_NAME = 'setMeInfo';
+export namespace MutationTypes {
+  export const SET_ME_INFO = 'SET_ME_INFO';
+}
 
-/* Actions names */
-export const GET_ME_INFO_ACTION_NAME = 'getMeInfo';
+export namespace ActionTypes {
+  export const GET_ME_INFO = 'GET_ME_INFO';
+}
 
-/* Actions */
-export const GET_ME_INFO_ACTION = `${NAMESPACE}/${GET_ME_INFO_ACTION_NAME}`;
+export namespace Actions {
+  export const GET_ME_INFO = `${NAMESPACE}/${ActionTypes.GET_ME_INFO}`;
+}

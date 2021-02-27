@@ -1,10 +1,13 @@
-import { SET_ME_INFO_MUTATION_NAME } from './types';
+import { MutationTypes } from './types';
+import { Mutations } from './mutation.interface';
 
-export default {
-  [SET_ME_INFO_MUTATION_NAME](state, payload) {
+export const mutations: Mutations = {
+  [MutationTypes.SET_ME_INFO](state, payload) {
     state.id = payload.id;
     state.name = payload.name;
     state.email = payload.email;
     state.avatarURL = payload.avatarURL;
   },
 };
+
+export default mutations;

@@ -1,32 +1,22 @@
-import {
-  CREATE_CHAT_MUTATION_NAME,
-  GET_CHATS_MUTATION_NAME,
-  SET_CHAT_TYPES_MUTATION_NAME,
-} from './types';
-import { State, Chat, ChatType } from './state';
+import { MutationTypes } from './types';
+import { Mutations } from './mutations.interface';
 
-export enum ChatTypesEnum {
-  DIALOG = 'DIALOG',
-  GROUP = 'GROUP',
-  CHANNEL = 'CHANNEL',
-}
-
-export interface ChatCreatePayload {
-  type: ChatTypesEnum;
-  userIds: string[];
-}
-
-export default {
-  [GET_CHATS_MUTATION_NAME](state: State, payload: Chat[]) {
+export const mutations: Mutations = {
+  [MutationTypes.GET_CHATS](state, payload) {
     state.all = payload;
   },
-  [CREATE_CHAT_MUTATION_NAME](state: State, payload: Chat) {
+  [MutationTypes.CREATE_CHAT](state, payload) {
     state.all = [...state.all, payload];
   },
-  [SET_CHAT_TYPES_MUTATION_NAME](state: State, payload: ChatType[]) {
+  [MutationTypes.SET_CHAT_TYPES](state, payload) {
     state.all = state.all.map((chat) => ({
       ...chat,
       type: payload.find((type) => type.id === chat.typeId),
     }));
   },
+  [MutationTypes.SET_CURRENT_CHAT](state, payload) {
+    state.currentChatId = payload.chatId;
+  },
 };
+
+export default mutations;

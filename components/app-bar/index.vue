@@ -41,7 +41,7 @@ import MenuIcon from '~/assets/menu.svg?inline';
 import LogoIcon from '~/assets/logo.svg?inline';
 // @ts-ignore
 import ArrowIcon from '~/assets/keyboard_arrow_down.svg?inline';
-import { GET_ME_INFO_ACTION } from '~/store/me/types';
+import { Actions } from '~/store/me/types';
 import { CHANGE_MENU_STATE_ACTION } from '~/store/flex/types';
 
 export default Vue.extend({
@@ -54,7 +54,7 @@ export default Vue.extend({
     'avatar-icon': AvatarIcon,
   },
   async fetch() {
-    await this.$store.dispatch(GET_ME_INFO_ACTION);
+    await this.$store.dispatch(Actions.GET_ME_INFO);
   },
   computed: {
     ...mapState({

@@ -1,22 +1,27 @@
-import { GET_ME_INFO_ACTION_NAME, SET_ME_INFO_MUTATION_NAME } from './types';
+import { ActionTypes, MutationTypes, SetMeInfoMutationPayload } from './types';
+import { Actions } from './actions.interface';
 import axios from '~/plugins/axios';
 
-export default {
-  [GET_ME_INFO_ACTION_NAME]({ commit, rootState }) {
-    return axios
-      .get('/me', {
-        headers: {
-          Authorization: `Bearer ${rootState.auth.tokens.access}`,
-        },
-      })
-      .then(({ data: { data } }) => {
-        commit(SET_ME_INFO_MUTATION_NAME, {
-          id: data.id,
-          name: data.name,
-          email: data.email,
-          avatarURL: data.avatarURL,
-        });
-      })
-      .catch((e) => e);
+export const actions: Actions = {
+  async [ActionTypes.GET_ME_INFO](ctx) {
+    const { commit, rootState } = ctx;
+
+    const res = await axios.get('/me', {
+      headers: {
+        Authorization: `Bearer ${rootState.auth.tokens.access}`,
+      },
+    });
+
+    const { data } = res.data;
+    const payload: SetMeInfoMutationPayload = {
+      id: data.id,
+      name: data.name,
+      email: data.email,
+      avatarURL: data.avatarURL,
+    };
+
+    commit(MutationTypes.SET_ME_INFO, payload);
   },
 };
+
+export default actions;

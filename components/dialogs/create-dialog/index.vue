@@ -102,8 +102,7 @@ import Tabs from '~/ui/tabs/index.vue';
 import Tab from '~/ui/tabs/tab.vue';
 import Skeleton from '~/ui/skeleton/index.vue';
 import { GET_USERS_ACTION } from '~/store/users/types';
-import { CREATE_CHAT_ACTION } from '~/store/chats/types';
-import { ChatTypesEnum } from '~/store/chats/mutations';
+import { Actions, ChatTypesEnum } from '~/store/chats/types';
 
 export default Vue.extend({
   components: {
@@ -135,7 +134,7 @@ export default Vue.extend({
       this.selectedUserId = userId;
     },
     async handleCreateBtnClick() {
-      await this.$store.dispatch(CREATE_CHAT_ACTION, {
+      await this.$store.dispatch(Actions.CREATE_CHAT, {
         type: ChatTypesEnum.DIALOG,
         userIds: [this.selectedUserId],
       });

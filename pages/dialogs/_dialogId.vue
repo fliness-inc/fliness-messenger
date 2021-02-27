@@ -21,6 +21,7 @@ import ChatBar from '~/components/chat-bar/index.vue';
 import ChatMessages from '~/components/chat-messages/index.vue';
 import ChatInput from '~/components/chat-input/index.vue';
 import MainLayout from '~/layouts/main.vue';
+import { Actions, SetCurrentChatActionPayload } from '~/store/chats/types';
 
 export default Vue.extend({
   components: {
@@ -36,6 +37,12 @@ export default Vue.extend({
     return {
       title: 'Fliness Messenger - Dialogs',
     };
+  },
+  async mounted() {
+    const payload: SetCurrentChatActionPayload = {
+      chatId: this.$route.params.dialogId,
+    };
+    await this.$store.dispatch(Actions.SET_CURRENT_CHAT, payload);
   },
 });
 </script>

@@ -1,16 +1,60 @@
+export interface Chat {
+  id: string;
+  title: string | null;
+  description: string | null;
+  updatedAt: string;
+  createdAt: string;
+  typeId: string;
+}
+
+export interface ChatType {
+  id: string;
+  name: string;
+  updatedAt: string;
+  createdAt: string;
+}
+
+export interface State {
+  all: Chat[];
+  currentChatId: string | null;
+}
+
+export enum ChatTypesEnum {
+  DIALOG = 'DIALOG',
+  GROUP = 'GROUP',
+  CHANNEL = 'CHANNEL',
+}
+
+export interface ChatCreatePayload {
+  type: ChatTypesEnum;
+  userIds: string[];
+}
+
+export interface SetCurrentChatMutationPayload {
+  chatId: string | null;
+}
+export interface SetCurrentChatActionPayload
+  extends SetCurrentChatMutationPayload {}
+
 export const NAMESPACE = 'chats';
 
-/* Mutations names */
-export const CREATE_CHAT_MUTATION_NAME = 'CREATE_CHAT_MUTATION';
-export const GET_CHATS_MUTATION_NAME = 'GET_CHATS_MUTATION';
-export const SET_CHAT_TYPES_MUTATION_NAME = 'SET_CHAT_TYPES_MUTATION';
+export namespace MutationTypes {
+  export const CREATE_CHAT = 'CREATE_CHAT';
+  export const GET_CHATS = 'GET_CHATS';
+  export const SET_CHAT_TYPES = 'SET_CHAT_TYPES';
+  export const SET_CURRENT_CHAT = 'SET_CURRENT_CHAT';
+}
 
-/* Actions names */
-export const CREATE_CHAT_ACTION_NAME = 'CREATE_CHAT_ACTION';
-export const GET_CHATS_ACTION_NAME = 'GET_CHATS_ACTION';
-export const GET_CHAT_TYPES_ACTION_NAME = 'GET_CHAT_TYPES_ACTION';
+export namespace ActionTypes {
+  export const CREATE_CHAT = 'CREATE_CHAT';
+  export const GET_CHATS = 'GET_CHATS';
+  export const GET_CHAT_TYPES = 'GET_CHAT_TYPES';
+  export const SET_CURRENT_CHAT = 'SET_CURRENT_CHAT';
+}
 
-/* Actions */
-export const CREATE_CHAT_ACTION = `${NAMESPACE}/${CREATE_CHAT_ACTION_NAME}`;
-export const GET_CHATS_ACTION = `${NAMESPACE}/${GET_CHATS_ACTION_NAME}`;
-export const GET_CHAT_TYPES_ACTION = `${NAMESPACE}/${GET_CHAT_TYPES_ACTION_NAME}`;
+export namespace Actions {
+  export const CREATE_CHAT = `${NAMESPACE}/${ActionTypes.CREATE_CHAT}`;
+  export const GET_CHATS = `${NAMESPACE}/${ActionTypes.GET_CHATS}`;
+  export const GET_CHAT_TYPES = `${NAMESPACE}/${ActionTypes.GET_CHAT_TYPES}`;
+  export const SET_CURRENT_CHAT = `${NAMESPACE}/${ActionTypes.SET_CURRENT_CHAT}`;
+}

@@ -26,6 +26,7 @@
           :username="getUser(chat.id).name"
           :avatarURL="getUser(chat.id).avatarURL"
           :title="getUser(chat.id).name"
+          :active="currentChatId === chat.id"
           description=""
           time=""
           messages=""
@@ -41,7 +42,6 @@
 <script lang="ts">
 import Vue from 'vue';
 import { mapState } from 'vuex';
-/* import Skeleton from './skeleton.vue'; */
 import ListItem from './list-item.vue';
 import Grid from '~/ui/grid/index.vue';
 import Skeleton from '~/ui/skeleton/index.vue';
@@ -49,8 +49,11 @@ import Search from '~/components/search/index.vue';
 import SideBarHorizontal from '~/components/side-bar/horizontal/index.vue';
 import CreateDialogModal from '~/components/dialogs/create-dialog/index.vue';
 import { MenuStateEnum } from '~/store/flex/state';
-import { GET_CHATS_ACTION } from '~/store/chats/types';
-import { ChatTypesEnum } from '~/store/chats/mutations';
+import {
+  Actions,
+  ChatTypesEnum,
+  SetCurrentChatActionPayload,
+} from '~/store/chats/types';
 
 export default Vue.extend({
   components: {
@@ -74,6 +77,7 @@ export default Vue.extend({
       chats: (state: any) => state.chats.all,
       members: (state: any) => state.members.all,
       users: (state: any) => state.users.all,
+      currentChatId: (state: any) => state.chats.currentChatId,
     }),
     showHorizontalSideBar() {
       return this.menuState === MenuStateEnum.MOVING_OVER_WITH_SIDE_BAR_ACTIVE;
@@ -83,12 +87,17 @@ export default Vue.extend({
     },
   },
   async mounted() {
-    await this.$store.dispatch(GET_CHATS_ACTION, {
+    await this.$store.dispatch(Actions.GET_CHATS, {
       type: ChatTypesEnum.DIALOG,
     });
   },
   methods: {
-    handleListItemClick(chatId: string) {
+    async handleListItemClick(chatId: string) {
+      const payload: SetCurrentChatActionPayload = {
+        chatId,
+      };
+      await this.$store.dispatch(Actions.SET_CURRENT_CHAT, payload);
+
       this.$router.push(`/dialogs/${chatId}`);
     },
     getUser(chatId: string) {

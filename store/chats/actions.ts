@@ -1,22 +1,12 @@
-import {
-  GET_CHATS_ACTION_NAME,
-  CREATE_CHAT_ACTION_NAME,
-  GET_CHATS_MUTATION_NAME,
-  CREATE_CHAT_MUTATION_NAME,
-  GET_CHAT_TYPES_ACTION_NAME,
-  SET_CHAT_TYPES_MUTATION_NAME,
-  GET_CHAT_TYPES_ACTION,
-} from './types';
-import { ChatTypesEnum } from './mutations';
+import { ActionTypes, MutationTypes, Actions, ChatTypesEnum } from './types';
+import { IActions } from './actions.interface';
 import axios from '~/plugins/axios';
 import { GET_CHATS_MEMBERS_ACTION } from '~/store/members/types';
 import { GET_USERS_BY_IDS_ACTION } from '~/store/users/types';
 
-export default {
-  async [GET_CHATS_ACTION_NAME](
-    { commit, rootState, state, dispatch },
-    payload
-  ) {
+export const actions: IActions = {
+  async [ActionTypes.GET_CHATS](ctx, payload) {
+    const { commit, rootState, state, dispatch } = ctx;
     const res = await axios.get('/me/chats', {
       headers: {
         Authorization: `Bearer ${rootState.auth.tokens.access}`,
@@ -25,9 +15,9 @@ export default {
 
     const { data } = res.data;
 
-    commit(GET_CHATS_MUTATION_NAME, data);
+    commit(MutationTypes.GET_CHATS, data);
 
-    await dispatch(GET_CHAT_TYPES_ACTION, null, { root: true });
+    await dispatch(Actions.GET_CHAT_TYPES, null, { root: true });
 
     await dispatch(
       GET_CHATS_MEMBERS_ACTION,
@@ -47,7 +37,7 @@ export default {
       { root: true }
     );
   },
-  async [CREATE_CHAT_ACTION_NAME](
+  async [ActionTypes.CREATE_CHAT](
     { commit, rootState, dispatch, state },
     payload
   ) {
@@ -59,9 +49,9 @@ export default {
 
     const { data } = res.data;
 
-    commit(CREATE_CHAT_MUTATION_NAME, data);
+    commit(MutationTypes.CREATE_CHAT, data);
 
-    await dispatch(GET_CHAT_TYPES_ACTION, null, { root: true });
+    await dispatch(Actions.GET_CHAT_TYPES, null, { root: true });
 
     await dispatch(
       GET_CHATS_MEMBERS_ACTION,
@@ -84,7 +74,8 @@ export default {
       { root: true }
     );
   },
-  async [GET_CHAT_TYPES_ACTION_NAME]({ commit, rootState }) {
+  async [ActionTypes.GET_CHAT_TYPES](ctx) {
+    const { commit, rootState } = ctx;
     const res = await axios.get('/chats/types', {
       headers: {
         Authorization: `Bearer ${rootState.auth.tokens.access}`,
@@ -93,6 +84,12 @@ export default {
 
     const { data } = res.data;
 
-    commit(SET_CHAT_TYPES_MUTATION_NAME, data);
+    commit(MutationTypes.SET_CHAT_TYPES, data);
+  },
+  async [ActionTypes.SET_CURRENT_CHAT](ctx, payload) {
+    const { commit } = ctx;
+    await commit(MutationTypes.SET_CURRENT_CHAT, payload);
   },
 };
+
+export default actions;

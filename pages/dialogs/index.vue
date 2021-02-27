@@ -4,11 +4,18 @@
       <list-bar title="Dialogs"></list-bar>
     </template>
     <template #content>
-      <!-- <ui-grid direction="column" :class="$style.chat_messages">
-        <chat-bar></chat-bar>
-        <chat-messages></chat-messages>
-        <chat-input></chat-input>
-      </ui-grid> -->
+      <ui-grid
+        direction="column"
+        align-items="center"
+        justify="center"
+        :class="[$style.chat_messages, $style.chat_messages__plug]"
+      >
+        <ui-grid direction="column" align-items="center" :class="[$style.plug]">
+          <dialogs-icon :class="[$style.plug__icon]"></dialogs-icon>
+          <p :class="[$style.plug__title]">Please select a dialog</p>
+          <p :class="[$style.plug__desc]">to start messaging</p>
+        </ui-grid>
+      </ui-grid>
     </template>
   </main-layout>
 </template>
@@ -17,19 +24,16 @@
 import Vue from 'vue';
 import Grid from '~/ui/grid/index.vue';
 import ListBar from '~/components/list-bar/index.vue';
-import ChatBar from '~/components/chat-bar/index.vue';
-import ChatMessages from '~/components/chat-messages/index.vue';
-import ChatInput from '~/components/chat-input/index.vue';
 import MainLayout from '~/layouts/main.vue';
+// @ts-ignore
+import DialogsIcon from '~/assets/chat_bubble_outline.svg?inline';
 
 export default Vue.extend({
   components: {
     'ui-grid': Grid,
     'list-bar': ListBar,
-    'chat-bar': ChatBar,
-    'chat-messages': ChatMessages,
-    'chat-input': ChatInput,
     'main-layout': MainLayout,
+    'dialogs-icon': DialogsIcon,
   },
   middleware: ['auth'],
   head() {
