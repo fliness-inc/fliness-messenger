@@ -42,7 +42,7 @@ export default Vue.extend({
   },
   middleware: ['auth'],
   async fetch() {
-    const payload: ChatsState.GetChatsActionPayload = {
+    const payload: ChatsState.Actions.GetChatsPayload = {
       type: ChatsState.ChatTypesEnum.DIALOG,
     };
     await this.$store.dispatch(ChatsState.Actions.GET_CHATS, payload);
@@ -95,7 +95,7 @@ export default Vue.extend({
   },
   methods: {
     async setCurrentChat() {
-      const payload: ChatsState.SetCurrentChatActionPayload = {
+      const payload: ChatsState.Actions.SetCurrentChatPayload = {
         chatId: this.$route.params.dialogId,
       };
       await this.$store.dispatch(ChatsState.Actions.SET_CURRENT_CHAT, payload);

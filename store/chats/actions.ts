@@ -1,11 +1,11 @@
-import { ActionTypes, MutationTypes, Actions, ChatTypesEnum } from './types';
+import { Actions, Mutations, ChatTypesEnum } from './types';
 import { IActions } from './actions.interface';
 import axios from '~/plugins/axios';
 import { GET_CHATS_MEMBERS_ACTION } from '~/store/members/types';
 import { GET_USERS_BY_IDS_ACTION } from '~/store/users/types';
 
 export const actions: IActions = {
-  async [ActionTypes.GET_CHATS](ctx, payload) {
+  async [Actions.Types.GET_CHATS](ctx, payload) {
     const { commit, rootState, state, dispatch } = ctx;
     const res = await axios.get('/me/chats', {
       headers: {
@@ -15,7 +15,7 @@ export const actions: IActions = {
 
     const { data } = res.data;
 
-    commit(MutationTypes.GET_CHATS, data);
+    commit(Mutations.Types.GET_CHATS, data);
 
     await dispatch(Actions.GET_CHAT_TYPES, null, { root: true });
 
@@ -37,7 +37,7 @@ export const actions: IActions = {
       { root: true }
     );
   },
-  async [ActionTypes.CREATE_CHAT](
+  async [Actions.Types.CREATE_CHAT](
     { commit, rootState, dispatch, state },
     payload
   ) {
@@ -49,7 +49,7 @@ export const actions: IActions = {
 
     const { data } = res.data;
 
-    commit(MutationTypes.CREATE_CHAT, data);
+    commit(Mutations.Types.CREATE_CHAT, data);
 
     await dispatch(Actions.GET_CHAT_TYPES, null, { root: true });
 
@@ -74,7 +74,7 @@ export const actions: IActions = {
       { root: true }
     );
   },
-  async [ActionTypes.GET_CHAT_TYPES](ctx) {
+  async [Actions.Types.GET_CHAT_TYPES](ctx) {
     const { commit, rootState } = ctx;
     const res = await axios.get('/chats/types', {
       headers: {
@@ -84,11 +84,11 @@ export const actions: IActions = {
 
     const { data } = res.data;
 
-    commit(MutationTypes.SET_CHAT_TYPES, data);
+    commit(Mutations.Types.SET_CHAT_TYPES, data);
   },
-  async [ActionTypes.SET_CURRENT_CHAT](ctx, payload) {
+  async [Actions.Types.SET_CURRENT_CHAT](ctx, payload) {
     const { commit } = ctx;
-    await commit(MutationTypes.SET_CURRENT_CHAT, payload);
+    await commit(Mutations.Types.SET_CURRENT_CHAT, payload);
   },
 };
 

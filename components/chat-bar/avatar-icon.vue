@@ -23,6 +23,7 @@ export default Vue.extend({
   },
   computed: {
     upperSymbolUsername() {
+      // @ts-ignore
       if (!this.username || !this.username.length) return '';
 
       return this.username[0].toUpperCase();

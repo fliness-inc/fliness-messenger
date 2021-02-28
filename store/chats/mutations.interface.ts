@@ -1,11 +1,13 @@
-import { State, MutationTypes, SetCurrentChatMutationPayload } from './types';
+import { State, Mutations } from './types';
 
-export interface Mutations<S = State> {
-  [MutationTypes.CREATE_CHAT](state: S, payload: any): void;
-  [MutationTypes.GET_CHATS](state: S, payload: any): void;
-  [MutationTypes.SET_CHAT_TYPES](state: S, payload: any): void;
-  [MutationTypes.SET_CURRENT_CHAT](
+export interface IMutations<S = State> {
+  [Mutations.Types.CREATE_CHAT](state: S, payload: any): void;
+  [Mutations.Types.GET_CHATS](state: S, payload: any): void;
+  [Mutations.Types.SET_CHAT_TYPES](state: S, payload: any): void;
+  [Mutations.Types.SET_CURRENT_CHAT](
     state: S,
-    payload: SetCurrentChatMutationPayload
+    payload: Mutations.SetCurrentChatPayload
   ): void;
 }
+
+export default IMutations;

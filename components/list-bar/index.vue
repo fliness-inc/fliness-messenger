@@ -49,11 +49,7 @@ import Search from '~/components/search/index.vue';
 import SideBarHorizontal from '~/components/side-bar/horizontal/index.vue';
 import CreateDialogModal from '~/components/dialogs/create-dialog/index.vue';
 import { MenuStateEnum } from '~/store/flex/types';
-import {
-  Actions,
-  ChatTypesEnum,
-  SetCurrentChatActionPayload,
-} from '~/store/chats/types';
+import { Actions, ChatTypesEnum } from '~/store/chats/types';
 
 export default Vue.extend({
   components: {
@@ -93,7 +89,7 @@ export default Vue.extend({
   },
   methods: {
     async handleListItemClick(chatId: string) {
-      const payload: SetCurrentChatActionPayload = {
+      const payload: Actions.SetCurrentChatPayload = {
         chatId,
       };
       await this.$store.dispatch(Actions.SET_CURRENT_CHAT, payload);

@@ -1,3 +1,5 @@
+import { Message } from '~/store/messages/types';
+
 export interface ChatType {
   id: string;
   name: string;
@@ -13,6 +15,7 @@ export interface Chat {
   createdAt: string;
   typeId: string;
   type: ChatType | null;
+  lastMessage: Message | null;
 }
 
 export interface State {
@@ -26,35 +29,45 @@ export enum ChatTypesEnum {
   CHANNEL = 'CHANNEL',
 }
 
-export interface GetChatsActionPayload {
-  type: ChatTypesEnum;
-}
-
-export interface SetCurrentChatMutationPayload {
-  chatId: string | null;
-}
-export interface SetCurrentChatActionPayload
-  extends SetCurrentChatMutationPayload {}
-
 export const NAMESPACE = 'chats';
 
-export namespace MutationTypes {
-  export const CREATE_CHAT = 'CREATE_CHAT';
-  export const GET_CHATS = 'GET_CHATS';
-  export const SET_CHAT_TYPES = 'SET_CHAT_TYPES';
-  export const SET_CURRENT_CHAT = 'SET_CURRENT_CHAT';
-}
+export namespace Mutations {
+  export namespace Types {
+    export const CREATE_CHAT = 'CREATE_CHAT';
+    export const GET_CHATS = 'GET_CHATS';
+    export const SET_CHAT_TYPES = 'SET_CHAT_TYPES';
+    export const SET_CURRENT_CHAT = 'SET_CURRENT_CHAT';
+    export const SET_LAST_MESSAGES = 'SET_LAST_MESSAGES';
+  }
 
-export namespace ActionTypes {
-  export const CREATE_CHAT = 'CREATE_CHAT';
-  export const GET_CHATS = 'GET_CHATS';
-  export const GET_CHAT_TYPES = 'GET_CHAT_TYPES';
-  export const SET_CURRENT_CHAT = 'SET_CURRENT_CHAT';
+  export interface SetCurrentChatPayload {
+    chatId: string | null;
+  }
+
+  export interface SetLastMessagesPayload {
+    messages: Messages;
+  }
 }
 
 export namespace Actions {
-  export const CREATE_CHAT = `${NAMESPACE}/${ActionTypes.CREATE_CHAT}`;
-  export const GET_CHATS = `${NAMESPACE}/${ActionTypes.GET_CHATS}`;
-  export const GET_CHAT_TYPES = `${NAMESPACE}/${ActionTypes.GET_CHAT_TYPES}`;
-  export const SET_CURRENT_CHAT = `${NAMESPACE}/${ActionTypes.SET_CURRENT_CHAT}`;
+  export namespace Types {
+    export const CREATE_CHAT = 'CREATE_CHAT';
+    export const GET_CHATS = 'GET_CHATS';
+    export const GET_CHAT_TYPES = 'GET_CHAT_TYPES';
+    export const SET_CURRENT_CHAT = 'SET_CURRENT_CHAT';
+    export const SET_LAST_MESSAGES = 'SET_LAST_MESSAGES';
+  }
+
+  export interface GetChatsPayload {
+    type: ChatTypesEnum;
+  }
+
+  export interface SetCurrentChatPayload
+    extends Mutations.SetCurrentChatPayload {}
+
+  export const CREATE_CHAT = `${NAMESPACE}/${Types.CREATE_CHAT}`;
+  export const GET_CHATS = `${NAMESPACE}/${Types.GET_CHATS}`;
+  export const GET_CHAT_TYPES = `${NAMESPACE}/${Types.GET_CHAT_TYPES}`;
+  export const SET_CURRENT_CHAT = `${NAMESPACE}/${Types.SET_CURRENT_CHAT}`;
+  export const SET_LAST_MESSAGES = `${NAMESPACE}/${Types.SET_LAST_MESSAGES}`;
 }
