@@ -69,7 +69,7 @@ export default Vue.extend({
     },
     avatarURL: {
       type: String,
-      required: true,
+      default: null,
     },
     description: {
       type: String,

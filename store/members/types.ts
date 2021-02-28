@@ -1,3 +1,7 @@
+export interface State {
+  all: any[];
+}
+
 export const NAMESPACE = 'members';
 
 /* Mutations names */

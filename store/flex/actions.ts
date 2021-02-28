@@ -1,9 +1,9 @@
-import { MenuStateEnum } from './state';
 import {
   SET_MENU_STATE_MUTATION_NAME,
   UPDATE_MENU_STATE_ACTION_NAME,
   CHANGE_MENU_STATE_ACTION_NAME,
   SET_MENU_STATE_ACTION_NAME,
+  MenuStateEnum,
 } from './types';
 
 export default {

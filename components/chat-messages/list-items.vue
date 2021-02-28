@@ -1,7 +1,7 @@
 <template>
   <ui-grid direction="column" :class="$style.message">
     <ui-grid align-items="center" :direction="shift ? 'row-reverse' : 'row'">
-      <avatar-icon :username="username" url="" />
+      <avatar-icon :username="username" :url="avatarURL" />
       <p :class="$style.avatar__name">{{ username }}</p>
       <!-- <EditButton /> -->
     </ui-grid>
@@ -58,22 +58,28 @@ export default Vue.extend({
       type: String,
       required: true,
     },
+    avatarURL: {
+      type: String,
+      default: null,
+    },
     text: {
       type: String,
       required: true,
     },
     time: {
-      type: Date,
+      type: String,
       required: true,
     },
   },
   computed: {
     formatedTime() {
-      const t: Date = <any>this.time;
+      const d = new Date(this.time);
 
-      return `${t.getHours()}:${t.getMinutes()} ${
-        t.getHours() >= 12 ? 'PM' : 'AM'
-      }`;
+      const hours = d.getHours();
+      const minutes = d.getMinutes();
+      const format = hours > 12 ? 'PM' : 'AM';
+
+      return `${hours}:${minutes} ${format}`;
     },
   },
 });

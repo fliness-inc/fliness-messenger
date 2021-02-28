@@ -1,7 +1,7 @@
 <template>
   <div>
     <Nuxt />
-    <portal-target name="modals-location"> </portal-target>
+    <portal-target name="modals-location" multiple> </portal-target>
   </div>
 </template>
 

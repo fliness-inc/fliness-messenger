@@ -22,7 +22,7 @@ export const actions: IActions = {
     await dispatch(
       GET_CHATS_MEMBERS_ACTION,
       state.all
-        .filter((chat) => chat.type.name === payload.type)
+        .filter((chat) => chat.type?.name === payload.type)
         .map((chat) => chat.id),
       { root: true }
     );
@@ -58,7 +58,7 @@ export const actions: IActions = {
       state.all
         .filter(
           (chat) =>
-            chat.id === data.id && chat.type.name === ChatTypesEnum.DIALOG
+            chat.id === data.id && chat.type?.name === ChatTypesEnum.DIALOG
         )
         .map((chat) => chat.id),
       { root: true }

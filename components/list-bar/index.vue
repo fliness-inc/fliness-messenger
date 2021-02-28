@@ -48,7 +48,7 @@ import Skeleton from '~/ui/skeleton/index.vue';
 import Search from '~/components/search/index.vue';
 import SideBarHorizontal from '~/components/side-bar/horizontal/index.vue';
 import CreateDialogModal from '~/components/dialogs/create-dialog/index.vue';
-import { MenuStateEnum } from '~/store/flex/state';
+import { MenuStateEnum } from '~/store/flex/types';
 import {
   Actions,
   ChatTypesEnum,

@@ -1,13 +1,5 @@
-export enum MenuStateEnum {
-  NONE = 'NONE',
-  MOVING_ACTIVE = 'MOVING_ACTIVE',
-  MOVING_DEACTIVE = 'MOVING_DEACTIVE',
-  MOVING_OVER_ACTIVE = 'MOVING_OVER_ACTIVE',
-  MOVING_OVER_DEACTIVE = 'MOVING_OVER_DEACTIVE',
-  MOVING_OVER_WITH_SIDE_BAR_ACTIVE = 'MOVING_OVER_WITH_SIDE_BAR_ACTIVE',
-  MOVING_OVER_WITH_SIDE_BAR_DEACTIVE = 'MOVING_OVER_WITH_SIDE_BAR_DEACTIVE',
-}
+import { State, MenuStateEnum } from './types';
 
-export default () => ({
+export default (): State => ({
   menuState: MenuStateEnum.NONE,
 });

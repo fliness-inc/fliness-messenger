@@ -1,3 +1,10 @@
+export interface State {
+  tokens: {
+    access: string | null;
+    refresh: string | null;
+  };
+}
+
 export const NAMESPACE = 'auth';
 
 /* Mutations names */

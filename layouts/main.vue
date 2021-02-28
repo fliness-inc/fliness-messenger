@@ -38,10 +38,10 @@ import Grid from '~/ui/grid/index.vue';
 import Modal from '~/ui/modal/index.vue';
 import AppBar from '~/components/app-bar/index.vue';
 import SideBarVertical from '~/components/side-bar/vertical/index.vue';
-import { MenuStateEnum } from '~/store/flex/state';
 import {
   SET_MENU_STATE_ACTION,
   UPDATE_MENU_STATE_ACTION,
+  MenuStateEnum,
 } from '~/store/flex/types';
 
 export default Vue.extend({

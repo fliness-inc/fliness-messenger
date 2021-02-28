@@ -28,6 +28,8 @@ import MainLayout from '~/layouts/main.vue';
 import * as ChatsState from '~/store/chats/types';
 import * as MeState from '~/store/me/types';
 import * as PagesState from '~/store/pages/types';
+import * as MessagesState from '~/store/messages/types';
+import { State } from '~/store/state.interface';
 
 export default Vue.extend({
   components: {
@@ -54,11 +56,15 @@ export default Vue.extend({
   },
   computed: {
     ...mapState({
-      me: (state: any) => state.me,
-      currentChatId: (state: any) => state.chats.currentChatId,
-      chats: (state: any) => state.chats.all,
-      members: (state: any) => state.members.all,
-      users: (state: any) => state.users.all,
+      me(state: State) {
+        return state.me;
+      },
+      currentChatId: (state: State) => state.chats.currentChatId,
+      chats: (state: State) => state.chats.all,
+      members: (state: State) => state.members.all,
+      users: (state: State) => state.users.all,
+      messagesSocketConnectionState: (state: State) =>
+        state.messages.socketConnectionState,
     }),
     currentChat() {
       return this.chats.find((chat) => chat.id === this.currentChatId);
@@ -81,6 +87,11 @@ export default Vue.extend({
       page: PagesState.Pages.DIALOG,
     };
     await this.$store.dispatch(PagesState.Actions.SET_PAGE, payload);
+
+    await this.$store.dispatch(MessagesState.Actions.CONNECT_SOCKET);
+  },
+  async destroyed() {
+    await this.$store.dispatch(MessagesState.Actions.DISCONNECT_SOCKET);
   },
   methods: {
     async setCurrentChat() {

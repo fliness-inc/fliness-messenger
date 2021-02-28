@@ -7,11 +7,17 @@
       <camera-icon :class="$style.btn__icon" />
     </ui-button>
     <input
+      v-model="messageText"
       type="text"
       :class="$style.chat_input__input"
+      @keypress.enter="sendMessage"
       placeholder="Type your message"
     />
-    <ui-button variant="text" :class="$style.chat_input__btn">
+    <ui-button
+      variant="text"
+      :class="$style.chat_input__btn"
+      @click="sendMessage"
+    >
       <plane-icon :class="$style.btn__icon" />
     </ui-button>
   </ui-grid>
@@ -27,6 +33,7 @@ import ClipIcon from '~/assets/paper-clip.svg?inline';
 import PlaneIcon from '~/assets/paper-plane.svg?inline';
 // @ts-ignore
 import CameraIcon from '~/assets/camera.svg?inline';
+import * as MessagesTypes from '~/store/messages/types';
 
 export default Vue.extend({
   components: {
@@ -35,6 +42,24 @@ export default Vue.extend({
     'clip-icon': ClipIcon,
     'plane-icon': PlaneIcon,
     'camera-icon': CameraIcon,
+  },
+  data() {
+    return {
+      messageText: '',
+    };
+  },
+  methods: {
+    sendMessage() {
+      if (this.messageText === '') return;
+
+      const payload: MessagesTypes.Actions.SendMessagePayload = {
+        text: this.messageText,
+      };
+
+      this.messageText = '';
+
+      this.$store.dispatch(MessagesTypes.Actions.SEND_MESSAGE, payload);
+    },
   },
 });
 </script>

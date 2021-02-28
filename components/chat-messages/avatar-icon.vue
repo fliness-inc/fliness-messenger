@@ -14,7 +14,7 @@ export default Vue.extend({
   props: {
     url: {
       type: String,
-      required: true,
+      default: null,
     },
     username: {
       type: String,

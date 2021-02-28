@@ -1,3 +1,10 @@
+export interface ChatType {
+  id: string;
+  name: string;
+  updatedAt: string;
+  createdAt: string;
+}
+
 export interface Chat {
   id: string;
   title: string | null;
@@ -5,13 +12,7 @@ export interface Chat {
   updatedAt: string;
   createdAt: string;
   typeId: string;
-}
-
-export interface ChatType {
-  id: string;
-  name: string;
-  updatedAt: string;
-  createdAt: string;
+  type: ChatType | null;
 }
 
 export interface State {
