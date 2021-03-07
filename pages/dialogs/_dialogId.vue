@@ -1,16 +1,16 @@
 <template>
   <main-layout>
     <template #listbar>
-      <list-bar title="Dialogs"></list-bar>
+      <list-bar-layout title="Dialogs"></list-bar-layout>
     </template>
     <template #content>
-      <ui-grid direction="column" :class="$style.chat_messages">
-        <chat-bar
+      <ui-grid direction="column" class="chat_messages">
+        <chat-bar-layout
           :title="currentCompanion.name"
           :url="currentCompanion.avatarURL"
-        ></chat-bar>
-        <chat-messages></chat-messages>
-        <chat-input></chat-input>
+        ></chat-bar-layout>
+        <chat-messages-layout></chat-messages-layout>
+        <chat-input-layout></chat-input-layout>
       </ui-grid>
     </template>
   </main-layout>
@@ -20,11 +20,11 @@
 import Vue from 'vue';
 import { mapState } from 'vuex';
 import Grid from '~/ui/grid/index.vue';
-import ListBar from '~/components/list-bar/index.vue';
+import ListBar from '~/components/list-bar/layout.vue';
 import ChatBar from '~/components/chat-bar/index.vue';
 import ChatMessages from '~/components/chat-messages/index.vue';
 import ChatInput from '~/components/chat-input/index.vue';
-import MainLayout from '~/layouts/main.vue';
+import MainLayout from '~/components/layouts/main.vue';
 import * as ChatsState from '~/store/chats/types';
 import * as MeState from '~/store/me/types';
 import * as PagesState from '~/store/pages/types';
@@ -34,10 +34,10 @@ import { State } from '~/store/state.interface';
 export default Vue.extend({
   components: {
     'ui-grid': Grid,
-    'list-bar': ListBar,
-    'chat-bar': ChatBar,
-    'chat-messages': ChatMessages,
-    'chat-input': ChatInput,
+    'list-bar-layout': ListBar,
+    'chat-bar-layout': ChatBar,
+    'chat-messages-layout': ChatMessages,
+    'chat-input-layout': ChatInput,
     'main-layout': MainLayout,
   },
   middleware: ['auth'],
@@ -72,7 +72,7 @@ export default Vue.extend({
     currentCompanion() {
       const member = this.members.find(
         (member) =>
-          member.chatId === this.currentChatId && member.userId !== this.me.id
+          member.chatId === this.currentChatId && member.userId !== this.me.id,
       );
 
       if (!member) return;
@@ -104,4 +104,4 @@ export default Vue.extend({
 });
 </script>
 
-<style lang="scss" module src="./index.module.scss"></style>
+<style lang="scss" src="./index.scss"></style>

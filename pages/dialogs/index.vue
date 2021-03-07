@@ -1,19 +1,19 @@
 <template>
   <main-layout>
     <template #listbar>
-      <list-bar title="Dialogs"></list-bar>
+      <list-bar-layout title="Dialogs"></list-bar-layout>
     </template>
     <template #content>
       <ui-grid
         direction="column"
         align-items="center"
         justify="center"
-        :class="[$style.chat_messages, $style.chat_messages__plug]"
+        :class="['chat_messages', 'chat_messages__plug']"
       >
-        <ui-grid direction="column" align-items="center" :class="[$style.plug]">
-          <dialogs-icon :class="[$style.plug__icon]"></dialogs-icon>
-          <p :class="[$style.plug__title]">Please select a dialog</p>
-          <p :class="[$style.plug__desc]">to start messaging</p>
+        <ui-grid direction="column" align-items="center" class="plug">
+          <dialogs-icon class="plug__icon"></dialogs-icon>
+          <p class="plug__title">Please select a dialog</p>
+          <p class="plug__desc">to start messaging</p>
         </ui-grid>
       </ui-grid>
     </template>
@@ -22,33 +22,47 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import Grid from '~/ui/grid/index.vue';
-import ListBar from '~/components/list-bar/index.vue';
-import MainLayout from '~/layouts/main.vue';
+import { mapActions } from 'vuex';
+import UiGrid from '~/ui/grid/index.vue';
+import ListBarLayout from '~/components/list-bar/layout.vue';
+import MainLayout from '~/components/layouts/main.vue';
 // @ts-ignore
 import DialogsIcon from '~/assets/chat_bubble_outline.svg?inline';
-import * as PagesState from '~/store/pages/types';
+import * as PagesState from '~/store/pages';
+import * as ChatsState from '~/store/chats';
+import * as MeState from '~/store/me';
 
 export default Vue.extend({
   components: {
-    'ui-grid': Grid,
-    'list-bar': ListBar,
-    'main-layout': MainLayout,
-    'dialogs-icon': DialogsIcon,
+    UiGrid,
+    ListBarLayout,
+    MainLayout,
+    DialogsIcon,
   },
   middleware: ['auth'],
+  async fetch() {
+    await this.getMeInfo();
+  },
   head() {
     return {
       title: 'Fliness Messenger - Dialogs',
     };
   },
   async mounted() {
-    const payload: PagesState.SetPageActionPayload = {
+    await this.setCurrentPage({
       page: PagesState.Pages.DIALOGS,
-    };
-    await this.$store.dispatch(PagesState.Actions.SET_PAGE, payload);
+    });
+
+    await this.getChats({ type: ChatsState.ChatTypesEnum.DIALOG });
+  },
+  methods: {
+    ...mapActions({
+      'setCurrentPage': PagesState.Actions.SET_PAGE,
+      'getChats': ChatsState.Actions.GET_CHATS,
+      'getMeInfo': MeState.Actions.GET_ME_INFO,
+    }),
   },
 });
 </script>
 
-<style lang="scss" module src="./index.module.scss"></style>
+<style lang="scss" src="./index.scss"></style>

@@ -1,3 +1,12 @@
+export interface Member {
+  id: string;
+  roleId: string;
+  userId: string;
+  chatId: string;
+  updatedAt: string;
+  createdAt: string;
+}
+
 export interface State {
   all: any[];
 }

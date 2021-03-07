@@ -1,12 +1,12 @@
 <template>
-  <ui-grid :class="$style.list_item__image_layout">
+  <ui-grid class="list_item__image_layout">
     <img
       v-if="url"
       :src="url"
+      class="list_item__image_root"
       alt="chat avatar"
-      :class="$style.list_item__image_root"
     />
-    <span v-else :class="$style.list_item__image_stub">
+    <span v-else class="list_item__image_stub">
       <span>{{ getUpperCaseSymbol() }}</span>
     </span>
   </ui-grid>
@@ -14,11 +14,12 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import Grid from '~/ui/grid/index.vue';
+import UiGrid from '~/ui/grid/index.vue';
 
 export default Vue.extend({
+  name: 'AvatarIcon',
   components: {
-    'ui-grid': Grid,
+    UiGrid,
   },
   props: {
     url: {
@@ -38,4 +39,4 @@ export default Vue.extend({
 });
 </script>
 
-<style lang="scss" module src="./index.module.scss"></style>
+<style lang="scss" src="./index.scss"></style>

@@ -3,18 +3,18 @@
     align-items="center"
     justify="space-between"
     wrap="nowrap"
-    :class="[$style.list_item, { [$style.list_item_active]: active }]"
+    :class="['list_item', { 'list_item__active': active }]"
     @click="handleClick"
   >
     <ui-grid
       align-items="center"
       justify="space-between"
-      :class="$style.list_item__header"
+      class="list_item__header"
     >
-      <div :class="$style.list_item__avatar">
-        <avatar-icon :username="username" :url="avatarURL"></avatar-icon>
-        <span :class="$style.list_item__status">
-          <span :class="$style.list_item__online_status"></span>
+      <div class="list_item__avatar">
+        <avatar-icon :username="username" :url="avatarUrl"></avatar-icon>
+        <span class="list_item__status">
+          <span class="list_item__online_status"></span>
         </span>
       </div>
       <ui-grid
@@ -22,30 +22,20 @@
         :justify="
           description && description.length ? 'space-between' : 'center'
         "
-        :class="$style.list_item__text"
+        class="list_item__text"
       >
-        <p :class="$style.list_item__title">{{ title }}</p>
-        <p
-          v-if="description && description.length"
-          :class="$style.list_item__desc"
-        >
+        <p class="list_item__title">{{ title }}</p>
+        <p v-if="description && description.length" class="list_item__desc">
           {{ description }}
         </p>
       </ui-grid>
     </ui-grid>
-    <ui-grid
-      direction="column"
-      justify="space-between"
-      :class="$style.list_item__info"
-    >
-      <p v-if="messages" :class="$style.list_item__nums">
+    <ui-grid direction="column" justify="space-between" class="list_item__info">
+      <p v-if="messages" class="list_item__nums">
         <span>{{ messages }}</span>
       </p>
-      <p
-        v-else
-        :class="[$style.list_item__nums, $style.list_item__nums_plug]"
-      ></p>
-      <p :class="$style.list_item__time">
+      <p v-else :class="['list_item__nums', 'list_item__nums_plug']"></p>
+      <p class="list_item__time">
         {{ time }}
       </p>
     </ui-grid>
@@ -54,26 +44,28 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import AvatarIcon from './avatar-icon.vue';
-import Grid from '~/ui/grid/index.vue';
+import AvatarIcon from '../avatar-icon.vue';
+import UiGrid from '~/ui/grid/index.vue';
 
 export default Vue.extend({
   components: {
-    'ui-grid': Grid,
-    'avatar-icon': AvatarIcon,
+    UiGrid,
+    AvatarIcon,
   },
   props: {
     username: {
       type: String,
       required: true,
     },
-    avatarURL: {
+    avatarUrl: {
       type: String,
+      required: false,
       default: null,
     },
     description: {
       type: String,
-      required: true,
+      required: false,
+      default: null,
     },
     title: {
       type: String,
@@ -89,6 +81,7 @@ export default Vue.extend({
     },
     active: {
       type: Boolean,
+      required: false,
       default: false,
     },
   },
@@ -100,4 +93,4 @@ export default Vue.extend({
 });
 </script>
 
-<style lang="scss" module src="./index.module.scss"></style>
+<style lang="scss" src="./index.scss"></style>

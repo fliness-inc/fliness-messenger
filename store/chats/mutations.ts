@@ -2,9 +2,13 @@ import { Mutations } from './types';
 import { IMutations } from './mutations.interface';
 
 export const mutations: IMutations = {
-  [Mutations.Types.GET_CHATS](state, payload) {
+  [Mutations.Types.SET_CHATS](state, payload) {
     state.all = payload;
   },
+  [Mutations.Types.SET_CHATS_STATUS](state, payload) {
+    state.status = payload.status;
+  },
+
   [Mutations.Types.CREATE_CHAT](state, payload) {
     state.all = [...state.all, payload];
   },

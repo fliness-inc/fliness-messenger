@@ -1,9 +1,7 @@
 <template>
   <ui-grid direction="column" :class="$style.message">
     <ui-grid align-items="center" :direction="shift ? 'row-reverse' : 'row'">
-      <avatar-icon :username="username" :url="avatarUrl" />
-      <p :class="$style.avatar__name">{{ username }}</p>
-      <!-- <EditButton /> -->
+      <ui-skeleton width="200px" height="24px" radius="4px"></ui-skeleton>
     </ui-grid>
     <ui-grid
       justify="center"
@@ -13,12 +11,9 @@
       <ui-grid
         align-items="center"
         :direction="shift ? 'row-reverse' : 'row'"
-        :class="[
-          $style.message__text,
-          { [$style.message__primary_text]: shift },
-        ]"
+        :class="[$style.message__text_skeleton]"
       >
-        <p>{{ text }}</p>
+        <ui-skeleton width="400px" height="100px" radius="4px"></ui-skeleton>
       </ui-grid>
     </ui-grid>
     <ui-grid
@@ -27,7 +22,7 @@
       :align-items="shift ? 'flex-end' : 'flex-start'"
     >
       <ui-grid align-items="center" :direction="shift ? 'row-reverse' : 'row'">
-        <span :class="$style.message__time"> {{ formatedTime }} </span>
+        <ui-skeleton width="70px" height="20px" radius="4px"></ui-skeleton>
         <ui-grid align-items="center" :class="$style.message__loading">
           <!-- {!shift ? null : ( /*<CheckIcon
           className={classes['message__loading_process']} />*/ <ChecksIcon
@@ -40,46 +35,18 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import AvatarIcon from './avatar-icon.vue';
+import Skeleton from '~/ui/skeleton/index.vue';
 import Grid from '~/ui/grid/index.vue';
 
 export default Vue.extend({
   components: {
     'ui-grid': Grid,
-    /* 'ui-button': Button, */
-    'avatar-icon': AvatarIcon,
+    'ui-skeleton': Skeleton,
   },
   props: {
     shift: {
       type: Boolean,
       default: false,
-    },
-    username: {
-      type: String,
-      required: true,
-    },
-    avatarUrl: {
-      type: String,
-      default: null,
-    },
-    text: {
-      type: String,
-      required: true,
-    },
-    time: {
-      type: String,
-      required: true,
-    },
-  },
-  computed: {
-    formatedTime() {
-      const d = new Date(this.time);
-
-      const hours = d.getHours();
-      const minutes = d.getMinutes();
-      const format = hours > 12 ? 'PM' : 'AM';
-
-      return `${hours}:${minutes} ${format}`;
     },
   },
 });

@@ -1,6 +1,8 @@
+import { Status } from '../utils';
 import { State, SocketConnectionStateEnum } from './types';
 
 export default (): State => ({
-  messagesCurrentChat: [],
+  all: {},
+  status: Status.NONE,
   socketConnectionState: SocketConnectionStateEnum.DISCONNECTED,
 });

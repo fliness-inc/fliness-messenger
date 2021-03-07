@@ -1,28 +1,28 @@
 <template>
-  <ui-grid :class="[$style.sidebar, $style.sidebar_horizontal]">
+  <ui-grid :class="['sidebar', 'sidebar_horizontal']">
     <menu-button
-      :class="$style.menu__item_horizontal"
+      class="menu__item_horizontal"
       :active="activeDialogsBtn"
       @click="handleMenuBtnClick('DIALOGS')"
     >
       <dialogs-icon />
     </menu-button>
     <menu-button
-      :class="$style.menu__item_horizontal"
+      class="menu__item_horizontal"
       :active="activeGroupsBtn"
       @click="handleMenuBtnClick('GROUPS')"
     >
       <groups-icon />
     </menu-button>
     <menu-button
-      :class="$style.menu__item_horizontal"
+      class="menu__item_horizontal"
       :active="activeChannelsBtn"
       @click="handleMenuBtnClick('CHANNELS')"
     >
       <channels-icon />
     </menu-button>
     <menu-button
-      :class="$style.menu__item_horizontal"
+      class="menu__item_horizontal"
       :active="activeSettingsBtn"
       @click="handleMenuBtnClick('SETTINGS')"
     >
@@ -102,4 +102,4 @@ export default Vue.extend({
 });
 </script>
 
-<style lang="scss" module src="../index.module.scss"></style>
+<style lang="scss" src="../index.scss"></style>

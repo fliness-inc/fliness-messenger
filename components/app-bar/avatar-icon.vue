@@ -1,7 +1,7 @@
 <template>
-  <div :class="$style.account__avatar__layout">
-    <img v-if="url" :src="url" :class="$style.account__avatar" />
-    <span v-else :class="$style.account__avatar">
+  <div class="account__avatar__layout">
+    <img v-if="url" :src="url" class="account__avatar" />
+    <span v-else class="account__avatar">
       <span>{{ upperSymbolUsername }}</span>
     </span>
   </div>
@@ -11,13 +11,16 @@
 import Vue from 'vue';
 
 export default Vue.extend({
+  name: 'AvatarIcon',
   props: {
     url: {
       type: String,
+      required: false,
       default: null,
     },
     username: {
       type: String,
+      required: false,
       default: null,
     },
   },
@@ -32,4 +35,4 @@ export default Vue.extend({
 });
 </script>
 
-<style lang="scss" module src="./index.module.scss"></style>
+<style lang="scss" src="./index.scss"></style>

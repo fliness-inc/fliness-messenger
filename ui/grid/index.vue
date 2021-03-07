@@ -1,10 +1,10 @@
 <template>
   <div
     :class="{
-      [$style.grid]: true,
-      [$style[`grid_dir-${direction}`]]: direction,
-      [$style[`grid_justify-${justify}`]]: justify,
-      [$style[`grid_align-${alignItems}`]]: alignItems,
+      'grid': true,
+      [`grid_dir-${direction}`]: direction,
+      [`grid_justify-${justify}`]: justify,
+      [`grid_align-${alignItems}`]: alignItems,
     }"
     @click="handleClick"
   >
@@ -16,6 +16,7 @@
 import Vue from 'vue';
 
 export default Vue.extend({
+  name: 'UiGrid',
   props: {
     justify: {
       type: String,
@@ -60,7 +61,7 @@ export default Vue.extend({
       type: String,
       default: 'row',
       validator(val) {
-        return ['row', 'column', 'row-reverse', 'column-revers'].includes(val);
+        return ['row', 'column', 'row-reverse', 'column-reverse'].includes(val);
       },
     },
   },
@@ -72,4 +73,4 @@ export default Vue.extend({
 });
 </script>
 
-<style lang="scss" module src="./index.module.scss"></style>
+<style lang="scss" src="./index.scss"></style>

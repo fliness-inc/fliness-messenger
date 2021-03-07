@@ -1,6 +1,7 @@
 import io from 'socket.io-client';
 import { Actions, Mutations, SocketConnectionStateEnum } from './types';
 import { IActions } from './actions.interface';
+import { Status } from '~/store/utils';
 import axios from '~/plugins/axios';
 
 let socket;
@@ -8,22 +9,30 @@ let socket;
 export const actions: IActions = {
   [Actions.Types.GET_MESSAGES](ctx, payload) {
     const { commit, rootState } = ctx;
+    const { chatId } = payload;
+
+    commit(Mutations.Types.SET_MESSAGES_STATUS, { status: Status.LOADING });
 
     return axios
-      .get(`/chats/${payload.chatId}/messages`, {
+      .get(`/chats/${chatId}/messages`, {
         headers: {
           Authorization: `Bearer ${rootState.auth.tokens.access}`,
         },
       })
       .then(({ data: { data } }) => {
         const payload: Mutations.SetMessagesPayload = {
+          chatId: <string>chatId,
           messages: data,
         };
         commit(Mutations.Types.SET_MESSAGES, payload);
+        commit(Mutations.Types.SET_MESSAGES_STATUS, { status: Status.SUCCESS });
+      })
+      .catch(() => {
+        commit(Mutations.Types.SET_MESSAGES_STATUS, { status: Status.ERROR });
       });
   },
   async [Actions.Types.CONNECT_SOCKET](ctx) {
-    const { commit, rootState } = ctx;
+    const { commit } = ctx;
 
     socket = await io(`${process.env.NUXT_ENV_API_WS_URL}`, {
       path: '/messages',
@@ -44,8 +53,7 @@ export const actions: IActions = {
     });
 
     socket.on('message-created', (data) => {
-      if (data.chatId === rootState.chats.currentChatId)
-        commit(Mutations.Types.ADD_NEW_MESSAGE, data);
+      commit(Mutations.Types.ADD_NEW_MESSAGE, data);
     });
   },
   async [Actions.Types.DISCONNECT_SOCKET]() {
@@ -64,8 +72,12 @@ export const actions: IActions = {
         headers: {
           Authorization: `Bearer ${rootState.auth.tokens.access}`,
         },
-      }
+      },
     );
+  },
+  [Actions.Types.SET_MESSAGES](ctx, payload) {
+    const { commit } = ctx;
+    return commit(Mutations.Types.SET_MESSAGES, payload);
   },
 };
 

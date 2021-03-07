@@ -1,37 +1,42 @@
 <template>
-  <ui-grid direction="column" :class="$style.chat_messages">
+  <ui-grid direction="column-reverse" :class="$style.chat_messages">
+    <!-- <template v-if="showLoading">
+      <skeleton v-for="i in 10" :key="i" :shift="i % 3 === 0"></skeleton>
+    </template> -->
+    <!-- <template> -->
     <list-item
       v-for="message in formatedMessages"
       :key="message.id"
       :username="message.username"
-      :avatarURL="message.avatarURL"
+      :avatar-url="message.avatarURL"
       :text="message.text"
       :time="message.createdAt"
       :shift="message.shift"
     ></list-item>
+    <!-- </template> -->
   </ui-grid>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import { mapState } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import ListItem from './list-items.vue';
-import Grid from '~/ui/grid/index.vue';
+import Skeleton from './skeleton.vue';
+import UiGrid from '~/ui/grid/index.vue';
 import { State } from '~/store/state.interface';
-import * as MessagesState from '~/store/messages/types';
+import { Status } from '~/store/utils';
+import * as MessagesState from '~/store/messages';
 
 export default Vue.extend({
   components: {
-    'ui-grid': Grid,
-    'list-item': ListItem,
+    UiGrid,
+    ListItem,
+    Skeleton,
   },
   computed: {
     ...mapState({
       me(state: State) {
         return state.me;
-      },
-      messages(state: State) {
-        return state.messages.messagesCurrentChat;
       },
       currentChatId(state: State) {
         return state.chats.currentChatId;
@@ -42,34 +47,43 @@ export default Vue.extend({
       users(state: State) {
         return state.users.all;
       },
+      messages(state: State) {
+        return state.messages.all;
+      },
+      showLoading: (state: State) => state.messages.status === Status.LOADING,
     }),
     formatedMessages() {
-      return this.messages.map((message) => {
+      if (!this.currentChatId) return [];
+
+      const messages = this.messages[this.currentChatId] || [];
+
+      return messages.map((message) => {
         const member = this.members.find(
-          (member) => member.id === message.memberId
+          (member) => member.id === message.memberId,
         );
 
         const user = this.users.find((user) => user.id === member.userId);
 
         return {
           ...message,
-          username: user.name || 'fds',
+          username: user.name,
           avatarURL: user.avatarURL,
           shift: this.me.id === user.id,
         };
       });
     },
   },
-  updated() {
-    this.$el.scrollTop = this.$el.scrollHeight;
-  },
   async mounted() {
     if (!this.currentChatId) return;
 
-    const payload: MessagesState.Actions.GetMessagesPayload = {
+    await this.getChatMessages({
       chatId: this.currentChatId,
-    };
-    await this.$store.dispatch(MessagesState.Actions.GET_MESSAGES, payload);
+    });
+  },
+  methods: {
+    ...mapActions({
+      getChatMessages: MessagesState.Actions.GET_MESSAGES,
+    }),
   },
 });
 </script>

@@ -1,11 +1,6 @@
 export enum MenuStateEnum {
   NONE = 'NONE',
-  MOVING_ACTIVE = 'MOVING_ACTIVE',
-  MOVING_DEACTIVE = 'MOVING_DEACTIVE',
-  MOVING_OVER_ACTIVE = 'MOVING_OVER_ACTIVE',
-  MOVING_OVER_DEACTIVE = 'MOVING_OVER_DEACTIVE',
-  MOVING_OVER_WITH_SIDE_BAR_ACTIVE = 'MOVING_OVER_WITH_SIDE_BAR_ACTIVE',
-  MOVING_OVER_WITH_SIDE_BAR_DEACTIVE = 'MOVING_OVER_WITH_SIDE_BAR_DEACTIVE',
+  ACTIVE = 'ACTIVE',
 }
 
 export interface State {
@@ -14,15 +9,18 @@ export interface State {
 
 export const NAMESPACE = 'flex';
 
-/* Mutations names */
-export const SET_MENU_STATE_MUTATION_NAME = 'setMenuState';
+export namespace Mutations {
+  export namespace Types {
+    export const SET_MENU_STATE = 'SET_MENU_STATE';
+  }
+}
 
-/* Actions names */
-export const CHANGE_MENU_STATE_ACTION_NAME = 'changeMenuState';
-export const UPDATE_MENU_STATE_ACTION_NAME = 'updateMenuState';
-export const SET_MENU_STATE_ACTION_NAME = 'setMenuState';
+export namespace Actions {
+  export namespace Types {
+    export const CHANGE_MENU_STATE = 'CHANGE_MENU_STATE';
+    export const SET_MENU_STATE = 'SET_MENU_STATE';
+  }
 
-/* Actions */
-export const CHANGE_MENU_STATE_ACTION = `${NAMESPACE}/${CHANGE_MENU_STATE_ACTION_NAME}`;
-export const UPDATE_MENU_STATE_ACTION = `${NAMESPACE}/${UPDATE_MENU_STATE_ACTION_NAME}`;
-export const SET_MENU_STATE_ACTION = `${NAMESPACE}/${SET_MENU_STATE_ACTION_NAME}`;
+  export const CHANGE_MENU_STATE = `${NAMESPACE}/${Types.CHANGE_MENU_STATE}`;
+  export const SET_MENU_STATE = `${NAMESPACE}/${Types.SET_MENU_STATE}`;
+}

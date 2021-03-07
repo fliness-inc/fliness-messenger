@@ -1,10 +1,10 @@
 <template>
   <ui-button
     variant="text"
-    :class="[$style.menu__item, { [$style.menu__item_active]: active }]"
+    :class="['menu__item', { 'menu__item_active': active }]"
     @click="$emit('click')"
   >
-    <div :class="$style.item__icon">
+    <div class="item__icon">
       <slot></slot>
     </div>
   </ui-button>
@@ -27,4 +27,4 @@ export default Vue.extend({
 });
 </script>
 
-<style lang="scss" module src="./index.module.scss"></style>
+<style lang="scss" src="./index.scss"></style>

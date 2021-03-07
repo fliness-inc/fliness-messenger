@@ -1,7 +1,7 @@
-import { SET_MENU_STATE_MUTATION_NAME, MenuStateEnum } from './types';
+import { Mutations, MenuStateEnum } from './types';
 
 export default {
-  [SET_MENU_STATE_MUTATION_NAME](state, payload: MenuStateEnum) {
-    state.menuState = payload;
+  [Mutations.Types.SET_MENU_STATE](state, payload: { state: MenuStateEnum }) {
+    state.menuState = payload.state;
   },
 };

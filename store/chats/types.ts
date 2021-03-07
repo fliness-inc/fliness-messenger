@@ -1,4 +1,5 @@
-import { Message } from '~/store/messages/types';
+import { Message } from '~/store/messages';
+import { Status } from '~/store/utils';
 
 export interface ChatType {
   id: string;
@@ -15,11 +16,12 @@ export interface Chat {
   createdAt: string;
   typeId: string;
   type: ChatType | null;
-  lastMessage: Message | null;
+  messages: Message[];
 }
 
 export interface State {
   all: Chat[];
+  status: Status;
   currentChatId: string | null;
 }
 
@@ -33,11 +35,13 @@ export const NAMESPACE = 'chats';
 
 export namespace Mutations {
   export namespace Types {
+    export const SET_CHATS = 'SET_CHATS';
+    export const SET_CHATS_STATUS = 'SET_CHATS_STATUS';
+
     export const CREATE_CHAT = 'CREATE_CHAT';
-    export const GET_CHATS = 'GET_CHATS';
     export const SET_CHAT_TYPES = 'SET_CHAT_TYPES';
     export const SET_CURRENT_CHAT = 'SET_CURRENT_CHAT';
-    export const SET_LAST_MESSAGES = 'SET_LAST_MESSAGES';
+    export const SET_CHATS_LAST_MESSAGES = 'SET_CHATS_LAST_MESSAGES';
   }
 
   export interface SetCurrentChatPayload {
@@ -45,7 +49,7 @@ export namespace Mutations {
   }
 
   export interface SetLastMessagesPayload {
-    messages: Messages;
+    messages: Message[];
   }
 }
 
@@ -55,7 +59,7 @@ export namespace Actions {
     export const GET_CHATS = 'GET_CHATS';
     export const GET_CHAT_TYPES = 'GET_CHAT_TYPES';
     export const SET_CURRENT_CHAT = 'SET_CURRENT_CHAT';
-    export const SET_LAST_MESSAGES = 'SET_LAST_MESSAGES';
+    export const GET_CHATS_LAST_MESSAGES = 'GET_CHATS_LAST_MESSAGES';
   }
 
   export interface GetChatsPayload {
@@ -69,5 +73,5 @@ export namespace Actions {
   export const GET_CHATS = `${NAMESPACE}/${Types.GET_CHATS}`;
   export const GET_CHAT_TYPES = `${NAMESPACE}/${Types.GET_CHAT_TYPES}`;
   export const SET_CURRENT_CHAT = `${NAMESPACE}/${Types.SET_CURRENT_CHAT}`;
-  export const SET_LAST_MESSAGES = `${NAMESPACE}/${Types.SET_LAST_MESSAGES}`;
+  export const GET_CHATS_LAST_MESSAGES = `${NAMESPACE}/${Types.GET_CHATS_LAST_MESSAGES}`;
 }

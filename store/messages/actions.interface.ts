@@ -16,6 +16,11 @@ export interface IActions<S = State, RS = RootState> {
     ctx: Context<S, RS>,
     payload: Actions.SendMessagePayload
   ): Promise<void>;
+
+  [Actions.Types.SET_MESSAGES](
+    ctx: Context<S, RS>,
+    payload: Actions.SetMessagesPayload
+  ): Promise<void>;
 }
 
 export default IActions;
