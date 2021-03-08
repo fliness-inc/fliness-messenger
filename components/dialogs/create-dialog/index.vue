@@ -49,7 +49,7 @@
                 v-for="user in users"
                 :key="user.id"
                 :username="user.name"
-                :avatarURL="user.avatarURL"
+                :avatar-url="user.avatarURL"
                 :active="user.id === selectedUserId"
                 @click="handleListItemClick(user.id)"
               />
@@ -95,24 +95,25 @@
 import Vue from 'vue';
 import { mapState } from 'vuex';
 import ListItem from './list-item.vue';
-import Modal from '~/ui/modal/index.vue';
-import Button from '~/ui/button/index.vue';
-import Grid from '~/ui/grid/index.vue';
-import Tabs from '~/ui/tabs/index.vue';
-import Tab from '~/ui/tabs/tab.vue';
-import Skeleton from '~/ui/skeleton/index.vue';
-import { GET_USERS_ACTION } from '~/store/users/types';
+import UiModal from '~/ui/modal/index.vue';
+import UiButton from '~/ui/button/index.vue';
+import UiGrid from '~/ui/grid/index.vue';
+import UiTabs from '~/ui/tabs/index.vue';
+import UiTab from '~/ui/tabs/tab.vue';
+import UiSkeleton from '~/ui/skeleton/index.vue';
+import * as UsersState from '~/store/users/types';
 import { Actions, ChatTypesEnum } from '~/store/chats/types';
+import { State } from '~/store/state.interface';
 
 export default Vue.extend({
   components: {
-    'ui-grid': Grid,
-    'ui-button': Button,
-    'ui-modal': Modal,
-    'ui-tabs': Tabs,
-    'ui-tab': Tab,
-    'ui-skeleton': Skeleton,
-    'list-item': ListItem,
+    UiGrid,
+    UiButton,
+    UiModal,
+    UiTabs,
+    UiTab,
+    UiSkeleton,
+    ListItem,
   },
   data() {
     return {
@@ -123,11 +124,11 @@ export default Vue.extend({
   },
   computed: {
     ...mapState({
-      users: (state: any) => state.users.all,
+      users: (state) => (state as State).users.all,
     }),
   },
   async mounted() {
-    await this.$store.dispatch(GET_USERS_ACTION);
+    await this.$store.dispatch(UsersState.Actions.GET_USERS);
   },
   methods: {
     handleListItemClick(userId) {

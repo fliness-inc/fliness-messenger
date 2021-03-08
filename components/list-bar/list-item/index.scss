@@ -45,7 +45,7 @@
     }
   }
 
-  &_active {
+  &__active {
     background-color: var(--color-list-bar-item-active-bg);
 
     .list_item__title {
@@ -190,15 +190,17 @@
   &__nums {
     --size: 22px;
 
-    min-width: var(--size);
-    min-height: var(--size);
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--color-list-bar-item-nums-bg);
-    border-radius: 50%;
+
     align-self: flex-end;
-    margin-top: 2px; /* dont touch, it's a magic! (~0-0)~ */
+
+    padding: 3px 8px;
+    padding-top: 4px;
+    border-radius: 16px;
+
+    background-color: var(--color-list-bar-item-nums-bg);
 
     &_plug {
       background-color: transparent;
@@ -207,8 +209,8 @@
 
   &__nums > span {
     color: var(--color-list-bar-item-nums-color);
-    font-size: 13px;
-    font-weight: 500;
+    font-size: 12px;
+    font-weight: 600;
   }
 
   &__online_status {

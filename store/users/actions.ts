@@ -1,27 +1,36 @@
-import {
-  GET_USERS_ACTION_NAME,
-  GET_USERS_BY_IDS_ACTION_NAME,
-  SET_USERS_MUTATION_NAME,
-} from './types';
+import { Actions, Mutations } from './types';
+import { IActions } from './actions.interface';
 import axios from '~/plugins/axios';
 
-export default {
-  [GET_USERS_ACTION_NAME]({ commit }) {
+export const actions: IActions = {
+  [Actions.Types.GET_USERS](ctx) {
+    const { commit } = ctx;
     return axios
       .get('/users')
-      .then(({ data: { data } }) => commit(SET_USERS_MUTATION_NAME, data))
+      .then((res) => {
+        const {
+          data: { data: users },
+        } = res;
+        commit(Mutations.Types.SET_USERS, { users });
+      })
       .catch((e) => console.error(e));
   },
-  [GET_USERS_BY_IDS_ACTION_NAME]({ commit, rootState }, payload: string[]) {
-    if (!payload.length) return;
-
+  [Actions.Types.GET_USERS_BY_IDS](ctx, payload) {
+    const { commit, rootState } = ctx;
     return axios
-      .get(`/users?ids=${payload.join(',')}`, {
+      .get(`/users?ids=${payload.ids.join(',')}`, {
         headers: {
           Authorization: `Bearer ${rootState.auth.tokens.access}`,
         },
       })
-      .then(({ data: { data } }) => commit(SET_USERS_MUTATION_NAME, data))
+      .then((res) => {
+        const {
+          data: { data: users },
+        } = res;
+        commit(Mutations.Types.SET_USERS, { users });
+      })
       .catch((e) => console.error(e));
   },
 };
+
+export default actions;

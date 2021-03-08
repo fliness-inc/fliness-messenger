@@ -1,16 +1,36 @@
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  avatarURL: string;
+}
+
 export interface State {
-  all: any[];
+  all: User[];
 }
 
 export const NAMESPACE = 'users';
 
-/* Mutations */
-export const SET_USERS_MUTATION_NAME = 'setUsers';
+export namespace Mutations {
+  export namespace Types {
+    export const SET_USERS = 'SET_USERS';
+  }
 
-/* Actions names */
-export const GET_USERS_ACTION_NAME = 'getUsers';
-export const GET_USERS_BY_IDS_ACTION_NAME = 'getUsersByIds';
+  export interface SetUsersPayload {
+    users: User[];
+  }
+}
 
-/* Actions */
-export const GET_USERS_ACTION = `${NAMESPACE}/${GET_USERS_ACTION_NAME}`;
-export const GET_USERS_BY_IDS_ACTION = `${NAMESPACE}/${GET_USERS_BY_IDS_ACTION_NAME}`;
+export namespace Actions {
+  export namespace Types {
+    export const GET_USERS = 'SET_USERS';
+    export const GET_USERS_BY_IDS = 'GET_USERS_BY_IDS';
+  }
+
+  export interface SetUsersByIdsPayload {
+    ids: string[];
+  }
+
+  export const GET_USERS = `${NAMESPACE}/${Types.GET_USERS}`;
+  export const GET_USERS_BY_IDS = `${NAMESPACE}/${Types.GET_USERS_BY_IDS}`;
+}

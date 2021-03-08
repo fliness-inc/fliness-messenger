@@ -14,7 +14,7 @@
         <create-dialog-modal />
       </ui-grid>
     </ui-grid>
-    <skeleton v-if="showLoading"></skeleton>
+    <skeleton v-if="isLoading"></skeleton>
     <chat-list v-else></chat-list>
     <side-bar-horizontal></side-bar-horizontal>
   </ui-grid>
@@ -22,7 +22,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { mapState } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import ChatList from './list.vue';
 import Skeleton from './skeleton.vue';
 import UiGrid from '~/ui/grid/index.vue';
@@ -32,8 +32,10 @@ import CreateDialogModal from '~/components/dialogs/create-dialog/index.vue';
 import { MenuStateEnum } from '~/store/flex';
 import { State } from '~/store/state.interface';
 import { Status } from '~/store/utils';
+import * as ChatsState from '~/store/chats';
 
 export default Vue.extend({
+  name: 'ListBarLayout',
   components: {
     UiGrid,
     Skeleton,
@@ -51,10 +53,8 @@ export default Vue.extend({
   computed: {
     ...mapState({
       menuState: (state) => (state as State).flex.menuState,
-      showLoading: (state) =>
-        (state as State).chats.status !==
-        Status.SUCCESS /*  &&
-        !Object.keys((state as State).chats.all).length */,
+      chats: (state) => (state as State).chats.all,
+      isLoading: (state) => (state as State).chats.status !== Status.SUCCESS,
       showSidebar() {
         return this.menuState === MenuStateEnum.NONE;
       },
@@ -62,6 +62,14 @@ export default Vue.extend({
     active() {
       return this.menuState === MenuStateEnum.ACTIVE;
     },
+  },
+  async mounted() {
+    await this.getChats();
+  },
+  methods: {
+    ...mapActions({
+      'getChats': ChatsState.Actions.GET_CHATS,
+    }),
   },
 });
 </script>

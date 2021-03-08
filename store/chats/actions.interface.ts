@@ -7,14 +7,14 @@ export interface IActions<S = State, RS = RootState> {
 
   [Actions.Types.GET_CHATS](
     ctx: Context<S, RS>,
-    payload: Actions.GetChatsPayload
+    payload: Actions.GetChatsPayload,
   ): Promise<void>;
 
   [Actions.Types.GET_CHAT_TYPES](ctx: Context<S, RS>): Promise<void>;
 
   [Actions.Types.SET_CURRENT_CHAT](
     ctx: Context<S, RS>,
-    payload: Actions.SetCurrentChatPayload
+    payload: Actions.SetCurrentChatPayload,
   ): Promise<void>;
 }
 

@@ -1,26 +1,11 @@
-import { SET_USERS_MUTATION_NAME } from './types';
+import lodash from 'lodash';
+import { Mutations } from './types';
+import { IMutations } from './mutations.interface';
 
-export default {
-  [SET_USERS_MUTATION_NAME](state, payload) {
-    let newUsers = payload;
-    const allUsers = state.all;
-
-    allUsers.map((existingUser) => {
-      const foundUser = newUsers.find(
-        (newUser) => newUser.id === existingUser.id
-      );
-
-      if (foundUser) {
-        newUsers = newUsers.filter((newUser) => newUser.id !== existingUser.id);
-        return {
-          ...existingUser,
-          ...foundUser,
-        };
-      }
-
-      return existingUser;
-    });
-
-    state.all = [...allUsers, ...newUsers];
+export const mutations: IMutations = {
+  [Mutations.Types.SET_USERS](state, payload) {
+    state.all = lodash.unionBy(state.all, payload.users, 'id');
   },
 };
+
+export default mutations;

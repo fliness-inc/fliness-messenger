@@ -67,8 +67,8 @@ export namespace Actions {
   export interface SetMessagesPayload extends Mutations.SetMessagesPayload {}
 
   export const GET_MESSAGES = `${NAMESPACE}/${Types.GET_MESSAGES}`;
-  export const CONNECT_SOCKET = `${NAMESPACE}/${Types.CONNECT_SOCKET}`;
-  export const DISCONNECT_SOCKET = `${NAMESPACE}/${Types.DISCONNECT_SOCKET}`;
+  export const SUB_ON_GET_MESSAGES = `${NAMESPACE}/${Types.CONNECT_SOCKET}`;
+  export const UNSUB_ON_GET_MESSAGES = `${NAMESPACE}/${Types.DISCONNECT_SOCKET}`;
   export const SEND_MESSAGE = `${NAMESPACE}/${Types.SEND_MESSAGE}`;
   export const SET_MESSAGES = `${NAMESPACE}/${Types.SET_MESSAGES}`;
 }

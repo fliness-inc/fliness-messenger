@@ -8,8 +8,8 @@
         :title="getCompanion(chat.id).name"
         :active="currentChatId === chat.id"
         :description="getTextLastMessage(chat.id)"
-        time=""
-        messages=""
+        :time="getTimeLastMessage(chat.id)"
+        :unreaded="chat.countMessageViews"
         @click="handleListItemClick(chat.id)"
       />
     </template>
@@ -24,8 +24,10 @@ import UiGrid from '~/ui/grid/index.vue';
 import { State } from '~/store/state.interface';
 import { Member } from '~/store/members';
 import * as ChatsState from '~/store/chats';
+import * as FlexState from '~/store/flex';
 
 export default Vue.extend({
+  name: 'List',
   components: {
     UiGrid,
     ListItem,
@@ -46,17 +48,19 @@ export default Vue.extend({
   methods: {
     ...mapActions({
       'setCurrentChat': ChatsState.Actions.SET_CURRENT_CHAT,
+      'getChats': ChatsState.Actions.GET_CHATS,
+      'setMenuState': FlexState.Actions.SET_MENU_STATE,
     }),
     getTextLastMessage(chatId: string) {
-      const messages = this.messages[chatId];
+      const chatMessages = this.messages[chatId];
 
-      if (!messages?.length) return '';
+      if (!chatMessages?.length) return '';
 
       const member = this.members.find(
         (member) => member.userId === this.me.id && member.chatId === chatId,
       );
 
-      const lastChatMessage = messages[0];
+      const lastChatMessage = chatMessages[0];
 
       return lastChatMessage.memberId === member.id
         ? `You: ${lastChatMessage.text}`
@@ -72,11 +76,25 @@ export default Vue.extend({
       return this.users.find((users) => users.id === member.userId);
     },
     async handleListItemClick(chatId: string) {
+      await this.setMenuState({ state: FlexState.MenuStateEnum.NONE });
       await this.setCurrentChat({
         chatId,
       });
 
       this.$router.push(`/dialogs/${chatId}`);
+    },
+    getTimeLastMessage(chatId: string) {
+      const chatMessages = this.messages[chatId];
+
+      if (!chatMessages?.length) return '';
+
+      const d = new Date(chatMessages[0].createdAt);
+
+      const hours = d.getHours();
+      const minutes = d.getMinutes();
+      const format = hours > 12 ? 'PM' : 'AM';
+
+      return `${hours}:${minutes} ${format}`;
     },
   },
 });

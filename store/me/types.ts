@@ -1,8 +1,5 @@
 export interface State {
   id: string | null;
-  name: string | null;
-  email: string | null;
-  avatarURL: string | null;
 }
 
 export interface SetMeInfoMutationPayload {

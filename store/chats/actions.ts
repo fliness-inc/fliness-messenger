@@ -1,14 +1,14 @@
 import { Actions, Mutations, ChatTypesEnum } from './types';
 import { IActions } from './actions.interface';
 import axios from '~/plugins/axios';
-import { GET_CHATS_MEMBERS_ACTION } from '~/store/members/types';
-import { GET_USERS_BY_IDS_ACTION } from '~/store/users/types';
-import { Status } from '~/store/utils';
+import { GET_CHATS_MEMBERS_ACTION } from '~/store/members';
+import * as UsersState from '~/store/users';
 import * as MessagesState from '~/store/messages';
+import { Status } from '~/store/utils';
 
 export const actions: IActions = {
-  [Actions.Types.GET_CHATS](ctx, payload) {
-    const { commit, rootState, state, dispatch } = ctx;
+  [Actions.Types.GET_CHATS](ctx) {
+    const { commit, rootState, dispatch } = ctx;
 
     commit(Mutations.Types.SET_CHATS_STATUS, { status: Status.LOADING });
 
@@ -20,46 +20,48 @@ export const actions: IActions = {
       })
       .then((res) => {
         const { data: chats } = res.data;
-        commit(Mutations.Types.SET_CHATS, chats);
+        return chats;
       })
-      .then(() =>
-        dispatch(
+      .then(async (chats) => {
+        await dispatch(
           GET_CHATS_MEMBERS_ACTION,
-          state.all
-            .filter((chat) => chat.type?.name === payload.type)
-            .map((chat) => chat.id),
+          chats.map((chat) => chat.id),
           { root: true },
-        ),
-      )
-      .then(() => {
+        );
+        return chats;
+      })
+      .then(async (chats) => {
         const companions = rootState.members.all.filter(
           (member) => member.userId !== rootState.me.id,
         );
 
-        return dispatch(
-          GET_USERS_BY_IDS_ACTION,
-          companions.map((member) => member.userId),
+        await dispatch(
+          UsersState.Actions.GET_USERS_BY_IDS,
+          { ids: companions.map((member) => member.userId) },
           { root: true },
         );
-      })
-      .then(async () => {
-        const chats = state.all.filter(
-          (chat) => chat.type?.name === payload.type,
-        );
 
-        for (const chat of chats) {
-          const payload: MessagesState.Actions.SetMessagesPayload = {
-            chatId: chat.id,
-            messages: chat.messages,
-          };
-          await dispatch(MessagesState.Actions.SET_MESSAGES, payload, {
-            root: true,
-          });
-        }
+        return chats;
       })
-      .then(() =>
-        commit(Mutations.Types.SET_CHATS_STATUS, { status: Status.SUCCESS }),
-      )
+      .then(async (chats) => {
+        for (const chat of chats) {
+          await dispatch(
+            MessagesState.Actions.SET_MESSAGES,
+            {
+              chatId: chat.id,
+              messages: chat.messages,
+            },
+            {
+              root: true,
+            },
+          );
+        }
+        return chats;
+      })
+      .then((chats) => {
+        commit(Mutations.Types.SET_CHATS, chats);
+        commit(Mutations.Types.SET_CHATS_STATUS, { status: Status.SUCCESS });
+      })
       .catch(() =>
         commit(Mutations.Types.SET_CHATS_STATUS, { status: Status.ERROR }),
       );
@@ -96,8 +98,8 @@ export const actions: IActions = {
     );
 
     await dispatch(
-      GET_USERS_BY_IDS_ACTION,
-      companions.map((member) => member.userId),
+      UsersState.Actions.GET_USERS_BY_IDS,
+      { ids: companions.map((member) => member.userId) },
       { root: true },
     );
   },

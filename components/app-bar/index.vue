@@ -31,7 +31,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { mapActions, mapState } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import AvatarIcon from './avatar-icon.vue';
 import UiGrid from '~/ui/grid/index.vue';
 import UiButton from '~/ui/button/index.vue';
@@ -42,7 +42,7 @@ import LogoIcon from '~/assets/logo.svg?inline';
 // @ts-ignore
 import ArrowIcon from '~/assets/keyboard_arrow_down.svg?inline';
 import * as FlexState from '~/store/flex';
-import { State } from '~/store/state.interface';
+import * as MeState from '~/store/me';
 
 export default Vue.extend({
   name: 'AppBar',
@@ -54,14 +54,16 @@ export default Vue.extend({
     ArrowIcon,
     AvatarIcon,
   },
+  async fetch() {
+    await this.getMeInfo();
+  },
   computed: {
-    ...mapState({
-      me: (state) => (state as State).me,
-    }),
+    ...mapGetters(['me']),
   },
   methods: {
     ...mapActions({
       changeMenuState: FlexState.Actions.CHANGE_MENU_STATE,
+      getMeInfo: MeState.Actions.GET_ME_INFO,
     }),
     handleMenuBtnClick() {
       this.changeMenuState();

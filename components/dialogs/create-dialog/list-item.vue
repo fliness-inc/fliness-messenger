@@ -17,9 +17,9 @@
         <div :class="$style.list_item__avatar">
           <div :class="$style.list_item__image">
             <img
-              v-if="avatarURL"
+              v-if="avatarUrl"
               :class="$style.list_item__image"
-              :src="avatarURL"
+              :src="avatarUrl"
               alt="user avatar"
             />
             <span v-else> {{ upperCaseFirstSymbol }} </span>
@@ -49,7 +49,7 @@ export default Vue.extend({
       type: Boolean,
       default: false,
     },
-    avatarURL: {
+    avatarUrl: {
       type: String,
       default: null,
     },

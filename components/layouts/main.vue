@@ -14,26 +14,6 @@
         <slot name="content"></slot>
       </ui-grid>
     </ui-grid>
-    <!-- <ui-modal :open="shouldOpenOverMenu" @close="closeOverMenu">
-      <ui-grid direction="column" justify="center" align-items="center">
-        <app-bar></app-bar>
-        <ui-grid wrap="nowrap">
-          <side-bar-vertical></side-bar-vertical>
-          <slot name="listbar"></slot>
-        </ui-grid>
-      </ui-grid>
-    </ui-modal> -->
-    <!--  <ui-modal
-      :open="shouldOpenOverWithSidebarMenu"
-      @close="closeOverWithSidebarMenu"
-    >
-      <ui-grid direction="column" justify="center" align-items="center">
-        <app-bar></app-bar>
-        <ui-grid wrap="nowrap">
-          <slot name="listbar"></slot>
-        </ui-grid>
-      </ui-grid>
-    </ui-modal> -->
   </ui-grid>
 </template>
 
@@ -41,17 +21,15 @@
 import Vue from 'vue';
 import { mapActions, mapState } from 'vuex';
 import UiGrid from '~/ui/grid/index.vue';
-import UiModal from '~/ui/modal/index.vue';
 import AppBar from '~/components/app-bar/index.vue';
 import SideBarVertical from '~/components/side-bar/vertical/index.vue';
 import * as FlexState from '~/store/flex';
 import { State } from '~/store/state.interface';
 
 export default Vue.extend({
-  name: 'MainLaylaod',
+  name: 'MainLayout',
   components: {
     UiGrid,
-    UiModal,
     AppBar,
     SideBarVertical,
   },
@@ -71,6 +49,7 @@ export default Vue.extend({
   },
   methods: {
     ...mapActions({
+      'setMenuState': FlexState.Actions.SET_MENU_STATE,
       'changeMenuState': FlexState.Actions.CHANGE_MENU_STATE,
     }),
     handleContentOverlayClick() {
@@ -78,7 +57,7 @@ export default Vue.extend({
     },
     subsWindowResize() {
       if (this.menuState === FlexState.MenuStateEnum.ACTIVE) {
-        this.changeMenuState();
+        this.setMenuState({ state: FlexState.MenuStateEnum.NONE });
       }
     },
   },

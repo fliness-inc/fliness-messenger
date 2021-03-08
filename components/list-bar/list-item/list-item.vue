@@ -31,8 +31,8 @@
       </ui-grid>
     </ui-grid>
     <ui-grid direction="column" justify="space-between" class="list_item__info">
-      <p v-if="messages" class="list_item__nums">
-        <span>{{ messages }}</span>
+      <p v-if="unreaded" class="list_item__nums">
+        <span>{{ unreaded }}</span>
       </p>
       <p v-else :class="['list_item__nums', 'list_item__nums_plug']"></p>
       <p class="list_item__time">
@@ -71,8 +71,8 @@ export default Vue.extend({
       type: String,
       required: true,
     },
-    messages: {
-      type: String,
+    unreaded: {
+      type: Number,
       required: true,
     },
     time: {

@@ -14,6 +14,7 @@ import UiGrid from '~/ui/grid/index.vue';
 import UiSkeleton from '~/ui/skeleton/index.vue';
 
 export default Vue.extend({
+  name: 'Skeleton',
   components: {
     UiGrid,
     UiSkeleton,

@@ -31,6 +31,7 @@ import DialogsIcon from '~/assets/chat_bubble_outline.svg?inline';
 import * as PagesState from '~/store/pages';
 import * as ChatsState from '~/store/chats';
 import * as MeState from '~/store/me';
+import * as MessagesState from '~/store/messages/types';
 
 export default Vue.extend({
   components: {
@@ -42,6 +43,9 @@ export default Vue.extend({
   middleware: ['auth'],
   async fetch() {
     await this.getMeInfo();
+    await this.setCurrentPage({
+      page: PagesState.Pages.DIALOG,
+    });
   },
   head() {
     return {
@@ -50,16 +54,21 @@ export default Vue.extend({
   },
   async mounted() {
     await this.setCurrentPage({
-      page: PagesState.Pages.DIALOGS,
+      page: PagesState.Pages.DIALOG,
     });
 
-    await this.getChats({ type: ChatsState.ChatTypesEnum.DIALOG });
+    await this.subOnGetMessages();
+  },
+  async destroyed() {
+    await this.unsubOnGetMessages();
   },
   methods: {
     ...mapActions({
       'setCurrentPage': PagesState.Actions.SET_PAGE,
       'getChats': ChatsState.Actions.GET_CHATS,
       'getMeInfo': MeState.Actions.GET_ME_INFO,
+      'subOnGetMessages': MessagesState.Actions.SUB_ON_GET_MESSAGES,
+      'unsubOnGetMessages': MessagesState.Actions.UNSUB_ON_GET_MESSAGES,
     }),
   },
 });

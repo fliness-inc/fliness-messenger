@@ -1,19 +1,19 @@
 <template>
   <ui-grid direction="column-reverse" :class="$style.chat_messages">
-    <!-- <template v-if="showLoading">
+    <template v-if="isLoading">
       <skeleton v-for="i in 10" :key="i" :shift="i % 3 === 0"></skeleton>
-    </template> -->
-    <!-- <template> -->
-    <list-item
-      v-for="message in formatedMessages"
-      :key="message.id"
-      :username="message.username"
-      :avatar-url="message.avatarURL"
-      :text="message.text"
-      :time="message.createdAt"
-      :shift="message.shift"
-    ></list-item>
-    <!-- </template> -->
+    </template>
+    <template v-else>
+      <list-item
+        v-for="message in formatedMessages"
+        :key="message.id"
+        :username="message.username"
+        :avatar-url="message.avatarURL"
+        :text="message.text"
+        :time="message.createdAt"
+        :shift="message.shift"
+      ></list-item>
+    </template>
   </ui-grid>
 </template>
 
@@ -50,7 +50,10 @@ export default Vue.extend({
       messages(state: State) {
         return state.messages.all;
       },
-      showLoading: (state: State) => state.messages.status === Status.LOADING,
+      isLoading: (state: State) =>
+        state.messages.status !== Status.SUCCESS &&
+        state.chats.currentChatId &&
+        !(state.messages.all[state.chats.currentChatId] || []).length,
     }),
     formatedMessages() {
       if (!this.currentChatId) return [];
@@ -66,9 +69,9 @@ export default Vue.extend({
 
         return {
           ...message,
-          username: user.name,
-          avatarURL: user.avatarURL,
-          shift: this.me.id === user.id,
+          username: user?.name,
+          avatarURL: user?.avatarURL,
+          shift: this.me.id === user?.id,
         };
       });
     },

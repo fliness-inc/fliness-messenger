@@ -18,40 +18,39 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { mapState } from 'vuex';
-import Grid from '~/ui/grid/index.vue';
-import ListBar from '~/components/list-bar/layout.vue';
-import ChatBar from '~/components/chat-bar/index.vue';
-import ChatMessages from '~/components/chat-messages/index.vue';
-import ChatInput from '~/components/chat-input/index.vue';
+import { mapActions, mapState } from 'vuex';
+import UiGrid from '~/ui/grid/index.vue';
+import ListBarLayout from '~/components/list-bar/layout.vue';
+import ChatBarLayout from '~/components/chat-bar/index.vue';
+import ChatMessagesLayout from '~/components/chat-messages/index.vue';
+import ChatInputLayout from '~/components/chat-input/index.vue';
 import MainLayout from '~/components/layouts/main.vue';
-import * as ChatsState from '~/store/chats/types';
-import * as MeState from '~/store/me/types';
-import * as PagesState from '~/store/pages/types';
-import * as MessagesState from '~/store/messages/types';
+import * as ChatsState from '~/store/chats';
+import * as MeState from '~/store/me';
+import * as PagesState from '~/store/pages';
+import * as MessagesState from '~/store/messages';
 import { State } from '~/store/state.interface';
 
 export default Vue.extend({
   components: {
-    'ui-grid': Grid,
-    'list-bar-layout': ListBar,
-    'chat-bar-layout': ChatBar,
-    'chat-messages-layout': ChatMessages,
-    'chat-input-layout': ChatInput,
-    'main-layout': MainLayout,
+    UiGrid,
+    ListBarLayout,
+    ChatBarLayout,
+    ChatMessagesLayout,
+    ChatInputLayout,
+    MainLayout,
   },
   middleware: ['auth'],
   async fetch() {
-    const payload: ChatsState.Actions.GetChatsPayload = {
-      type: ChatsState.ChatTypesEnum.DIALOG,
-    };
-    await this.$store.dispatch(ChatsState.Actions.GET_CHATS, payload);
-    await this.$store.dispatch(MeState.Actions.GET_ME_INFO);
-    await this.setCurrentChat();
+    await this.getMeInfo();
+    await this.setCurrnetChat({
+      chatId: this.$route.params.dialogId,
+    });
+    await this.getChats({ type: ChatsState.ChatTypesEnum.DIALOG });
   },
   head() {
     return {
-      title: 'Fliness Messenger - Dialogs',
+      title: `Fliness Messenger - ${this.currentCompanion.name}`,
     };
   },
   computed: {
@@ -81,25 +80,28 @@ export default Vue.extend({
     },
   },
   async mounted() {
-    await this.setCurrentChat();
+    await this.setCurrnetChat({
+      chatId: this.$route.params.dialogId,
+    });
 
-    const payload: PagesState.SetPageActionPayload = {
+    await this.setCurrentPage({
       page: PagesState.Pages.DIALOG,
-    };
-    await this.$store.dispatch(PagesState.Actions.SET_PAGE, payload);
+    });
 
-    await this.$store.dispatch(MessagesState.Actions.CONNECT_SOCKET);
+    await this.getChats({ type: ChatsState.ChatTypesEnum.DIALOG });
   },
   async destroyed() {
-    await this.$store.dispatch(MessagesState.Actions.DISCONNECT_SOCKET);
+    await this.unsubOnGetMessages();
   },
   methods: {
-    async setCurrentChat() {
-      const payload: ChatsState.Actions.SetCurrentChatPayload = {
-        chatId: this.$route.params.dialogId,
-      };
-      await this.$store.dispatch(ChatsState.Actions.SET_CURRENT_CHAT, payload);
-    },
+    ...mapActions({
+      'getMeInfo': MeState.Actions.GET_ME_INFO,
+      'getChats': ChatsState.Actions.GET_CHATS,
+      'setCurrentPage': PagesState.Actions.SET_PAGE,
+      'setCurrnetChat': ChatsState.Actions.SET_CURRENT_CHAT,
+      'subOnGetMessages': MessagesState.Actions.SUB_ON_GET_MESSAGES,
+      'unsubOnGetMessages': MessagesState.Actions.UNSUB_ON_GET_MESSAGES,
+    }),
   },
 });
 </script>
