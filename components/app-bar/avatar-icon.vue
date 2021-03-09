@@ -7,10 +7,8 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
-
-export default Vue.extend({
+<script>
+export default {
   name: 'AvatarIcon',
   props: {
     url: {
@@ -26,13 +24,11 @@ export default Vue.extend({
   },
   computed: {
     upperSymbolUsername() {
-      // @ts-ignore
       if (!this.username || !this.username.length) return this.username;
-
       return this.username[0].toUpperCase();
     },
   },
-});
+};
 </script>
 
 <style lang="scss" src="./index.scss"></style>

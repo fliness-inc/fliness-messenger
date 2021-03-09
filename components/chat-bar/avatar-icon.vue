@@ -1,16 +1,6 @@
-<template>
-  <div>
-    <img v-if="url" :src="url" :class="$style.chatbar__avatar_img" />
-    <span v-else :class="$style.chatbar__avatar_plug">
-      <span>{{ upperSymbolUsername }}</span>
-    </span>
-  </div>
-</template>
-
-<script lang="ts">
-import Vue from 'vue';
-
-export default Vue.extend({
+<script>
+export default {
+  name: 'AvatarIcon',
   props: {
     url: {
       type: String,
@@ -23,13 +13,20 @@ export default Vue.extend({
   },
   computed: {
     upperSymbolUsername() {
-      // @ts-ignore
       if (!this.username || !this.username.length) return '';
-
       return this.username[0].toUpperCase();
     },
   },
-});
+};
 </script>
 
-<style lang="scss" module src="./index.module.scss"></style>
+<template>
+  <div>
+    <img v-if="url" :src="url" class="chatbar__avatar_img" />
+    <span v-else class="chatbar__avatar_plug">
+      <span>{{ upperSymbolUsername }}</span>
+    </span>
+  </div>
+</template>
+
+<style lang="scss" module src="./index.scss"></style>

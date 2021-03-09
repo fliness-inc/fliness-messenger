@@ -1,3 +1,49 @@
+<script>
+import { mapActions, mapState } from 'vuex';
+import UiGrid from '~/ui/grid/index.vue';
+import AppBar from '~/components/app-bar/index.vue';
+import SideBarVertical from '~/components/side-bar/vertical/index.vue';
+import * as MenuStates from '~/store/flex/menu-states';
+import * as MeneActions from '~/store/flex/actions';
+
+export default {
+  name: 'MainLayout',
+  components: {
+    UiGrid,
+    AppBar,
+    SideBarVertical,
+  },
+  computed: {
+    ...mapState({
+      menuState: (state) => state.flex.menuState,
+    }),
+    shifted() {
+      return this.menuState === MenuStates.ACTIVE;
+    },
+  },
+  mounted() {
+    window.addEventListener('resize', this.subsWindowResize);
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.subsWindowResize);
+  },
+  methods: {
+    ...mapActions({
+      'setMenuState': MeneActions.SET_MENU_STATE,
+      'changeMenuState': MeneActions.CHANGE_MENU_STATE,
+    }),
+    handleContentOverlayClick() {
+      this.changeMenuState();
+    },
+    subsWindowResize() {
+      if (this.menuState === MenuStates.ACTIVE) {
+        this.setMenuState({ state: MenuStates.NONE });
+      }
+    },
+  },
+};
+</script>
+
 <template>
   <ui-grid direction="column">
     <app-bar></app-bar>
@@ -16,52 +62,5 @@
     </ui-grid>
   </ui-grid>
 </template>
-
-<script lang="ts">
-import Vue from 'vue';
-import { mapActions, mapState } from 'vuex';
-import UiGrid from '~/ui/grid/index.vue';
-import AppBar from '~/components/app-bar/index.vue';
-import SideBarVertical from '~/components/side-bar/vertical/index.vue';
-import * as FlexState from '~/store/flex';
-import { State } from '~/store/state.interface';
-
-export default Vue.extend({
-  name: 'MainLayout',
-  components: {
-    UiGrid,
-    AppBar,
-    SideBarVertical,
-  },
-  computed: {
-    ...mapState({
-      menuState: (state) => (state as State).flex.menuState,
-    }),
-    shifted() {
-      return this.menuState === FlexState.MenuStateEnum.ACTIVE;
-    },
-  },
-  mounted() {
-    window.addEventListener('resize', this.subsWindowResize);
-  },
-  beforeDestroy() {
-    window.removeEventListener('resize', this.subsWindowResize);
-  },
-  methods: {
-    ...mapActions({
-      'setMenuState': FlexState.Actions.SET_MENU_STATE,
-      'changeMenuState': FlexState.Actions.CHANGE_MENU_STATE,
-    }),
-    handleContentOverlayClick() {
-      this.changeMenuState();
-    },
-    subsWindowResize() {
-      if (this.menuState === FlexState.MenuStateEnum.ACTIVE) {
-        this.setMenuState({ state: FlexState.MenuStateEnum.NONE });
-      }
-    },
-  },
-});
-</script>
 
 <style lang="scss" src="./index.scss"></style>

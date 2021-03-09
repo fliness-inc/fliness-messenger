@@ -31,20 +31,16 @@ export default {
   css: ['~/assets/css/main.scss', '~/ui/palette.scss', '~/ui/themes.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: ['~/plugins/axios'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  buildModules: [
-    // https://go.nuxtjs.dev/typescript
-    '@nuxt/typescript-build',
-    '@nuxtjs/svg',
-  ],
+  buildModules: ['@nuxtjs/eslint-module', '@nuxtjs/svg'],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ['cookie-universal-nuxt', 'portal-vue/nuxt'],
+  modules: ['cookie-universal-nuxt', 'portal-vue/nuxt', '@nuxtjs/axios'],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {

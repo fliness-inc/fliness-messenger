@@ -1,0 +1,3 @@
+export const SET_CHATS_MEMBERS = 'SET_CHATS_MEMBERS';
+
+export const SET_INIT_STATUS = 'SET_INIT_STATUS';

@@ -1,3 +1,70 @@
+<script>
+import { mapActions, mapState } from 'vuex';
+import ListItem from './list-item.vue';
+import UiModal from '~/ui/modal/index.vue';
+import UiButton from '~/ui/button/index.vue';
+import UiGrid from '~/ui/grid/index.vue';
+import UiTabs from '~/ui/tabs/index.vue';
+import UiTab from '~/ui/tabs/tab.vue';
+import UiSkeleton from '~/ui/skeleton/index.vue';
+import * as UsersActions from '~/store/users/actions';
+import * as ChatsActions from '~/store/chats/actions';
+import * as ChatTypes from '~/store/chats/chat-types';
+
+export default {
+  components: {
+    UiGrid,
+    UiButton,
+    UiModal,
+    UiTabs,
+    UiTab,
+    UiSkeleton,
+    ListItem,
+  },
+  data() {
+    return {
+      openModal: false,
+      tabIndex: 1,
+      selectedUserId: null,
+    };
+  },
+  computed: {
+    ...mapState({
+      users: (state) => Object.values(state.users.all),
+    }),
+  },
+  async mounted() {
+    await this.getUsers();
+  },
+  methods: {
+    ...mapActions({
+      createChat: ChatsActions.CREATE_CHAT,
+      getUsers: UsersActions.GET_USERS,
+    }),
+    handleListItemClick(userId) {
+      this.selectedUserId = userId;
+    },
+    async handleCreateBtnClick() {
+      await this.createChat({
+        type: ChatTypes.DIALOG,
+        userIds: [this.selectedUserId],
+      });
+
+      this.openModal = false;
+    },
+    handleCancelBtnClick() {
+      this.openModal = false;
+    },
+    handleOpenModal() {
+      this.openModal = true;
+    },
+    handleCloseModal() {
+      this.openModal = false;
+    },
+  },
+};
+</script>
+
 <template>
   <ui-grid>
     <ui-button variant="outlined" @click="handleOpenModal">New</ui-button>
@@ -90,69 +157,5 @@
     </ui-modal>
   </ui-grid>
 </template>
-
-<script lang="ts">
-import Vue from 'vue';
-import { mapState } from 'vuex';
-import ListItem from './list-item.vue';
-import UiModal from '~/ui/modal/index.vue';
-import UiButton from '~/ui/button/index.vue';
-import UiGrid from '~/ui/grid/index.vue';
-import UiTabs from '~/ui/tabs/index.vue';
-import UiTab from '~/ui/tabs/tab.vue';
-import UiSkeleton from '~/ui/skeleton/index.vue';
-import * as UsersState from '~/store/users/types';
-import { Actions, ChatTypesEnum } from '~/store/chats/types';
-import { State } from '~/store/state.interface';
-
-export default Vue.extend({
-  components: {
-    UiGrid,
-    UiButton,
-    UiModal,
-    UiTabs,
-    UiTab,
-    UiSkeleton,
-    ListItem,
-  },
-  data() {
-    return {
-      openModal: false,
-      tabIndex: 1,
-      selectedUserId: null,
-    };
-  },
-  computed: {
-    ...mapState({
-      users: (state) => (state as State).users.all,
-    }),
-  },
-  async mounted() {
-    await this.$store.dispatch(UsersState.Actions.GET_USERS);
-  },
-  methods: {
-    handleListItemClick(userId) {
-      this.selectedUserId = userId;
-    },
-    async handleCreateBtnClick() {
-      await this.$store.dispatch(Actions.CREATE_CHAT, {
-        type: ChatTypesEnum.DIALOG,
-        userIds: [this.selectedUserId],
-      });
-
-      this.openModal = false;
-    },
-    handleCancelBtnClick() {
-      this.openModal = false;
-    },
-    handleOpenModal() {
-      this.openModal = true;
-    },
-    handleCloseModal() {
-      this.openModal = false;
-    },
-  },
-});
-</script>
 
 <style lang="scss" module src="./index.module.scss"></style>

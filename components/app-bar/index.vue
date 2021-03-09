@@ -1,3 +1,42 @@
+<script>
+import { mapActions, mapGetters } from 'vuex';
+import AvatarIcon from './avatar-icon.vue';
+import UiGrid from '~/ui/grid/index.vue';
+import UiButton from '~/ui/button/index.vue';
+import MenuIcon from '~/assets/menu.svg?inline';
+import LogoIcon from '~/assets/logo.svg?inline';
+import ArrowIcon from '~/assets/keyboard_arrow_down.svg?inline';
+import * as FlexActions from '~/store/flex/actions';
+import * as MeActions from '~/store/me/actions';
+
+export default {
+  name: 'AppBar',
+  components: {
+    UiGrid,
+    UiButton,
+    MenuIcon,
+    LogoIcon,
+    ArrowIcon,
+    AvatarIcon,
+  },
+  computed: {
+    ...mapGetters(['me']),
+  },
+  async mounted() {
+    await this.getMeInfo();
+  },
+  methods: {
+    ...mapActions({
+      changeMenuState: FlexActions.CHANGE_MENU_STATE,
+      getMeInfo: MeActions.GET_ME_INFO,
+    }),
+    handleMenuBtnClick() {
+      this.changeMenuState();
+    },
+  },
+};
+</script>
+
 <template>
   <ui-grid align-items="center" class="app-bar">
     <ui-grid justify="space-between">
@@ -28,48 +67,5 @@
     </ui-grid>
   </ui-grid>
 </template>
-
-<script lang="ts">
-import Vue from 'vue';
-import { mapActions, mapGetters } from 'vuex';
-import AvatarIcon from './avatar-icon.vue';
-import UiGrid from '~/ui/grid/index.vue';
-import UiButton from '~/ui/button/index.vue';
-// @ts-ignore
-import MenuIcon from '~/assets/menu.svg?inline';
-// @ts-ignore
-import LogoIcon from '~/assets/logo.svg?inline';
-// @ts-ignore
-import ArrowIcon from '~/assets/keyboard_arrow_down.svg?inline';
-import * as FlexState from '~/store/flex';
-import * as MeState from '~/store/me';
-
-export default Vue.extend({
-  name: 'AppBar',
-  components: {
-    UiGrid,
-    UiButton,
-    MenuIcon,
-    LogoIcon,
-    ArrowIcon,
-    AvatarIcon,
-  },
-  async fetch() {
-    await this.getMeInfo();
-  },
-  computed: {
-    ...mapGetters(['me']),
-  },
-  methods: {
-    ...mapActions({
-      changeMenuState: FlexState.Actions.CHANGE_MENU_STATE,
-      getMeInfo: MeState.Actions.GET_ME_INFO,
-    }),
-    handleMenuBtnClick() {
-      this.changeMenuState();
-    },
-  },
-});
-</script>
 
 <style lang="scss" src="./index.scss"></style>

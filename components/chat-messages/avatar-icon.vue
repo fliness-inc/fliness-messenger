@@ -1,16 +1,5 @@
-<template>
-  <div :class="$style.avatar">
-    <img v-if="url" :src="url" :class="$style.avatar__icon" />
-    <span v-else :class="$style.avatar__icon_plug">
-      <span>{{ upperSymbolUsername }}</span>
-    </span>
-  </div>
-</template>
-
-<script lang="ts">
-import Vue from 'vue';
-
-export default Vue.extend({
+<script>
+export default {
   props: {
     url: {
       type: String,
@@ -26,7 +15,16 @@ export default Vue.extend({
       return this.username[0].toUpperCase();
     },
   },
-});
+};
 </script>
+
+<template>
+  <div :class="$style.avatar">
+    <img v-if="url" :src="url" :class="$style.avatar__icon" />
+    <span v-else :class="$style.avatar__icon_plug">
+      <span>{{ upperSymbolUsername }}</span>
+    </span>
+  </div>
+</template>
 
 <style lang="scss" module src="./index.module.scss"></style>

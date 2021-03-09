@@ -1,3 +1,35 @@
+<script>
+import UiButton from '~/ui/button/index.vue';
+import UiGrid from '~/ui/grid/index.vue';
+
+export default {
+  name: 'ListItems',
+  components: {
+    UiGrid,
+    UiButton,
+  },
+  props: {
+    active: {
+      type: Boolean,
+      default: false,
+    },
+    avatarUrl: {
+      type: String,
+      default: null,
+    },
+    username: {
+      type: String,
+      required: true,
+    },
+  },
+  computed: {
+    upperCaseFirstSymbol() {
+      return this.username[0].toUpperCase();
+    },
+  },
+};
+</script>
+
 <template>
   <ui-grid
     align-items="center"
@@ -33,37 +65,5 @@
     </ui-button>
   </ui-grid>
 </template>
-
-<script lang="ts">
-import Vue from 'vue';
-import Button from '~/ui/button/index.vue';
-import Grid from '~/ui/grid/index.vue';
-
-export default Vue.extend({
-  components: {
-    'ui-grid': Grid,
-    'ui-button': Button,
-  },
-  props: {
-    active: {
-      type: Boolean,
-      default: false,
-    },
-    avatarUrl: {
-      type: String,
-      default: null,
-    },
-    username: {
-      type: String,
-      required: true,
-    },
-  },
-  computed: {
-    upperCaseFirstSymbol() {
-      return this.username[0].toUpperCase();
-    },
-  },
-});
-</script>
 
 <style lang="scss" module src="./index.module.scss"></style>

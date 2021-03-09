@@ -1,51 +1,23 @@
-<template>
-  <ui-grid justify="space-between" align-items="center" :class="$style.chatbar">
-    <ui-grid align-items="center" :class="$style.chatbar__avatar">
-      <avatar-icon :username="title" :url="url"></avatar-icon>
-      <ui-grid direction="column" :class="$style.chatbar__text">
-        <p :class="$style.chatbar__title">{{ title }}</p>
-        <ui-grid align-items="center">
-          <p :class="$style.chatbar__status">Active Now</p>
-          <span :class="$style.chatbar__status_icon"></span>
-        </ui-grid>
-      </ui-grid>
-    </ui-grid>
-    <ui-grid align-items="center" justify="flex-end">
-      <ui-button variant="text" :class="$style.chatbar__tool_btn">
-        <search-icon :class="$style.chatbar__tool_btn_icon" />
-      </ui-button>
-      <ui-button variant="text" :class="$style.chatbar__tool_btn">
-        <sidebar-icon :class="$style.chatbar__tool_btn_icon" />
-      </ui-button>
-      <ui-button variant="text" :class="$style.chatbar__tool_btn">
-        <more-icon :class="$style.chatbar__tool_btn_icon" />
-      </ui-button>
-    </ui-grid>
-  </ui-grid>
-</template>
-
-<script lang="ts">
-import Vue from 'vue';
+<script>
+import { mapState } from 'vuex';
 import AvatarIcon from './avatar-icon.vue';
-import Grid from '~/ui/grid/index.vue';
-import Button from '~/ui/button/index.vue';
-// @ts-ignore
+import UiGrid from '~/ui/grid/index.vue';
+import UiButton from '~/ui/button/index.vue';
 import SearchIcon from '~/assets/search-24px.svg?inline';
-// @ts-ignore
 import MoreIcon from '~/assets/more.svg?inline';
-// @ts-ignore
 import SideBarIcon from '~/assets/sidebar.svg?inline';
 
-export default Vue.extend({
+export default {
+  name: 'ChatBar',
   components: {
-    'avatar-icon': AvatarIcon,
-    'ui-grid': Grid,
-    'ui-button': Button,
-    'search-icon': SearchIcon,
-    'more-icon': MoreIcon,
-    'sidebar-icon': SideBarIcon,
+    AvatarIcon,
+    UiGrid,
+    UiButton,
+    SearchIcon,
+    MoreIcon,
+    SideBarIcon,
   },
-  props: {
+  /* props: {
     title: {
       type: String,
       default: null,
@@ -54,8 +26,62 @@ export default Vue.extend({
       type: String,
       default: null,
     },
+  }, */
+  computed: {
+    ...mapState({
+      me: (state) => state.me,
+      currentChatId: (state) => state.chats.currentChatId,
+      members: (state) => state.members.all, // array
+      users: (state) => state.users.all, // object
+    }),
+    currentCompanion() {
+      const member = this.members.find(
+        (member) =>
+          member.chatId === this.currentChatId && member.userId !== this.me.id,
+      );
+
+      if (!member) return null;
+
+      const user = this.users[member.userId];
+
+      if (!user) return null;
+
+      return user;
+    },
+    title() {
+      return this.currentCompanion ? this.currentCompanion.name : null;
+    },
+    avatarUrl() {
+      return this.currentCompanion ? this.currentCompanion.avatarURL : null;
+    },
   },
-});
+};
 </script>
 
-<style lang="scss" module src="./index.module.scss"></style>
+<template>
+  <ui-grid justify="space-between" align-items="center" class="chatbar">
+    <ui-grid align-items="center" class="chatbar__avatar">
+      <avatar-icon :username="title" :url="avatarUrl"></avatar-icon>
+      <ui-grid direction="column" class="chatbar__text">
+        <p class="chatbar__title">{{ title }}</p>
+        <ui-grid align-items="center">
+          <p class="chatbar__status">Active Now</p>
+          <span class="chatbar__status_icon"></span>
+        </ui-grid>
+      </ui-grid>
+    </ui-grid>
+    <ui-grid align-items="center" justify="flex-end">
+      <ui-button variant="text" class="chatbar__tool_btn">
+        <search-icon class="chatbar__tool_btn_icon" />
+      </ui-button>
+      <ui-button variant="text" class="chatbar__tool_btn">
+        <side-bar-icon class="chatbar__tool_btn_icon" />
+      </ui-button>
+      <ui-button variant="text" class="chatbar__tool_btn">
+        <more-icon class="chatbar__tool_btn_icon" />
+      </ui-button>
+    </ui-grid>
+  </ui-grid>
+</template>
+
+<style lang="scss" src="./index.scss"></style>

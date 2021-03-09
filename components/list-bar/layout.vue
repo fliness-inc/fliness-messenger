@@ -1,3 +1,59 @@
+<script>
+import { mapActions, mapState } from 'vuex';
+import ChatList from './list.vue';
+import Skeleton from './skeleton.vue';
+import UiGrid from '~/ui/grid/index.vue';
+import Search from '~/components/search/index.vue';
+import SideBarHorizontal from '~/components/side-bar/horizontal/index.vue';
+import CreateDialogModal from '~/components/dialogs/create-dialog/index.vue';
+import * as MenuStates from '~/store/flex/menu-states';
+import * as NetworkStatus from '~/store/network-status';
+import * as ChatsActions from '~/store/chats/actions';
+import * as InitStatus from '~/store/initialization-status';
+
+export default {
+  name: 'ListBarLayout',
+  components: {
+    UiGrid,
+    Skeleton,
+    ChatList,
+    Search,
+    CreateDialogModal,
+    SideBarHorizontal,
+  },
+  props: {
+    title: {
+      type: String,
+      required: true,
+    },
+  },
+  computed: {
+    ...mapState({
+      menuState: (state) => state.flex.menuState,
+      isLoading(state) {
+        return (
+          state.chats.status !== NetworkStatus.SUCCESS &&
+          state.chats.initStatus !== InitStatus.INIT
+        );
+      },
+    }),
+    active() {
+      return this.menuState === MenuStates.ACTIVE;
+    },
+  },
+  async mounted() {
+    await this.getChats();
+    await this.setChatsInitStatus({ status: InitStatus.INIT });
+  },
+  methods: {
+    ...mapActions({
+      'setChatsInitStatus': ChatsActions.SET_INIT_STATUS,
+      'getChats': ChatsActions.GET_CHATS,
+    }),
+  },
+};
+</script>
+
 <template>
   <ui-grid
     direction="column"
@@ -19,59 +75,5 @@
     <side-bar-horizontal></side-bar-horizontal>
   </ui-grid>
 </template>
-
-<script lang="ts">
-import Vue from 'vue';
-import { mapActions, mapState } from 'vuex';
-import ChatList from './list.vue';
-import Skeleton from './skeleton.vue';
-import UiGrid from '~/ui/grid/index.vue';
-import Search from '~/components/search/index.vue';
-import SideBarHorizontal from '~/components/side-bar/horizontal/index.vue';
-import CreateDialogModal from '~/components/dialogs/create-dialog/index.vue';
-import { MenuStateEnum } from '~/store/flex';
-import { State } from '~/store/state.interface';
-import { Status } from '~/store/utils';
-import * as ChatsState from '~/store/chats';
-
-export default Vue.extend({
-  name: 'ListBarLayout',
-  components: {
-    UiGrid,
-    Skeleton,
-    ChatList,
-    Search,
-    CreateDialogModal,
-    SideBarHorizontal,
-  },
-  props: {
-    title: {
-      type: String,
-      required: true,
-    },
-  },
-  computed: {
-    ...mapState({
-      menuState: (state) => (state as State).flex.menuState,
-      chats: (state) => (state as State).chats.all,
-      isLoading: (state) => (state as State).chats.status !== Status.SUCCESS,
-      showSidebar() {
-        return this.menuState === MenuStateEnum.NONE;
-      },
-    }),
-    active() {
-      return this.menuState === MenuStateEnum.ACTIVE;
-    },
-  },
-  async mounted() {
-    await this.getChats();
-  },
-  methods: {
-    ...mapActions({
-      'getChats': ChatsState.Actions.GET_CHATS,
-    }),
-  },
-});
-</script>
 
 <style lang="scss" src="./index.scss"></style>

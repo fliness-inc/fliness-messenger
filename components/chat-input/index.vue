@@ -1,41 +1,12 @@
-<template>
-  <ui-grid align-items="center" :class="$style.chat_input">
-    <ui-button variant="text" :class="$style.chat_input__btn">
-      <clip-icon :class="$style.btn__icon" />
-    </ui-button>
-    <ui-button variant="text" :class="$style.chat_input__btn">
-      <camera-icon :class="$style.btn__icon" />
-    </ui-button>
-    <input
-      v-model="messageText"
-      type="text"
-      :class="$style.chat_input__input"
-      @keypress.enter="sendMessage"
-      placeholder="Type your message"
-    />
-    <ui-button
-      variant="text"
-      :class="$style.chat_input__btn"
-      @click="sendMessage"
-    >
-      <plane-icon :class="$style.btn__icon" />
-    </ui-button>
-  </ui-grid>
-</template>
-
-<script lang="ts">
-import Vue from 'vue';
+<script>
 import Grid from '~/ui/grid/index.vue';
 import Button from '~/ui/button/index.vue';
-// @ts-ignore
 import ClipIcon from '~/assets/paper-clip.svg?inline';
-// @ts-ignore
 import PlaneIcon from '~/assets/paper-plane.svg?inline';
-// @ts-ignore
 import CameraIcon from '~/assets/camera.svg?inline';
-import * as MessagesTypes from '~/store/messages/types';
+import * as MessagesActions from '~/store/messages/actions';
 
-export default Vue.extend({
+export default {
   components: {
     'ui-grid': Grid,
     'ui-button': Button,
@@ -52,16 +23,39 @@ export default Vue.extend({
     sendMessage() {
       if (this.messageText === '') return;
 
-      const payload: MessagesTypes.Actions.SendMessagePayload = {
+      this.$store.dispatch(MessagesActions.SEND_MESSAGE, {
         text: this.messageText,
-      };
+      });
 
       this.messageText = '';
-
-      this.$store.dispatch(MessagesTypes.Actions.SEND_MESSAGE, payload);
     },
   },
-});
+};
 </script>
+
+<template>
+  <ui-grid align-items="center" :class="$style.chat_input">
+    <ui-button variant="text" :class="$style.chat_input__btn">
+      <clip-icon :class="$style.btn__icon" />
+    </ui-button>
+    <ui-button variant="text" :class="$style.chat_input__btn">
+      <camera-icon :class="$style.btn__icon" />
+    </ui-button>
+    <input
+      v-model="messageText"
+      type="text"
+      :class="$style.chat_input__input"
+      placeholder="Type your message"
+      @keypress.enter="sendMessage"
+    />
+    <ui-button
+      variant="text"
+      :class="$style.chat_input__btn"
+      @click="sendMessage"
+    >
+      <plane-icon :class="$style.btn__icon" />
+    </ui-button>
+  </ui-grid>
+</template>
 
 <style lang="scss" module src="./index.module.scss"></style>
