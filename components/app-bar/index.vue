@@ -60,7 +60,7 @@ export default {
           <ui-button variant="text" class="account__btn">
             <p class="account__username">{{ me.name }}</p>
             <avatar-icon :url="me.avatarURL" :username="me.name"></avatar-icon>
-            <arrow-icon class="account__arrow-ico" />
+            <arrow-icon class="account__arrow-icon" />
           </ui-button>
         </ui-grid>
       </ui-grid>

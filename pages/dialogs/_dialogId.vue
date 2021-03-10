@@ -6,6 +6,7 @@ import ChatBarLayout from '~/components/chat-bar/index.vue';
 import ChatMessagesLayout from '~/components/chat-messages/index.vue';
 import ChatInputLayout from '~/components/chat-input/index.vue';
 import MainLayout from '~/components/layouts/main.vue';
+import InfoBar from '~/components/info-bar/index.vue';
 import * as Pages from '~/store/pages/pages';
 import * as ChatsActions from '~/store/chats/actions';
 import * as ChatTypes from '~/store/chats/chat-types';
@@ -21,6 +22,7 @@ export default {
     ChatMessagesLayout,
     ChatInputLayout,
     MainLayout,
+    InfoBar,
   },
   middleware: ['auth'],
   async fetch() {
@@ -34,7 +36,7 @@ export default {
   },
   head() {
     return {
-      title: `Fliness Messenger - `, // ${this.currentCompanion.name}
+      title: `Fliness Messenger - Dialogs`, // ${this.currentCompanion.name}
     };
   },
   computed: {
@@ -97,6 +99,7 @@ export default {
         <chat-messages-layout></chat-messages-layout>
         <chat-input-layout></chat-input-layout>
       </ui-grid>
+      <info-bar></info-bar>
     </template>
   </main-layout>
 </template>

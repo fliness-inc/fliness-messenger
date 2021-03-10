@@ -1,0 +1,237 @@
+body[data-theme-mode='light'] {
+  --color-info-bar-border-color: var(--color-gray-100);
+  --color-info-bar-avatar-icon-bg-color: var(--color-gray-300);
+  --color-info-bar-avatar-icon-color: var(--color-white);
+  --color-info-bar-header-title-color: var(--color-black);
+  --color-info-bar-header-close-btn-fill: var(--color-black);
+  --color-info-bar-chat-info-title-color: var(--color-black);
+  --color-info-bar-status-color: var(--color-gray-200);
+  --color-info-bar-status-icon-bg-color: var(--color-green-200);
+  --color-info-bar-bio-icon-fill: var(--color-gray-400);
+  --color-info-bar-bio-link-title-color: var(--color-gray-200);
+  --color-info-bar-bio-url-title-color: var(--color-blue-400);
+  --color-info-bar-btn-color: var(--color-gray-600);
+  --color-info-bar-btn-fill: var(--color-gray-400);
+  --color-info-bar-scroll-bg-color: var(--color-gray-200);
+  --color-info-bar-bg-color: var(--color-white);
+}
+
+body[data-theme-mode='dark'] {
+}
+
+.infobar {
+  position: fixed;
+  width: 320px;
+  height: calc(100vh - 70px);
+  border-left: 1px solid var(--color-info-bar-border-color);
+  flex-shrink: 0;
+  overflow-y: auto;
+  background-color: var(--color-info-bar-bg-color);
+
+  transition: right 0.22s;
+
+  right: -100%;
+
+  &--active {
+    right: 0;
+  }
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: var(--color-info-bar-scroll-bg-color);
+  }
+
+  &__header,
+  &__chat-info {
+    padding: 0 30px;
+    flex-shrink: 0;
+  }
+
+  &__header {
+    height: 84px;
+  }
+
+  &__chat-info {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid var(--color-info-bar-border-color);
+  }
+
+  &__notif {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  &__bottom {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 0px;
+  }
+}
+
+.header {
+  &__title {
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--color-info-bar-header-title-color);
+  }
+
+  &__close-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 14px;
+
+    border-radius: 50%;
+
+    & > svg {
+      --size: 12px;
+
+      width: var(--size);
+      height: var(--size);
+
+      fill: var(--color-info-bar-header-close-btn-fill);
+    }
+  }
+}
+
+.avatar {
+  &__icon {
+    display: flex;
+    flex-shrink: 0;
+    flex-grow: 0;
+
+    align-items: center;
+    justify-content: center;
+
+    --size: 68px;
+
+    width: var(--size);
+    height: var(--size);
+
+    border-radius: 50%;
+
+    background-color: var(--color-info-bar-avatar-icon-bg-color);
+
+    font-weight: 500;
+    font-size: 24px;
+    color: var(--color-info-bar-avatar-icon-color);
+  }
+}
+
+.chat-info {
+  &__text {
+    margin: 0 20px;
+  }
+
+  &__title {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--color-info-bar-chat-info-title-color);
+  }
+
+  &__status {
+    &-title {
+      color: var(--color-info-bar-status-color);
+      font-weight: 500;
+      font-size: 15px;
+    }
+
+    &-icon {
+      --size: 8px;
+
+      width: var(--size);
+      height: var(--size);
+
+      background-color: var(--color-info-bar-status-icon-bg-color);
+      border-radius: 50%;
+      margin: 0 6px;
+    }
+  }
+
+  &__bio-icon {
+    --size: 24px;
+
+    display: flex;
+    flex-shrink: 0;
+    flex-grow: 0;
+
+    width: var(--size);
+    height: var(--size);
+
+    margin: 0 25px;
+
+    fill: var(--color-info-bar-bio-icon-fill);
+  }
+}
+
+.bio-link {
+  &__url {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--color-info-bar-bio-url-title-color);
+    margin-bottom: 8px;
+  }
+
+  &__title {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--color-info-bar-bio-link-title-color);
+  }
+
+  &__bio-parag {
+    margin-bottom: 24px;
+  }
+
+  &__bio-parag:last-child {
+    margin-bottom: 0;
+  }
+
+  &__text {
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+}
+
+.btn {
+  width: 100%;
+
+  padding-left: 0;
+  padding-right: 0;
+
+  &__icon {
+    --size: 24px;
+
+    width: var(--size);
+    height: var(--size);
+
+    fill: var(--color-info-bar-btn-fill);
+
+    margin: 0 25px;
+  }
+
+  &__title {
+    font-size: 16px;
+    font-weight: 500;
+    white-space: nowrap;
+    color: var(--color-info-bar-btn-color);
+  }
+
+  &__badge {
+    margin-right: 20px;
+  }
+
+  &__notif {
+    background-color: transparent !important;
+    cursor: default;
+
+    &:hover {
+      background-color: transparent !important;
+    }
+  }
+}

@@ -4,7 +4,8 @@ import UiGrid from '~/ui/grid/index.vue';
 import AppBar from '~/components/app-bar/index.vue';
 import SideBarVertical from '~/components/side-bar/vertical/index.vue';
 import * as MenuStates from '~/store/flex/menu-states';
-import * as MeneActions from '~/store/flex/actions';
+import * as MenuInfoState from '~/store/flex/menu-info-state';
+import * as FlexActions from '~/store/flex/actions';
 
 export default {
   name: 'MainLayout',
@@ -15,11 +16,10 @@ export default {
   },
   computed: {
     ...mapState({
-      menuState: (state) => state.flex.menuState,
+      shiftedLeft: (state) => state.flex.menuState === MenuStates.ACTIVE,
+      shiftedRight: (state) =>
+        state.flex.menuInfoState === MenuInfoState.ACTIVE,
     }),
-    shifted() {
-      return this.menuState === MenuStates.ACTIVE;
-    },
   },
   mounted() {
     window.addEventListener('resize', this.subsWindowResize);
@@ -29,16 +29,18 @@ export default {
   },
   methods: {
     ...mapActions({
-      'setMenuState': MeneActions.SET_MENU_STATE,
-      'changeMenuState': MeneActions.CHANGE_MENU_STATE,
+      'setMenuState': FlexActions.SET_MENU_STATE,
+      'changeMenuState': FlexActions.CHANGE_MENU_STATE,
+      'setMenuInfoState': FlexActions.SET_MENU_INFO_STATE,
+      'changeMenuInfoState': FlexActions.CHANGE_MENU_INFO_STATE,
     }),
     handleContentOverlayClick() {
       this.changeMenuState();
     },
     subsWindowResize() {
-      if (this.menuState === MenuStates.ACTIVE) {
-        this.setMenuState({ state: MenuStates.NONE });
-      }
+      if (this.shiftedLeft) this.setMenuState({ state: MenuStates.NONE });
+      if (this.shiftedRight)
+        this.setMenuInfoState({ state: MenuInfoState.NONE });
     },
   },
 };
@@ -51,10 +53,17 @@ export default {
       <side-bar-vertical></side-bar-vertical>
       <slot name="listbar"></slot>
       <ui-grid
-        :class="['content__layout', { 'content__layout--shifted': shifted }]"
+        :class="[
+          'content__layout',
+          { 'content__layout--shifted': shiftedLeft },
+          { 'content__layout--shifted-right': shiftedRight },
+        ]"
       >
         <div
-          :class="['content__overlay', { 'content__overlay--show': shifted }]"
+          :class="[
+            'content__overlay',
+            { 'content__overlay--show': shiftedLeft },
+          ]"
           @click="handleContentOverlayClick"
         ></div>
         <slot name="content"></slot>
