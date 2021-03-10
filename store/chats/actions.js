@@ -9,6 +9,7 @@ export const NAMESPACE = 'chats';
 
 export const CREATE_CHAT = `${NAMESPACE}/${ActionTypes.CREATE_CHAT}`;
 export const GET_CHATS = `${NAMESPACE}/${ActionTypes.GET_CHATS}`;
+export const GET_CHAT = `${NAMESPACE}/${ActionTypes.GET_CHAT}`;
 export const GET_CHAT_TYPES = `${NAMESPACE}/${ActionTypes.GET_CHAT_TYPES}`;
 export const SET_CURRENT_CHAT = `${NAMESPACE}/${ActionTypes.SET_CURRENT_CHAT}`;
 export const GET_CHATS_LAST_MESSAGES = `${NAMESPACE}/${ActionTypes.GET_CHATS_LAST_MESSAGES}`;
@@ -58,6 +59,56 @@ export default {
       })
       .then((chats) => {
         commit(MutationTypes.SET_CHATS, { chats });
+        commit(MutationTypes.SET_CHATS_STATUS, {
+          status: NetworkStatus.SUCCESS,
+        });
+      })
+      .catch(() =>
+        commit(MutationTypes.SET_CHATS_STATUS, { status: NetworkStatus.ERROR }),
+      );
+  },
+  [ActionTypes.GET_CHAT]({ commit, rootState, dispatch }, { id }) {
+    commit(MutationTypes.SET_CHATS_STATUS, { status: NetworkStatus.LOADING });
+    return this.$axios
+      .get(`/me/chats/${id}`)
+      .then(({ data: { data: chat } }) => chat)
+      .then(async (chat) => {
+        await dispatch(
+          MembersActions.GET_CHATS_MEMBERS,
+          { ids: [chat.id] },
+          { root: true },
+        );
+        return chat;
+      })
+      .then(async (chat) => {
+        const companions = rootState.members.all.filter(
+          (member) =>
+            member.chatId === chat.id && member.userId !== rootState.me.id,
+        );
+
+        await dispatch(
+          UsersActions.GET_USERS_BY_IDS,
+          { ids: companions.map((member) => member.userId) },
+          { root: true },
+        );
+
+        return chat;
+      })
+      .then(async (chat) => {
+        await dispatch(
+          MessagesActions.SET_MESSAGES,
+          {
+            chatId: chat.id,
+            messages: chat.messages,
+          },
+          {
+            root: true,
+          },
+        );
+        return chat;
+      })
+      .then((chat) => {
+        commit(MutationTypes.SET_CHATS, { chats: [chat] });
         commit(MutationTypes.SET_CHATS_STATUS, {
           status: NetworkStatus.SUCCESS,
         });

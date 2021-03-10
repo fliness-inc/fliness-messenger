@@ -1,5 +1,6 @@
 export const CREATE_CHAT = 'CREATE_CHAT';
 export const GET_CHATS = 'GET_CHATS';
+export const GET_CHAT = 'GET_CHAT';
 export const GET_CHAT_TYPES = 'GET_CHAT_TYPES';
 export const SET_CURRENT_CHAT = 'SET_CURRENT_CHAT';
 export const GET_CHATS_LAST_MESSAGES = 'GET_CHATS_LAST_MESSAGES';

@@ -3,6 +3,7 @@ import * as NetworkStatus from '../network-status';
 import * as SocketConnectionStatus from '../socket-connection-status';
 import * as MembersActions from '../members/actions';
 import * as UsersActions from '../users/actions';
+import * as ChatsActions from '../chats/actions';
 import * as ActionTypes from './action-types';
 import * as MutationTypes from './mutation-types';
 
@@ -59,7 +60,7 @@ export default {
         }),
       );
   },
-  async [ActionTypes.CONNECT_SOCKET]({ commit }) {
+  async [ActionTypes.CONNECT_SOCKET]({ commit, rootState, dispatch }) {
     if (socket) await socket.disconnect();
 
     socket = await io(`${process.env.NUXT_ENV_API_WS_URL}`, {
@@ -79,7 +80,19 @@ export default {
     });
 
     socket.on('message-created', (data) => {
+      const existsChat = rootState.chats.all[data.chatId];
+
       commit(MutationTypes.ADD_NEW_MESSAGE, data);
+
+      if (
+        !existsChat &&
+        rootState.chats.networkStatus !== NetworkStatus.LOADING
+      )
+        return dispatch(
+          ChatsActions.GET_CHAT,
+          { id: data.chatId },
+          { root: true },
+        );
     });
   },
   async [ActionTypes.DISCONNECT_SOCKET]() {
@@ -92,11 +105,6 @@ export default {
     await this.$axios.post(
       `/chats/${rootState.chats.currentChatId}/messages`,
       payload,
-      {
-        headers: {
-          Authorization: `Bearer ${rootState.auth.tokens.access}`,
-        },
-      },
     );
   },
   [ActionTypes.SET_MESSAGES]({ commit }, payload) {
