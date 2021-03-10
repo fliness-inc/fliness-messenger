@@ -1,5 +1,5 @@
 <script>
-import { mapActions, mapState } from 'vuex';
+import { mapActions, mapGetters, mapState } from 'vuex';
 import ListItem from './list-items.vue';
 import Skeleton from './skeleton.vue';
 import UiGrid from '~/ui/grid/index.vue';
@@ -20,6 +20,7 @@ export default {
       currentChatId: (state) => state.chats.currentChatId,
       members: (state) => state.members.all,
       users: (state) => state.users.all,
+      chats: (state) => state.chats.all,
       messages: (state) => state.messages.all,
       isLoading(state) {
         return (
@@ -28,6 +29,7 @@ export default {
         );
       },
     }),
+    ...mapGetters(['currentChat']),
     formatedMessages() {
       const messages = this.messages[this.currentChatId] || [];
 
@@ -51,6 +53,13 @@ export default {
       });
     },
   },
+  watch: {
+    chats() {
+      if (!this.currentChat.countMessageViews && !this.isLoading) return;
+
+      this.setAllViews({ chatId: this.currentChatId });
+    },
+  },
   async mounted() {
     await this.getChatMessages({
       chatId: this.currentChatId,
@@ -59,6 +68,7 @@ export default {
   },
   methods: {
     ...mapActions({
+      'setAllViews': MessagesActions.SET_ALL_VIEWS,
       'getChatMessages': MessagesActions.GET_MESSAGES,
       'setMessagesInitStatus': MessagesActions.SET_INIT_STATUS,
     }),

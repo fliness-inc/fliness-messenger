@@ -15,8 +15,9 @@ export const UNSUB_ON_GET_MESSAGES = `${NAMESPACE}/${ActionTypes.DISCONNECT_SOCK
 export const SEND_MESSAGE = `${NAMESPACE}/${ActionTypes.SEND_MESSAGE}`;
 export const SET_MESSAGES = `${NAMESPACE}/${ActionTypes.SET_MESSAGES}`;
 export const SET_INIT_STATUS = `${NAMESPACE}/${ActionTypes.SET_INIT_STATUS}`;
+export const SET_ALL_VIEWS = `${NAMESPACE}/${ActionTypes.SET_ALL_VIEWS}`;
 
-let socket;
+let socket = null;
 
 export default {
   [ActionTypes.GET_MESSAGES]({ commit, rootState, dispatch }, { chatId }) {
@@ -60,10 +61,10 @@ export default {
         }),
       );
   },
-  async [ActionTypes.CONNECT_SOCKET]({ commit, rootState, dispatch }) {
-    if (socket) await socket.disconnect();
+  [ActionTypes.CONNECT_SOCKET]({ commit, rootState, dispatch }) {
+    if (socket) socket.close();
 
-    socket = await io(`${process.env.NUXT_ENV_API_WS_URL}`, {
+    socket = io(`${process.env.NUXT_ENV_API_WS_URL}`, {
       path: '/messages',
     });
 
@@ -80,14 +81,9 @@ export default {
     });
 
     socket.on('message-created', (data) => {
-      const existsChat = rootState.chats.all[data.chatId];
-
       commit(MutationTypes.ADD_NEW_MESSAGE, data);
 
-      if (
-        !existsChat &&
-        rootState.chats.networkStatus !== NetworkStatus.LOADING
-      )
+      if (rootState.chats.networkStatus !== NetworkStatus.LOADING)
         return dispatch(
           ChatsActions.GET_CHAT,
           { id: data.chatId },
@@ -95,14 +91,17 @@ export default {
         );
     });
   },
-  async [ActionTypes.DISCONNECT_SOCKET]() {
-    if (socket) await socket.disconnect();
+  [ActionTypes.DISCONNECT_SOCKET]() {
+    if (socket) {
+      socket.close();
+      socket = null;
+    }
   },
 
-  async [ActionTypes.SEND_MESSAGE]({ rootState }, payload) {
+  [ActionTypes.SEND_MESSAGE]({ rootState }, payload) {
     if (!rootState.chats.currentChatId) return;
 
-    await this.$axios.post(
+    return this.$axios.post(
       `/chats/${rootState.chats.currentChatId}/messages`,
       payload,
     );
@@ -112,5 +111,13 @@ export default {
   },
   [ActionTypes.SET_INIT_STATUS]({ commit }, payload) {
     commit(MutationTypes.SET_INIT_STATUS, payload);
+  },
+  [ActionTypes.SET_ALL_VIEWS]({ dispatch }, { chatId }) {
+    return this.$axios
+      .post(`/chats/${chatId}/messages/views`)
+      .then(() =>
+        dispatch(ChatsActions.GET_CHAT, { id: chatId }, { root: true }),
+      )
+      .catch((e) => console.error(e));
   },
 };

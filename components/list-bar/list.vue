@@ -1,10 +1,11 @@
 <script>
-import { mapActions, mapState } from 'vuex';
+import { mapActions, mapState, mapGetters } from 'vuex';
 import ListItem from './list-item/list-item.vue';
 import UiGrid from '~/ui/grid/index.vue';
 import * as ChatsActions from '~/store/chats/actions';
 import * as FlexActions from '~/store/flex/actions';
 import * as MenuStates from '~/store/flex/menu-states';
+import * as MessagesActions from '~/store/messages/actions';
 
 export default {
   name: 'List',
@@ -21,6 +22,7 @@ export default {
       users: (state) => state.users.all,
       currentChatId: (state) => state.chats.currentChatId,
     }),
+    ...mapGetters(['currentChat']),
     companions() {
       return this.members.filter((member) => member.userId !== this.me.id);
     },
@@ -30,6 +32,7 @@ export default {
       'setCurrentChat': ChatsActions.SET_CURRENT_CHAT,
       'getChats': ChatsActions.GET_CHATS,
       'setMenuState': FlexActions.SET_MENU_STATE,
+      'setAllViews': MessagesActions.SET_ALL_VIEWS,
     }),
     getTextLastMessage(chatId) {
       const chatMessages = this.messages[chatId];
@@ -58,6 +61,9 @@ export default {
       await this.setCurrentChat({
         chatId,
       });
+
+      if (this.currentChat.countMessageViews)
+        await this.setAllViews({ chatId: this.currentChatId });
 
       this.$router.push(`/dialogs/${chatId}`);
     },

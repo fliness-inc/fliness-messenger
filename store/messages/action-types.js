@@ -3,5 +3,5 @@ export const SET_MESSAGES = 'SET_MESSAGES';
 export const CONNECT_SOCKET = 'CONNECT_SOCKET';
 export const DISCONNECT_SOCKET = 'DISCONNECT_SOCKET';
 export const SEND_MESSAGE = 'SEND_MESSAGE';
-
 export const SET_INIT_STATUS = 'SET_INIT_STATUS';
+export const SET_ALL_VIEWS = 'SET_ALL_VIEWS';
