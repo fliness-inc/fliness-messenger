@@ -6,4 +6,5 @@ export default () => ({
     refresh: null,
   },
   state: NetworkStatus.NONE,
+  error: null,
 });

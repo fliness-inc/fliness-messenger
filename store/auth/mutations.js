@@ -7,7 +7,19 @@ export default {
       refresh: tokens.refreshToken,
     };
   },
-  [MutationTypes.SET_STATUS](state, payload) {
-    state.status = payload.status;
+  [MutationTypes.SET_STATUS](state, { status }) {
+    state.status = status;
+  },
+  [MutationTypes.SET_ERROR](state, payload) {
+    if (!payload) {
+      state.error = null;
+      return;
+    }
+
+    state.error = {
+      type: payload.error,
+      message: payload.message,
+      statusCode: payload.payload,
+    };
   },
 };

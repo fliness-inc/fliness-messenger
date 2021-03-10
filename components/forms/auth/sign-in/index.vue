@@ -1,4 +1,5 @@
 <script>
+import { mapState } from 'vuex';
 import Field from '../field/index.vue';
 import ErrorField from '../error-field/index.vue';
 import Grid from '~/ui/grid/index.vue';
@@ -7,6 +8,7 @@ import LogoIcon from '~/assets/logo.svg?inline';
 import UnlockIcon from '~/assets/unlock.svg?inline';
 import EmailIcon from '~/assets/email.svg?inline';
 import * as AuthActions from '~/store/auth/actions';
+import * as NetworkStatus from '~/store/network-status';
 
 export default {
   components: {
@@ -22,9 +24,22 @@ export default {
     return {
       email: null,
       password: null,
-      error: null,
-      loading: false,
     };
+  },
+  computed: {
+    ...mapState({
+      error: (state) => state.auth.error,
+      isLoading: (state) => state.auth.status === NetworkStatus.LOADING,
+    }),
+    errorMessage() {
+      if (!this.error) return '';
+
+      if (this.error.statusCode === 404) return 'The user was not found';
+      else if (this.error.statusCode === 401)
+        return 'The email or password is incorrect';
+
+      return 'Something went wrong...';
+    },
   },
   methods: {
     handleFieldInput(type, value) {
@@ -37,21 +52,15 @@ export default {
           break;
       }
     },
-    async handleFormSubmit() {
-      this.loading = true;
-
-      await this.$store
+    handleFormSubmit() {
+      this.$store
         .dispatch(AuthActions.SIGN_IN, {
           email: this.email,
           password: this.password,
         })
         .then(() => {
           this.$router.push('/dialogs');
-        })
-        .catch(() => {
-          this.error = 'The email or password is incorrect';
-        })
-        .finally(() => (this.loading = false));
+        });
     },
   },
 };
@@ -63,7 +72,7 @@ export default {
     <p :class="$style.form__title">Sign in</p>
     <p :class="$style.form__description">to get started</p>
     <form :class="$style.inputs_layout" @submit.prevent="handleFormSubmit">
-      <form-error-field v-if="error" :text="error"></form-error-field>
+      <form-error-field v-if="error" :text="errorMessage"></form-error-field>
       <form-field
         type="text"
         placeholder="Email address or phone number"
@@ -86,7 +95,7 @@ export default {
         <ui-button
           :class="$style.form__button"
           variant="contained"
-          :disabled="loading"
+          :disabled="isLoading"
         >
           Continue
         </ui-button>

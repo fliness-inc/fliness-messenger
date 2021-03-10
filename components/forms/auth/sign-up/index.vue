@@ -1,4 +1,5 @@
 <script>
+import { mapActions, mapState } from 'vuex';
 import Field from '../field/index.vue';
 import ErrorField from '../error-field/index.vue';
 import Grid from '~/ui/grid/index.vue';
@@ -8,6 +9,7 @@ import UnlockIcon from '~/assets/unlock.svg?inline';
 import EmailIcon from '~/assets/email.svg?inline';
 import UserIcon from '~/assets/user.svg?inline';
 import * as AuthActions from '~/store/auth/actions';
+import * as NetworkStatus from '~/store/network-status';
 
 export default {
   components: {
@@ -26,11 +28,29 @@ export default {
       email: null,
       password: null,
       repeatPassword: null,
-      error: null,
-      loading: false,
     };
   },
+  computed: {
+    ...mapState({
+      error: (state) => state.auth.error,
+      isLoading: (state) => state.auth.status === NetworkStatus.LOADING,
+    }),
+    errorMessage() {
+      if (!this.error) return '';
+
+      if (this.error.statusCode === 404) return 'The user was not found';
+      else if (this.error.statusCode === 401)
+        return 'The email or password is incorrect';
+      else if (this.error.statusCode === 6000)
+        return 'The passwords are not match';
+
+      return 'Something went wrong...';
+    },
+  },
   methods: {
+    ...mapActions({
+      'setError': AuthActions.SET_ERROR,
+    }),
     handleFieldInput(type, value) {
       switch (type) {
         case 'username':
@@ -47,15 +67,13 @@ export default {
           break;
       }
     },
-    async handleFormSubmit() {
+    handleFormSubmit() {
       if (this.password !== this.repeatPassword) {
-        this.error = 'The passwords are not match';
+        this.setError({ statusCode: 6000 });
         return;
       }
 
-      this.loading = true;
-
-      await this.$store
+      this.$store
         .dispatch(AuthActions.SIGN_UP, {
           name: this.username,
           email: this.email,
@@ -63,11 +81,7 @@ export default {
         })
         .then(() => {
           this.$router.push('/dialogs');
-        })
-        .catch(() => {
-          this.error = 'The email or password is incorrect';
-        })
-        .finally(() => (this.loading = false));
+        });
     },
   },
 };
@@ -79,7 +93,7 @@ export default {
     <p :class="$style.form__title">Sign up</p>
     <p :class="$style.form__description">to get started</p>
     <form :class="$style.inputs_layout" @submit.prevent="handleFormSubmit">
-      <form-error-field v-if="error" :text="error"></form-error-field>
+      <form-error-field v-if="error" :text="errorMessage"></form-error-field>
       <form-field
         type="text"
         placeholder="Username"
@@ -120,7 +134,7 @@ export default {
         <ui-button
           :class="$style.form__button"
           variant="contained"
-          :disabled="loading"
+          :disabled="isLoading"
         >
           Continue
         </ui-button>

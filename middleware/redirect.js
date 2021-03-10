@@ -1,12 +1,10 @@
-import axios from '~/plugins/axios';
-
-export default ({ app, redirect, req }) => {
+export default ({ app, redirect, req, $axios }) => {
   const token = app.$cookies.get('jwt-token');
   const userAgent = process.server
     ? req.headers['user-agent']
     : navigator.userAgent;
 
-  return axios
+  return $axios
     .post(
       '/auth/refresh-tokens',
       {},

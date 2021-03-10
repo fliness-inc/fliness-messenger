@@ -6,6 +6,7 @@ export const NAMESPACE = 'auth';
 export const SIGN_IN = `${NAMESPACE}/${ActionTypes.SIGN_IN}`;
 export const SIGN_UP = `${NAMESPACE}/${ActionTypes.SIGN_UP}`;
 export const SET_TOKENS = `${NAMESPACE}/${ActionTypes.SET_TOKENS}`;
+export const SET_ERROR = `${NAMESPACE}/${ActionTypes.SET_ERROR}`;
 
 export default {
   [ActionTypes.SIGN_IN]({ commit }, payload) {
@@ -15,9 +16,11 @@ export default {
       .then(({ data: { data: tokens } }) => {
         commit(MutationTypes.SET_TOKENS, { tokens });
         commit(MutationTypes.SET_STATUS, { status: NetworkStatus.SUCCESS });
+        commit(MutationTypes.SET_ERROR, null);
       })
-      .catch(() => {
+      .catch((e) => {
         commit(MutationTypes.SET_STATUS, { status: NetworkStatus.ERROR });
+        commit(MutationTypes.SET_ERROR, e.response.data);
       });
   },
   [ActionTypes.SIGN_UP]({ commit }, payload) {
@@ -27,12 +30,17 @@ export default {
       .then(({ data: { data: tokens } }) => {
         commit(MutationTypes.SET_TOKENS, { tokens });
         commit(MutationTypes.SET_STATUS, { status: NetworkStatus.SUCCESS });
+        commit(MutationTypes.SET_ERROR, null);
       })
-      .catch(() => {
+      .catch((e) => {
         commit(MutationTypes.SET_STATUS, { status: NetworkStatus.ERROR });
+        commit(MutationTypes.SET_ERROR, e.response.data);
       });
   },
   [ActionTypes.SET_TOKENS]({ commit }, payload) {
     commit(MutationTypes.SET_TOKENS, payload);
+  },
+  [ActionTypes.SET_ERROR]({ commit }, payload) {
+    commit(MutationTypes.SET_ERROR, payload);
   },
 };
