@@ -1,4 +1,4 @@
-body[data-theme-mode='light'] {
+.page[data-theme-mode='light'] {
   --color-switch-checked-color: var(--color-blue-400);
   --color-switch-checked-bg-color: var(--color-blue-400);
   --color-switch-hover-bg-color: rgba(25, 118, 210, 0.04);
@@ -6,7 +6,12 @@ body[data-theme-mode='light'] {
   --color-switch-base-bg-color: var(--color-white);
 }
 
-body[data-theme-mode='dark'] {
+.page[data-theme-mode='dark'] {
+  --color-switch-checked-color: var(--color-blue-400);
+  --color-switch-checked-bg-color: var(--color-blue-400);
+  --color-switch-hover-bg-color: rgba(25, 118, 210, 0.04);
+  --color-switch-bg-color: var(--color-gray-500);
+  --color-switch-base-bg-color: var(--color-gray-200);
 }
 
 .switch {

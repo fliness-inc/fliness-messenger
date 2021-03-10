@@ -59,6 +59,7 @@
   &_outlined {
     border: 1px solid var(--color-btn-outlined-border);
     background-color: transparent;
+    color: var(--color-btn-outlined-color);
 
     &:disabled {
       color: var(--color-btn-outlined-disabled-color);

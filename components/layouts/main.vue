@@ -47,7 +47,7 @@ export default {
 </script>
 
 <template>
-  <ui-grid direction="column">
+  <ui-grid direction="column" class="page">
     <app-bar></app-bar>
     <ui-grid wrap="nowrap">
       <side-bar-vertical></side-bar-vertical>

@@ -6,6 +6,7 @@ import * as UsersActions from '~/store/users/actions';
 export const NAMESPACE = 'me';
 
 export const GET_ME_INFO = `${NAMESPACE}/${ActionTypes.GET_ME_INFO}`;
+export const SET_THEME = `${NAMESPACE}/${ActionTypes.SET_THEME}`;
 
 export default {
   [ActionTypes.GET_ME_INFO]({ commit, rootState, dispatch }) {
@@ -30,5 +31,8 @@ export default {
       .catch(() =>
         commit(MutationTypes.SET_STATUS, { status: NetworkStatus.ERROR }),
       );
+  },
+  [ActionTypes.SET_THEME]({ commit }, payload) {
+    commit(MutationTypes.SET_THEME, payload);
   },
 };

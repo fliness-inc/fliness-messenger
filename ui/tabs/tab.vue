@@ -3,7 +3,7 @@
     align-items="center"
     justify="center"
     :class="[$style.tabs__tab, $style.tab, { [$style.tab_selected]: active }]"
-    @click="() => this.$emit('click', this.index)"
+    @click="() => this.$emit('click', index)"
   >
     <slot></slot>
   </ui-grid>

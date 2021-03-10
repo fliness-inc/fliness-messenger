@@ -21,7 +21,9 @@ export default {
       members: (state) => state.members.all,
       users: (state) => state.users.all,
       chats: (state) => state.chats.all,
-      messages: (state) => state.messages.all,
+      messages(state) {
+        return state.messages.all[this.currentChatId];
+      },
       isLoading(state) {
         return (
           state.messages.networkStatus !== NetworkStatus.SUCCESS &&
@@ -31,9 +33,7 @@ export default {
     }),
     ...mapGetters(['currentChat']),
     formatedMessages() {
-      const messages = this.messages[this.currentChatId] || [];
-
-      return messages.map((message) => {
+      return this.messages.map((message) => {
         const member = this.members.find(
           (member) => member.id === message.memberId,
         );
@@ -54,8 +54,8 @@ export default {
     },
   },
   watch: {
-    chats() {
-      if (!this.currentChat.countMessageViews && !this.isLoading) return;
+    messages(val, prev) {
+      if (val && prev && val.length === prev.length) return;
 
       this.setAllViews({ chatId: this.currentChatId });
     },

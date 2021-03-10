@@ -104,6 +104,23 @@
   }
 }
 
+.settings-popup {
+  display: inline-flex;
+  width: auto;
+  background-color: var(--color-app-bar-popup-bg-color);
+  padding: 10px;
+  margin: 6px 2px;
+  box-shadow: 0px 0px 4px var(--color-app-bar-popup-box-sw-color);
+  border-radius: 4px;
+
+  &__btn {
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    color: var(--color-app-bar-popup-btn-bg-color);
+  }
+}
+
 @media screen and (max-width: 640px) {
   .logo {
     display: none;

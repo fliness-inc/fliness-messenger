@@ -7,4 +7,7 @@ export default {
   [MutationTypes.SET_STATUS](state, payload) {
     state.status = payload.status;
   },
+  [MutationTypes.SET_THEME](state, payload) {
+    state.theme = payload.theme;
+  },
 };
